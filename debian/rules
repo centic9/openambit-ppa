@@ -1,0 +1,29 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+CPPFLAGS:=$(shell dpkg-buildflags --get CPPFLAGS)
+CFLAGS:=$(shell dpkg-buildflags --get CFLAGS) $(CPPFLAGS)
+CXXFLAGS:=$(shell dpkg-buildflags --get CXXFLAGS) $(CPPFLAGS)
+LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
+
+%:
+	dh $@ 
+
+override_dh_auto_build:
+	mkdir libambit-build
+	cd libambit-build && cmake ../src/libambit -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} $(CFLAGS)" -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} $(CXXFLAGS)"
+	cd libambit-build && $(MAKE) -j$(NUMCPUS)
+	mkdir openambit-build
+	cd openambit-build && cmake ../src/openambit -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} $(CFLAGS)" -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} $(CXXFLAGS)"
+	cd openambit-build && $(MAKE) -j$(NUMCPUS)
+
+INSTDIR=../debian/tmp/
+override_dh_install:
+	cd libambit-build && $(MAKE) install DESTDIR=$(INSTDIR)
+	cd openambit-build && $(MAKE) install DESTDIR=$(INSTDIR)
+	pwd
+	ls -lR
+	dh_install

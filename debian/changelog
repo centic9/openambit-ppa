@@ -1,0 +1,25 @@
+openambit (0.2+20140602-1) unstable; urgency=low
+
+  * Upstream git snapshot (OpenAmbit should work with latest firmware
+    updates by Suunto)
+  * Remove no longer needed 01_FixDesktopCategory patch
+
+ -- Christian Perrier <bubulle@debian.org>  Fri, 18 Jul 2014 07:18:32 +0200
+
+openambit (0.2-2) unstable; urgency=low
+
+  * Properly specify BSD-3-clause license for
+    openambit-0.2/wireshark_dissector/*
+  * Properly specidy alternative BSD-3-clause or HIDAPI licenses
+    for openambit-0.2/src/libambit/hid*
+
+ -- Christian Perrier <bubulle@debian.org>  Tue, 08 Jul 2014 07:58:19 +0200
+
+openambit (0.2-1) unstable; urgency=low
+
+  * Initial release . Closes: #746652
+  * Fix category used by upstream in the desktop file because it is not
+    one registered at http://standards.freedesktop.org/menu-spec/1.0/apa.html.
+    Use: Education;Sports
+
+ -- Christian Perrier <bubulle@debian.org>  Thu, 01 May 2014 11:53:02 +0200

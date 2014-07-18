@@ -1,0 +1,87 @@
+Source: openambit
+Section: utils
+Priority: optional
+Maintainer: Debian running development group <pkg-running-devel@lists.alioth.debian.org>
+Uploaders: Christian Perrier <bubulle@debian.org>
+Build-Depends: debhelper (>= 9~), cmake, libusb-1.0-0-dev, libudev-dev, libqjson-dev, libqt4-dev, zlib1g-dev
+Standards-Version: 3.9.5
+Homepage: http://openambit.org/
+Vcs-Git: git://git.debian.org/pkg-running/openambit.git
+Vcs-Browser: http://git.debian.org/?p=pkg-running/openambit.git;a=summary
+
+Package: openambit
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: utilities for Suunto Ambit sport watches
+ This package provides software that helps communicating with Suunto Ambit
+ outdoor watches.
+ .
+ OpenAmbit offers the following features:
+  - Read logs from device and save them in XML files;
+  - Upload logs to movescount.com;
+  - Update orbital data (for faster GPS sync) to the device.
+ .
+ It doesn't have the following features (but may include them in future
+ releases):
+  - Sync user settings from movescount to device;
+  - Sync apps, routes etc from movescount to device.
+ .
+ The application is divided in 2 parts, libambit which is a basic
+ C-library that does the device-communication, and the openambit GUI
+ application that writes the logs to XML files and synchronize with
+ movescount. The movescount parts is completely optional, and needs
+ to be manually enabled in the UI.
+ .
+ This package provides the GUI interface.
+
+Package: libambit0
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: utilities for Suunto Ambit sport watches
+ This package provides software that helps communicating with Suunto Ambit
+ outdoor watches.
+ .
+ OpenAmbit offers the following features:
+  - Read logs from device and save them in XML files;
+  - Upload logs to movescount.com;
+  - Update orbital data (for faster GPS sync) to the device.
+ .
+ It doesn't have the following features (but may include them in future
+ releases):
+  - Sync user settings from movescount to device;
+  - Sync apps, routes etc from movescount to device.
+ .
+ The application is divided in 2 parts, libambit which is a basic
+ C-library that does the device-communication, and the openambit GUI
+ application that writes the logs to XML files and synchronize with
+ movescount. The movescount parts is completely optional, and needs
+ to be manually enabled in the UI.
+ .
+ This package provides the shared library.
+
+Package: libambit0-dev
+Architecture: any
+Section: libdevel
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: utilities for Suunto Ambit sport watches
+ This package provides software that helps communicating with Suunto Ambit
+ outdoor watches.
+ .
+ OpenAmbit offers the following features:
+  - Read logs from device and save them in XML files;
+  - Upload logs to movescount.com;
+  - Update orbital data (for faster GPS sync) to the device.
+ .
+ It doesn't have the following features (but may include them in future
+ releases):
+  - Sync user settings from movescount to device;
+  - Sync apps, routes etc from movescount to device.
+ .
+ The application is divided in 2 parts, libambit which is a basic
+ C-library that does the device-communication, and the openambit GUI
+ application that writes the logs to XML files and synchronize with
+ movescount. The movescount parts is completely optional, and needs
+ to be manually enabled in the UI.
+ .
+ This package provides the development files.
+
