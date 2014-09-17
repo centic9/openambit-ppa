@@ -42,6 +42,7 @@ static typename_lookup_entry_t sampleAltitudeSourceNames[] = {
 };
 
 static typename_lookup_entry_t sampleLapEventTypeNames[] = {
+    { 0x00, "Distance" },
     { 0x01, "Manual" },
     { 0x14, "High Interval" },
     { 0x15, "Low Interval" },
@@ -240,7 +241,7 @@ bool MovesCountXML::XMLWriter::writeLogEntry()
         xml.writeTextElement("PeakTrainingEffect", QString::number((double)logEntry->logEntry->header.peak_training_effect/10.0, 'g', 16));
     }
     xml.writeTextElement("ActivityType", QString("%1").arg(logEntry->logEntry->header.activity_type));
-    xml.writeTextElement("Activity", QString(logEntry->logEntry->header.activity_name));
+    xml.writeTextElement("Activity", QString::fromLatin1(logEntry->logEntry->header.activity_name));
     xml.writeStartElement("Temperature");
     xml.writeTextElement("Max", QString::number((double)logEntry->logEntry->header.temperature_max/10.0 + 273.15, 'g', 16));
     xml.writeTextElement("Min", QString::number((double)logEntry->logEntry->header.temperature_min/10.0 + 273.15, 'g', 16));
