@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.5)
 project (OPENAMBIT)
 
-set (OPENAMBIT_VERSION HEAD)
+set (OPENAMBIT_VERSION 0.3)
 
 # Where to lookup modules
 set(CMAKE_MODULE_PATH "${OPENAMBIT_SOURCE_DIR}/cmake")
@@ -19,8 +19,6 @@ include(GNUInstallDirs)
 
 include_directories (
   ${CMAKE_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}
-  ${QT_QTCORE_INCLUDE_DIR}
-  ${QT_QTGUI_INCLUDE_DIR}
   ${QT_QTCORE_INCLUDE_DIR}
   ${QT_QTGUI_INCLUDE_DIR}
   ${QT_QTNETWORK_INCLUDE_DIR}
@@ -86,7 +84,7 @@ add_definitions( -DAPP_VERSION="${OPENAMBIT_VERSION}" )
 
 add_executable ( openambit ${openambit_SRCS} ${UIS} ${RSCS} ${TRS} ${MOCS} )
 
-target_link_libraries ( openambit  ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTNETWORK_LIBRARY} ${LIBAMBIT_LIBS} ${UDEV_LIBS} ${ZLIB_LIBRARY} ${QJSON_LIBRARIES} )
+target_link_libraries ( openambit  ${QT_QTCORE_LIBRARY} ${QT_QTGUI_LIBRARY} ${QT_QTNETWORK_LIBRARY} ${LIBAMBIT_LIBS} ${UDEV_LIBS} ${ZLIB_LIBRARY} ${QJSON_LIBRARIES} )
 
 install ( TARGETS openambit DESTINATION ${CMAKE_INSTALL_BINDIR} )
 install ( FILES ${OPENAMBIT_SOURCE_DIR}/deployment/99-suunto-ambit.rules
