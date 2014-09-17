@@ -1,3 +1,9 @@
+openambit (0.3-0ubuntu0~ppa1) trusty; urgency=medium
+
+  * Update to new upstream release.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 17 Sep 2014 21:37:29 +0200
+
 openambit (0.2+20140602-1) unstable; urgency=low
 
   * Upstream git snapshot (OpenAmbit should work with latest firmware
