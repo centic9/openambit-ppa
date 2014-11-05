@@ -1,3 +1,11 @@
+openambit (0.3-0ubuntu20141105~ppa1) trusty; urgency=medium
+
+  * Update to latest Git
+  * Add dependency on libpcap-dev as libopenambit now can make 
+    use of it (not sure if it will be actually used, though...)
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 05 Nov 2014 22:05:12 +0100
+
 openambit (0.3-0ubuntu0~ppa1) trusty; urgency=medium
 
   * Update to new upstream release.
