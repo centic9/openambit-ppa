@@ -17,6 +17,18 @@ openambit (0.3-1) unstable; urgency=low
 
  -- Christian Perrier <bubulle@debian.org>  Tue, 16 Sep 2014 22:27:30 +0200
 
+openambit (0.3-0ubuntu20141223~ppa2) trusty; urgency=medium
+
+  * Adjust new standard-conforming location of udev-rules.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Tue, 23 Dec 2014 23:25:09 +0100
+
+openambit (0.3-0ubuntu20141223~ppa1) trusty; urgency=medium
+
+  * Update to latest Git
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Tue, 23 Dec 2014 23:15:19 +0100
+
 openambit (0.3-0ubuntu20141105~ppa1) trusty; urgency=medium
 
   * Update to latest Git
