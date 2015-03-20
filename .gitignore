@@ -4,3 +4,6 @@
 # Ignore temporary and user files
 *~
 *.user
+
+# Debian patch-dir
+.pc

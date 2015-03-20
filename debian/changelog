@@ -1,3 +1,9 @@
+openambit (0.3-1ubuntu0~git20150320~ppa2) trusty; urgency=medium
+
+  * Adjust location of udev rules
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Fri, 20 Mar 2015 21:34:41 +0100
+
 openambit (0.3-1ubuntu0~git20150320~ppa1) trusty; urgency=medium
 
   * Update to latest version from git
