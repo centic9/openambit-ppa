@@ -1,3 +1,10 @@
+openambit (0.3-1ubuntu0~git20150320~ppa1) trusty; urgency=medium
+
+  * Update to latest version from git
+  * Update version to higher version than available in Vivid.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Fri, 20 Mar 2015 20:48:56 +0100
+
 openambit (0.3-0ubuntu20141105~ppa1) trusty; urgency=medium
 
   * Update to latest Git
