@@ -1,8 +1,29 @@
+openambit (0.3-1ubuntu0~git20150320~ppa1) trusty; urgency=medium
+
+  * Update to latest version from git
+  * Update version to higher version than available in Vivid.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Fri, 20 Mar 2015 20:48:56 +0100
+
 openambit (0.3-1) unstable; urgency=low
 
   * New upstream release
 
  -- Christian Perrier <bubulle@debian.org>  Tue, 16 Sep 2014 22:27:30 +0200
+
+openambit (0.3-0ubuntu20141105~ppa1) trusty; urgency=medium
+
+  * Update to latest Git
+  * Add dependency on libpcap-dev as libopenambit now can make 
+    use of it (not sure if it will be actually used, though...)
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 05 Nov 2014 22:05:12 +0100
+
+openambit (0.3-0ubuntu0~ppa1) trusty; urgency=medium
+
+  * Update to new upstream release.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 17 Sep 2014 21:37:29 +0200
 
 openambit (0.2+20140602-1) unstable; urgency=low
 

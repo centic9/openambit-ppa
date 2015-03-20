@@ -3,7 +3,7 @@ Section: utils
 Priority: optional
 Maintainer: Debian running development group <pkg-running-devel@lists.alioth.debian.org>
 Uploaders: Christian Perrier <bubulle@debian.org>
-Build-Depends: debhelper (>= 9~), cmake, libusb-1.0-0-dev, libudev-dev, libqjson-dev, libqt4-dev, zlib1g-dev
+Build-Depends: debhelper (>= 9~), cmake, libusb-1.0-0-dev, libudev-dev, libqjson-dev, libqt4-dev, zlib1g-dev, libpcap-dev
 Standards-Version: 3.9.5
 Homepage: http://openambit.org/
 Vcs-Git: git://git.debian.org/pkg-running/openambit.git
@@ -63,6 +63,7 @@ Package: libambit0-dev
 Architecture: any
 Section: libdevel
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Replaces: libambit-dev
 Description: utilities for Suunto Ambit sport watches
  This package provides software that helps communicating with Suunto Ambit
  outdoor watches.
