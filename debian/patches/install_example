@@ -1,0 +1,10 @@
+Index: openambit/src/example/CMakeLists.txt
+===================================================================
+--- openambit.orig/src/example/CMakeLists.txt	2015-05-03 20:52:51.499743299 +0200
++++ openambit/src/example/CMakeLists.txt	2015-05-03 21:28:16.366562364 +0200
+@@ -23,3 +23,5 @@
+ target_link_libraries(
+   ambitconsole ${LIBAMBIT_LIBS}
+ )
++
++install ( TARGETS ambitconsole DESTINATION ${CMAKE_INSTALL_BINDIR} )
