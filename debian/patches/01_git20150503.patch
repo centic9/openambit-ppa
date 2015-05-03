@@ -1,7 +1,6 @@
-Index: openambit/build.sh
-===================================================================
---- openambit.orig/build.sh	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/build.sh	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./build.sh ../openambit.git/build.sh
+--- ./build.sh	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/build.sh	2015-03-20 20:47:45.908512152 +0100
 @@ -1,3 +1,5 @@
 +#!/bin/bash
 +
@@ -44,10 +43,9 @@ Index: openambit/build.sh
 +    cmake "$@" ../wireshark_dissector
 +    make -j$CORES
 +fi
-Index: openambit/Dockerfile
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/Dockerfile	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./Dockerfile ../openambit.git/Dockerfile
+--- ./Dockerfile	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/Dockerfile	2015-05-03 10:54:35.522551177 +0200
 @@ -0,0 +1,83 @@
 +#  Dockerfile -- to build the sources on a well-known platform
 +#  Copyright (C) 2014, 2015  Olaf Meeuwissen
@@ -132,21 +130,9 @@ Index: openambit/Dockerfile
 +# Finally, things that really should be fixed in the Openambit code.
 +# FIXME add multiarch support to src/libambit/cmake/FindUdev.cmake
 +RUN  cd /usr/lib/ && ln -s x86_64-linux-gnu/libudev.so
-Index: openambit/.gitignore
-===================================================================
---- openambit.orig/.gitignore	2015-03-20 21:37:32.477648092 +0100
-+++ openambit/.gitignore	2015-05-03 11:09:00.000000000 +0200
-@@ -4,6 +4,3 @@
- # Ignore temporary and user files
- *~
- *.user
--
--# Debian patch-dir
--.pc
-Index: openambit/README
-===================================================================
---- openambit.orig/README	2015-03-20 21:42:14.000000000 +0100
-+++ /dev/null	1970-01-01 00:00:00.000000000 +0000
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./README ../openambit.git/README
+--- ./README	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/README	1970-01-01 01:00:00.000000000 +0100
 @@ -1,91 +0,0 @@
 -OPENAMBIT
 -=========
@@ -239,10 +225,9 @@ Index: openambit/README
 -> make
 -> cp ambit.so ~/.wireshark/plugins
 -
-Index: openambit/README.rst
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/README.rst	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./README.rst ../openambit.git/README.rst
+--- ./README.rst	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/README.rst	2015-05-03 10:54:35.522551177 +0200
 @@ -0,0 +1,148 @@
 +Openambit
 +=========
@@ -392,10 +377,9 @@ Index: openambit/README.rst
 +.. _Ubuntu: http://packages.ubuntu.com/search?keywords=openambit
 +.. _OSWatershed.org: http://oswatershed.org/pkg/openambit
 +.. _release: https://github.com/openambitproject/openambit/releases
-Index: openambit/run.sh
-===================================================================
---- openambit.orig/run.sh	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/run.sh	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./run.sh ../openambit.git/run.sh
+--- ./run.sh	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/run.sh	2015-05-03 10:54:35.522551177 +0200
 @@ -1,8 +1,23 @@
 +#!/bin/sh
 +
@@ -422,10 +406,9 @@ Index: openambit/run.sh
  
 +echo "------running $application------"
 +LD_LIBRARY_PATH=./libambit-build ./$builddir/$application
-Index: openambit/src/example/ambitconsole.c
-===================================================================
---- openambit.orig/src/example/ambitconsole.c	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/example/ambitconsole.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/example/ambitconsole.c ../openambit.git/src/example/ambitconsole.c
+--- ./src/example/ambitconsole.c	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/example/ambitconsole.c	2015-03-20 20:47:45.908512152 +0100
 @@ -1,5 +1,6 @@
  #include <stdlib.h>
  #include <stdio.h>
@@ -498,10 +481,9 @@ Index: openambit/src/example/ambitconsole.c
  
      return 0;
  }
-Index: openambit/src/example/cmake/Findlibambit.cmake
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/example/cmake/Findlibambit.cmake	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/example/cmake/Findlibambit.cmake ../openambit.git/src/example/cmake/Findlibambit.cmake
+--- ./src/example/cmake/Findlibambit.cmake	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/example/cmake/Findlibambit.cmake	2015-03-20 20:47:45.912512150 +0100
 @@ -0,0 +1,26 @@
 +# - Find libambit
 +# If found, this will define
@@ -529,10 +511,9 @@ Index: openambit/src/example/cmake/Findlibambit.cmake
 +endif(LIBAMBIT_INCLUDE_DIR AND LIBAMBIT_LIBS)
 +
 +mark_as_advanced(LIBAMBIT_INCLUDE_DIR LIBAMBIT_LIBS)
-Index: openambit/src/example/CMakeLists.txt
-===================================================================
---- openambit.orig/src/example/CMakeLists.txt	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/example/CMakeLists.txt	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/example/CMakeLists.txt ../openambit.git/src/example/CMakeLists.txt
+--- ./src/example/CMakeLists.txt	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/example/CMakeLists.txt	2015-03-20 20:47:45.908512152 +0100
 @@ -1,9 +1,19 @@
 +cmake_minimum_required(VERSION 2.8.5)
 +project (EXAMPLE C)
@@ -562,10 +543,9 @@ Index: openambit/src/example/CMakeLists.txt
 -  ambitconsole ambit
 +  ambitconsole ${LIBAMBIT_LIBS}
  )
-Index: openambit/src/libambit/cmake/FindPCAP.cmake
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/cmake/FindPCAP.cmake	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/cmake/FindPCAP.cmake ../openambit.git/src/libambit/cmake/FindPCAP.cmake
+--- ./src/libambit/cmake/FindPCAP.cmake	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/cmake/FindPCAP.cmake	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,74 @@
 +# - Try to find libpcap include dirs and libraries
 +#
@@ -641,10 +621,9 @@ Index: openambit/src/libambit/cmake/FindPCAP.cmake
 +    PCAP_INCLUDE_DIR
 +    PCAP_LIBRARY
 +)
-Index: openambit/src/libambit/cmake/HidapiDriver.cmake
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/cmake/HidapiDriver.cmake	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/cmake/HidapiDriver.cmake ../openambit.git/src/libambit/cmake/HidapiDriver.cmake
+--- ./src/libambit/cmake/HidapiDriver.cmake	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/cmake/HidapiDriver.cmake	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,30 @@
 +# - Resolve what hidapi driver to use
 +# This module is affected by the following defines
@@ -676,10 +655,9 @@ Index: openambit/src/libambit/cmake/HidapiDriver.cmake
 +    mark_as_advanced(HIDAPI_INCLUDE_DIR HIDAPI_SOURCE_FILES HIDAPI_LIBS)
 +    set (HIDAPI_RESOLVED TRUE)
 +endif (NOT HIDAPI_RESOLVED)
-Index: openambit/src/libambit/CMakeLists.txt
-===================================================================
---- openambit.orig/src/libambit/CMakeLists.txt	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/libambit/CMakeLists.txt	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/CMakeLists.txt ../openambit.git/src/libambit/CMakeLists.txt
+--- ./src/libambit/CMakeLists.txt	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/libambit/CMakeLists.txt	2015-03-20 20:47:45.908512152 +0100
 @@ -1,5 +1,5 @@
  cmake_minimum_required (VERSION 2.8.5)
 -project (LIBAMBIT)
@@ -741,10 +719,9 @@ Index: openambit/src/libambit/CMakeLists.txt
 +install(FILES libambit.rules
 +        DESTINATION $ENV{DESTDIR}${CMAKE_INSTALL_UDEVRULESDIR}
 +        COMPONENT system)
-Index: openambit/src/libambit/crc16.c
-===================================================================
---- openambit.orig/src/libambit/crc16.c	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/libambit/crc16.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/crc16.c ../openambit.git/src/libambit/crc16.c
+--- ./src/libambit/crc16.c	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/libambit/crc16.c	2014-11-05 21:53:14.000000000 +0100
 @@ -18,7 +18,7 @@
  /*                                                               */
  /*****************************************************************/
@@ -754,10 +731,9 @@ Index: openambit/src/libambit/crc16.c
  
  static uint16_t crctable[256] =
  {
-Index: openambit/src/libambit/crc16.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/crc16.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/crc16.h ../openambit.git/src/libambit/crc16.h
+--- ./src/libambit/crc16.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/crc16.h	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,31 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -790,10 +766,9 @@ Index: openambit/src/libambit/crc16.h
 +uint16_t crc16_ccitt_false_init(unsigned char *buf, size_t buflen, uint16_t crc);
 +
 +#endif /* __CRC16_H__ */
-Index: openambit/src/libambit/debug.c
-===================================================================
---- openambit.orig/src/libambit/debug.c	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/libambit/debug.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/debug.c ../openambit.git/src/libambit/debug.c
+--- ./src/libambit/debug.c	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/libambit/debug.c	2014-11-05 21:53:14.000000000 +0100
 @@ -19,8 +19,7 @@
   * Contributors:
   *
@@ -804,10 +779,9 @@ Index: openambit/src/libambit/debug.c
  
  #include <stdarg.h>
  #include <stdio.h>
-Index: openambit/src/libambit/debug.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/debug.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/debug.h ../openambit.git/src/libambit/debug.h
+--- ./src/libambit/debug.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/debug.h	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,52 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -861,10 +835,9 @@ Index: openambit/src/libambit/debug.h
 +#endif
 +
 +#endif /* __DEBUG_H__ */
-Index: openambit/src/libambit/device_driver_ambit3.c
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/device_driver_ambit3.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/device_driver_ambit3.c ../openambit.git/src/libambit/device_driver_ambit3.c
+--- ./src/libambit/device_driver_ambit3.c	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/device_driver_ambit3.c	2015-03-20 20:47:45.908512152 +0100
 @@ -0,0 +1,459 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -1325,10 +1298,9 @@ Index: openambit/src/libambit/device_driver_ambit3.c
 +
 +    return 0;
 +}
-Index: openambit/src/libambit/device_driver_ambit.c
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/device_driver_ambit.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/device_driver_ambit.c ../openambit.git/src/libambit/device_driver_ambit.c
+--- ./src/libambit/device_driver_ambit.c	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/device_driver_ambit.c	2015-03-20 20:47:45.908512152 +0100
 @@ -0,0 +1,299 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -1629,10 +1601,9 @@ Index: openambit/src/libambit/device_driver_ambit.c
 +    return ret;
 +}
 +
-Index: openambit/src/libambit/device_driver_common.c
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/device_driver_common.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/device_driver_common.c ../openambit.git/src/libambit/device_driver_common.c
+--- ./src/libambit/device_driver_common.c	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/device_driver_common.c	2015-03-20 20:47:45.908512152 +0100
 @@ -0,0 +1,127 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -1761,10 +1732,9 @@ Index: openambit/src/libambit/device_driver_common.c
 +
 +    return ret;
 +}
-Index: openambit/src/libambit/device_driver_common.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/device_driver_common.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/device_driver_common.h ../openambit.git/src/libambit/device_driver_common.h
+--- ./src/libambit/device_driver_common.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/device_driver_common.h	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,36 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -1802,10 +1772,9 @@ Index: openambit/src/libambit/device_driver_common.h
 +int libambit_device_driver_status_get(ambit_object_t *object, ambit_device_status_t *status);
 +
 +#endif /* DEVICE_DRIVER_COMMON */
-Index: openambit/src/libambit/device_driver.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/device_driver.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/device_driver.h ../openambit.git/src/libambit/device_driver.h
+--- ./src/libambit/device_driver.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/device_driver.h	2015-03-20 20:47:45.908512152 +0100
 @@ -0,0 +1,45 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -1852,10 +1821,9 @@ Index: openambit/src/libambit/device_driver.h
 +extern ambit_device_driver_t ambit_device_driver_ambit3; // Ambit3
 +
 +#endif /* __DEVICE_DRIVER_H__ */
-Index: openambit/src/libambit/device_support.c
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/device_support.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/device_support.c ../openambit.git/src/libambit/device_support.c
+--- ./src/libambit/device_support.c	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/device_support.c	2015-03-20 20:47:45.908512152 +0100
 @@ -0,0 +1,105 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -1962,10 +1930,9 @@ Index: openambit/src/libambit/device_support.c
 +            | (version[2] <<  0)
 +            | (version[3] <<  8));
 +}
-Index: openambit/src/libambit/device_support.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/device_support.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/device_support.h ../openambit.git/src/libambit/device_support.h
+--- ./src/libambit/device_support.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/device_support.h	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,39 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -2006,10 +1973,9 @@ Index: openambit/src/libambit/device_support.h
 +const ambit_known_device_t *libambit_device_support_find(uint16_t vendor_id, uint16_t product_id, const char *model, const uint8_t *fw_version);
 +
 +#endif /* __DEVICE_SUPPORT_H__ */
-Index: openambit/src/libambit/hidapi/hid-libusb.c
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/hidapi/hid-libusb.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/hidapi/hid-libusb.c ../openambit.git/src/libambit/hidapi/hid-libusb.c
+--- ./src/libambit/hidapi/hid-libusb.c	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/hidapi/hid-libusb.c	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,1427 @@
 +/*******************************************************
 + HIDAPI - Multi-Platform library for
@@ -3438,10 +3404,9 @@ Index: openambit/src/libambit/hidapi/hid-libusb.c
 +#ifdef __cplusplus
 +}
 +#endif
-Index: openambit/src/libambit/hidapi/hid-linux.c
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/hidapi/hid-linux.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/hidapi/hid-linux.c ../openambit.git/src/libambit/hidapi/hid-linux.c
+--- ./src/libambit/hidapi/hid-linux.c	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/hidapi/hid-linux.c	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,795 @@
 +/*******************************************************
 + HIDAPI - Multi-Platform library for
@@ -4238,10 +4203,9 @@ Index: openambit/src/libambit/hidapi/hid-linux.c
 +{
 +	return NULL;
 +}
-Index: openambit/src/libambit/hidapi/hid-pcapsimulate.c
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/hidapi/hid-pcapsimulate.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/hidapi/hid-pcapsimulate.c ../openambit.git/src/libambit/hidapi/hid-pcapsimulate.c
+--- ./src/libambit/hidapi/hid-pcapsimulate.c	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/hidapi/hid-pcapsimulate.c	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,442 @@
 +/*******************************************************
 + HIDAPI simulation interface for PCAP files
@@ -4685,10 +4649,9 @@ Index: openambit/src/libambit/hidapi/hid-pcapsimulate.c
 +
 +    return ret;
 +}
-Index: openambit/src/libambit/hid.c
-===================================================================
---- openambit.orig/src/libambit/hid.c	2015-03-20 21:42:14.000000000 +0100
-+++ /dev/null	1970-01-01 00:00:00.000000000 +0000
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/hid.c ../openambit.git/src/libambit/hid.c
+--- ./src/libambit/hid.c	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/libambit/hid.c	1970-01-01 01:00:00.000000000 +0100
 @@ -1,795 +0,0 @@
 -/*******************************************************
 - HIDAPI - Multi-Platform library for
@@ -5485,10 +5448,9 @@ Index: openambit/src/libambit/hid.c
 -{
 -	return NULL;
 -}
-Index: openambit/src/libambit/hid-libusb.c
-===================================================================
---- openambit.orig/src/libambit/hid-libusb.c	2015-03-20 21:42:14.000000000 +0100
-+++ /dev/null	1970-01-01 00:00:00.000000000 +0000
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/hid-libusb.c ../openambit.git/src/libambit/hid-libusb.c
+--- ./src/libambit/hid-libusb.c	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/libambit/hid-libusb.c	1970-01-01 01:00:00.000000000 +0100
 @@ -1,1427 +0,0 @@
 -/*******************************************************
 - HIDAPI - Multi-Platform library for
@@ -6917,10 +6879,9 @@ Index: openambit/src/libambit/hid-libusb.c
 -#ifdef __cplusplus
 -}
 -#endif
-Index: openambit/src/libambit/libambit.c
-===================================================================
---- openambit.orig/src/libambit/libambit.c	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/libambit/libambit.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/libambit.c ../openambit.git/src/libambit/libambit.c
+--- ./src/libambit/libambit.c	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/libambit/libambit.c	2015-03-20 20:47:45.908512152 +0100
 @@ -21,8 +21,14 @@
   */
  #include "libambit.h"
@@ -7748,10 +7709,9 @@ Index: openambit/src/libambit/libambit.c
 +
 +    return device;
  }
-Index: openambit/src/libambit/libambit.h
-===================================================================
---- openambit.orig/src/libambit/libambit.h	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/libambit/libambit.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/libambit.h ../openambit.git/src/libambit/libambit.h
+--- ./src/libambit/libambit.h	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/libambit/libambit.h	2015-03-20 20:47:45.908512152 +0100
 @@ -30,19 +30,22 @@
  #include <stdbool.h>
  #include <time.h>
@@ -7937,10 +7897,9 @@ Index: openambit/src/libambit/libambit.h
  
  /**
   * Set sync message to device display
-Index: openambit/src/libambit/libambit_int.h
-===================================================================
---- openambit.orig/src/libambit/libambit_int.h	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/libambit/libambit_int.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/libambit_int.h ../openambit.git/src/libambit/libambit_int.h
+--- ./src/libambit/libambit_int.h	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/libambit/libambit_int.h	2014-11-05 21:53:14.000000000 +0100
 @@ -28,127 +28,13 @@
  
  struct ambit_object_s {
@@ -8073,10 +8032,9 @@ Index: openambit/src/libambit/libambit_int.h
 -}
 -
  #endif /* __LIBAMBIT_INT_H__ */
-Index: openambit/src/libambit/libambit.rules
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/libambit.rules	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/libambit.rules ../openambit.git/src/libambit/libambit.rules
+--- ./src/libambit/libambit.rules	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/libambit.rules	2015-03-20 20:47:45.908512152 +0100
 @@ -0,0 +1,30 @@
 +# Rules for Suunto Ambit devices
 +# Change permissions so that libambit can communicate with these
@@ -8108,10 +8066,9 @@ Index: openambit/src/libambit/libambit.rules
 +ENV{openambit}=="yes", MODE="0666", OWNER="root", GROUP="root"
 +
 +LABEL="openambit_rules_end"
-Index: openambit/src/libambit/personal.c
-===================================================================
---- openambit.orig/src/libambit/personal.c	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/libambit/personal.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/personal.c ../openambit.git/src/libambit/personal.c
+--- ./src/libambit/personal.c	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/libambit/personal.c	2015-03-20 20:47:45.908512152 +0100
 @@ -19,8 +19,8 @@
   * Contributors:
   *
@@ -8145,10 +8102,9 @@ Index: openambit/src/libambit/personal.c
      }
  
      return 0;
-Index: openambit/src/libambit/personal.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/personal.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/personal.h ../openambit.git/src/libambit/personal.h
+--- ./src/libambit/personal.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/personal.h	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,31 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -8181,10 +8137,9 @@ Index: openambit/src/libambit/personal.h
 +int libambit_personal_settings_parse(uint8_t *data, size_t datalen, ambit_personal_settings_t *settings);
 +
 +#endif /* __PERSONAL_H__ */
-Index: openambit/src/libambit/pmem20.c
-===================================================================
---- openambit.orig/src/libambit/pmem20.c	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/libambit/pmem20.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/pmem20.c ../openambit.git/src/libambit/pmem20.c
+--- ./src/libambit/pmem20.c	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/libambit/pmem20.c	2015-03-20 20:47:45.908512152 +0100
 @@ -19,8 +19,11 @@
   * Contributors:
   *
@@ -9027,10 +8982,9 @@ Index: openambit/src/libambit/pmem20.c
  {
      int ret = -1;
  
-Index: openambit/src/libambit/pmem20.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/pmem20.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/pmem20.h ../openambit.git/src/libambit/pmem20.h
+--- ./src/libambit/pmem20.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/pmem20.h	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,60 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -9092,10 +9046,9 @@ Index: openambit/src/libambit/pmem20.h
 +int libambit_pmem20_gps_orbit_write(libambit_pmem20_t *object, const uint8_t *data, size_t datalen, bool include_sha256_hash);
 +
 +#endif /* __PMEM20_H__ */
-Index: openambit/src/libambit/protocol.c
-===================================================================
---- openambit.orig/src/libambit/protocol.c	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/libambit/protocol.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/protocol.c ../openambit.git/src/libambit/protocol.c
+--- ./src/libambit/protocol.c	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/libambit/protocol.c	2014-11-05 21:53:14.000000000 +0100
 @@ -19,8 +19,10 @@
   * Contributors:
   *
@@ -9119,10 +9072,9 @@ Index: openambit/src/libambit/protocol.c
      msg->sequence = htole16(object->sequence_no);
      msg->payload_len = htole32(datalen);
      packet_payload_len = fmin(42, datalen);
-Index: openambit/src/libambit/protocol.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/protocol.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/protocol.h ../openambit.git/src/libambit/protocol.h
+--- ./src/libambit/protocol.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/protocol.h	2015-03-20 20:47:45.908512152 +0100
 @@ -0,0 +1,63 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -9187,10 +9139,9 @@ Index: openambit/src/libambit/protocol.h
 +void libambit_protocol_free(uint8_t *data);
 +
 +#endif /* __PROTOCOL_H__ */
-Index: openambit/src/libambit/sbem0102.c
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/sbem0102.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/sbem0102.c ../openambit.git/src/libambit/sbem0102.c
+--- ./src/libambit/sbem0102.c	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/sbem0102.c	2015-05-03 10:54:35.522551177 +0200
 @@ -0,0 +1,249 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -9441,10 +9392,9 @@ Index: openambit/src/libambit/sbem0102.c
 +        }
 +    }
 +}
-Index: openambit/src/libambit/sbem0102.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/sbem0102.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/sbem0102.h ../openambit.git/src/libambit/sbem0102.h
+--- ./src/libambit/sbem0102.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/sbem0102.h	2015-03-20 20:47:45.908512152 +0100
 @@ -0,0 +1,173 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -9619,10 +9569,9 @@ Index: openambit/src/libambit/sbem0102.h
 +}
 +
 +#endif /* __SBEM0102_H__ */
-Index: openambit/src/libambit/sha256.c
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/sha256.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/sha256.c ../openambit.git/src/libambit/sha256.c
+--- ./src/libambit/sha256.c	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/sha256.c	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,176 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -9800,10 +9749,9 @@ Index: openambit/src/libambit/sha256.c
 +        ctx->h[i] += th[i];
 +    }
 +}
-Index: openambit/src/libambit/sha256.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/sha256.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/sha256.h ../openambit.git/src/libambit/sha256.h
+--- ./src/libambit/sha256.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/sha256.h	2014-11-05 21:53:14.000000000 +0100
 @@ -0,0 +1,42 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -9847,10 +9795,9 @@ Index: openambit/src/libambit/sha256.h
 +void sha256_final(sha256_ctx *ctx, uint8_t *hash);
 +
 +#endif /* __SHA256_H__ */
-Index: openambit/src/libambit/utils.c
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/utils.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/utils.c ../openambit.git/src/libambit/utils.c
+--- ./src/libambit/utils.c	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/utils.c	2015-03-20 20:47:45.908512152 +0100
 @@ -0,0 +1,205 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -10057,10 +10004,9 @@ Index: openambit/src/libambit/utils.c
 +
 +    return utf8memconv((char *)src, len, "WCHAR_T");
 +}
-Index: openambit/src/libambit/utils.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/libambit/utils.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/libambit/utils.h ../openambit.git/src/libambit/utils.h
+--- ./src/libambit/utils.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/libambit/utils.h	2015-03-20 20:47:45.912512150 +0100
 @@ -0,0 +1,94 @@
 +/*
 + * (C) Copyright 2014 Emil Ljungdahl
@@ -10156,10 +10102,9 @@ Index: openambit/src/libambit/utils.h
 +}
 +
 +#endif /* __UTILS_H__ */
-Index: openambit/src/openambit/cmake/Findlibambit.cmake
-===================================================================
---- openambit.orig/src/openambit/cmake/Findlibambit.cmake	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/cmake/Findlibambit.cmake	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/cmake/Findlibambit.cmake ../openambit.git/src/openambit/cmake/Findlibambit.cmake
+--- ./src/openambit/cmake/Findlibambit.cmake	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/cmake/Findlibambit.cmake	2015-03-20 20:47:45.912512150 +0100
 @@ -6,19 +6,14 @@
  # LIBAMBIT_LIBS - the libambit libraries
  
@@ -10184,10 +10129,9 @@ Index: openambit/src/openambit/cmake/Findlibambit.cmake
  
  if(LIBAMBIT_INCLUDE_DIR AND LIBAMBIT_LIBS)
    set(LIBAMBIT_FOUND TRUE CACHE INTERNAL "libambit found")
-Index: openambit/src/openambit/CMakeLists.txt
-===================================================================
---- openambit.orig/src/openambit/CMakeLists.txt	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/CMakeLists.txt	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/CMakeLists.txt ../openambit.git/src/openambit/CMakeLists.txt
+--- ./src/openambit/CMakeLists.txt	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/CMakeLists.txt	2015-03-20 20:47:45.912512150 +0100
 @@ -1,7 +1,7 @@
  cmake_minimum_required(VERSION 2.8.5)
 -project (OPENAMBIT)
@@ -10315,10 +10259,9 @@ Index: openambit/src/openambit/CMakeLists.txt
            DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/64x64/apps
            RENAME openambit.png )
 +
-Index: openambit/src/openambit/deployment/99-suunto-ambit.rules
-===================================================================
---- openambit.orig/src/openambit/deployment/99-suunto-ambit.rules	2015-03-20 21:42:14.000000000 +0100
-+++ /dev/null	1970-01-01 00:00:00.000000000 +0000
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/deployment/99-suunto-ambit.rules ../openambit.git/src/openambit/deployment/99-suunto-ambit.rules
+--- ./src/openambit/deployment/99-suunto-ambit.rules	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/deployment/99-suunto-ambit.rules	1970-01-01 01:00:00.000000000 +0100
 @@ -1,22 +0,0 @@
 -#
 -# Suunto Ambit / Ambit 2 UDEV rules
@@ -10342,10 +10285,9 @@ Index: openambit/src/openambit/deployment/99-suunto-ambit.rules
 -
 -# Greentit (a.k.a Suunto Ambit2 R)
 -SUBSYSTEMS=="usb", ATTRS{idVendor}=="1493", ATTRS{idProduct}=="001d", MODE="0666"
-Index: openambit/src/openambit/deployment/openambit.desktop
-===================================================================
---- openambit.orig/src/openambit/deployment/openambit.desktop	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/deployment/openambit.desktop	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/deployment/openambit.desktop ../openambit.git/src/openambit/deployment/openambit.desktop
+--- ./src/openambit/deployment/openambit.desktop	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/deployment/openambit.desktop	2015-03-20 20:47:45.912512150 +0100
 @@ -1,9 +1,9 @@
  [Desktop Entry]
 -Version=0.3
@@ -10358,10 +10300,9 @@ Index: openambit/src/openambit/deployment/openambit.desktop
  Icon=openambit
 -Categories=Utility;Education;Sports
 +Categories=Utility;Education;Sports;
-Index: openambit/src/openambit/deviceinfo.cpp
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/openambit/deviceinfo.cpp	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/deviceinfo.cpp ../openambit.git/src/openambit/deviceinfo.cpp
+--- ./src/openambit/deviceinfo.cpp	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/openambit/deviceinfo.cpp	2015-03-20 20:47:45.912512150 +0100
 @@ -0,0 +1,42 @@
 +/*
 + * (C) Copyright 2014 Olaf Meeuwissen
@@ -10405,10 +10346,9 @@ Index: openambit/src/openambit/deviceinfo.cpp
 +
 +    return *this;
 +}
-Index: openambit/src/openambit/deviceinfo.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/openambit/deviceinfo.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/deviceinfo.h ../openambit.git/src/openambit/deviceinfo.h
+--- ./src/openambit/deviceinfo.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/openambit/deviceinfo.h	2015-03-20 20:47:45.912512150 +0100
 @@ -0,0 +1,44 @@
 +/*
 + * (C) Copyright 2014 Olaf Meeuwissen
@@ -10454,10 +10394,9 @@ Index: openambit/src/openambit/deviceinfo.h
 +};
 +
 +#endif // DEVICEINFO_H
-Index: openambit/src/openambit/devicemanager.cpp
-===================================================================
---- openambit.orig/src/openambit/devicemanager.cpp	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/devicemanager.cpp	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/devicemanager.cpp ../openambit.git/src/openambit/devicemanager.cpp
+--- ./src/openambit/devicemanager.cpp	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/devicemanager.cpp	2015-03-20 20:47:45.912512150 +0100
 @@ -59,15 +59,17 @@
      mutex.lock();
      if (this->deviceObject != NULL) {
@@ -10500,10 +10439,9 @@ Index: openambit/src/openambit/devicemanager.cpp
      if (entry != NULL) {
          //! TODO: make this optional, only used for debugging
          manager->movesCountXML.writeLog(entry);
-Index: openambit/src/openambit/devicemanager.h
-===================================================================
---- openambit.orig/src/openambit/devicemanager.h	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/devicemanager.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/devicemanager.h ../openambit.git/src/openambit/devicemanager.h
+--- ./src/openambit/devicemanager.h	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/devicemanager.h	2015-03-20 20:47:45.912512150 +0100
 @@ -46,7 +46,7 @@
      ~DeviceManager();
      void start();
@@ -10522,10 +10460,9 @@ Index: openambit/src/openambit/devicemanager.h
      ambit_personal_settings_t currentPersonalSettings;
  
      int syncParts;
-Index: openambit/src/openambit/logentry.cpp
-===================================================================
---- openambit.orig/src/openambit/logentry.cpp	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/logentry.cpp	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/logentry.cpp ../openambit.git/src/openambit/logentry.cpp
+--- ./src/openambit/logentry.cpp	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/logentry.cpp	2015-03-20 20:47:45.912512150 +0100
 @@ -22,7 +22,6 @@
  #include "logentry.h"
  
@@ -10610,10 +10547,9 @@ Index: openambit/src/openambit/logentry.cpp
 -}
 -
 -
-Index: openambit/src/openambit/logentry.h
-===================================================================
---- openambit.orig/src/openambit/logentry.h	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/logentry.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/logentry.h ../openambit.git/src/openambit/logentry.h
+--- ./src/openambit/logentry.h	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/logentry.h	2015-03-20 20:47:45.912512150 +0100
 @@ -25,6 +25,8 @@
  #include <QDateTime>
  #include <libambit.h>
@@ -10638,10 +10574,9 @@ Index: openambit/src/openambit/logentry.h
      ambit_personal_settings_t *personalSettings;
      ambit_log_entry_t *logEntry;
  signals:
-Index: openambit/src/openambit/logstore.cpp
-===================================================================
---- openambit.orig/src/openambit/logstore.cpp	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/logstore.cpp	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/logstore.cpp ../openambit.git/src/openambit/logstore.cpp
+--- ./src/openambit/logstore.cpp	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/logstore.cpp	2015-03-20 20:47:45.928512158 +0100
 @@ -46,8 +46,12 @@
      { ambit_log_sample_type_gps_small, "gps-small" },
      { ambit_log_sample_type_gps_tiny, "gps-tiny" },
@@ -11114,10 +11049,9 @@ Index: openambit/src/openambit/logstore.cpp
      case ambit_log_sample_type_unknown:
      {
          QString data = "";
-Index: openambit/src/openambit/logstore.h
-===================================================================
---- openambit.orig/src/openambit/logstore.h	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/logstore.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/logstore.h ../openambit.git/src/openambit/logstore.h
+--- ./src/openambit/logstore.h	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/logstore.h	2015-03-20 20:47:45.928512158 +0100
 @@ -30,6 +30,7 @@
  #include <QXmlStreamWriter>
  #include <libambit.h>
@@ -11162,10 +11096,9 @@ Index: openambit/src/openambit/logstore.h
          QDateTime time;
          QString movescountId;
          QXmlStreamWriter xml;
-Index: openambit/src/openambit/logview.cpp
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/openambit/logview.cpp	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/logview.cpp ../openambit.git/src/openambit/logview.cpp
+--- ./src/openambit/logview.cpp	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/openambit/logview.cpp	2015-03-20 20:47:45.928512158 +0100
 @@ -0,0 +1,54 @@
 +#include "logview.h"
 +
@@ -11221,10 +11154,9 @@ Index: openambit/src/openambit/logview.cpp
 +
 +    return QString("%1:%2:%3").arg(hours, 2, 10, QChar('0')).arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0'));
 +}
-Index: openambit/src/openambit/logview.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/openambit/logview.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/logview.h ../openambit.git/src/openambit/logview.h
+--- ./src/openambit/logview.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/openambit/logview.h	2015-03-20 20:47:45.928512158 +0100
 @@ -0,0 +1,26 @@
 +#ifndef LOGVIEW_H
 +#define LOGVIEW_H
@@ -11252,10 +11184,9 @@ Index: openambit/src/openambit/logview.h
 +};
 +
 +#endif // LOGVIEW_H
-Index: openambit/src/openambit/main.cpp
-===================================================================
---- openambit.orig/src/openambit/main.cpp	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/main.cpp	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/main.cpp ../openambit.git/src/openambit/main.cpp
+--- ./src/openambit/main.cpp	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/main.cpp	2015-03-20 20:47:45.928512158 +0100
 @@ -19,13 +19,43 @@
   * Contributors:
   *
@@ -11351,10 +11282,9 @@ Index: openambit/src/openambit/main.cpp
 +        qApp->installTranslator(openambitTranslator);
 +    }
 +}
-Index: openambit/src/openambit/mainwindow.cpp
-===================================================================
---- openambit.orig/src/openambit/mainwindow.cpp	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/mainwindow.cpp	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/mainwindow.cpp ../openambit.git/src/openambit/mainwindow.cpp
+--- ./src/openambit/mainwindow.cpp	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/mainwindow.cpp	2015-03-20 20:47:45.932512160 +0100
 @@ -91,8 +91,8 @@
      // Setup device manager
      deviceManager = new DeviceManager();
@@ -11459,10 +11389,9 @@ Index: openambit/src/openambit/mainwindow.cpp
      if (syncOrbit || movescountEnable) {
          if (movesCount == NULL) {
              movesCount = MovesCount::instance();
-Index: openambit/src/openambit/mainwindow.h
-===================================================================
---- openambit.orig/src/openambit/mainwindow.h	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/mainwindow.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/mainwindow.h ../openambit.git/src/openambit/mainwindow.h
+--- ./src/openambit/mainwindow.h	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/mainwindow.h	2015-03-20 20:47:45.932512160 +0100
 @@ -22,6 +22,7 @@
  #ifndef MAINWINDOW_H
  #define MAINWINDOW_H
@@ -11496,10 +11425,9 @@ Index: openambit/src/openambit/mainwindow.h
      void deviceRemoved();
      void deviceCharge(quint8 percent);
      void syncFinished(bool success);
-Index: openambit/src/openambit/mainwindow.ui
-===================================================================
---- openambit.orig/src/openambit/mainwindow.ui	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/mainwindow.ui	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/mainwindow.ui ../openambit.git/src/openambit/mainwindow.ui
+--- ./src/openambit/mainwindow.ui	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/mainwindow.ui	2014-11-05 21:53:14.000000000 +0100
 @@ -30,7 +30,7 @@
       </widget>
      </item>
@@ -11509,10 +11437,9 @@ Index: openambit/src/openambit/mainwindow.ui
        <property name="openExternalLinks">
         <bool>true</bool>
        </property>
-Index: openambit/src/openambit/movescount/CMakeLists.txt
-===================================================================
---- openambit.orig/src/openambit/movescount/CMakeLists.txt	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/movescount/CMakeLists.txt	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/movescount/CMakeLists.txt ../openambit.git/src/openambit/movescount/CMakeLists.txt
+--- ./src/openambit/movescount/CMakeLists.txt	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/movescount/CMakeLists.txt	2014-11-05 21:53:14.000000000 +0100
 @@ -2,9 +2,9 @@
    ${openambit_SRCS}
    ${CMAKE_CURRENT_SOURCE_DIR}/movescount.cpp
@@ -11536,10 +11463,9 @@ Index: openambit/src/openambit/movescount/CMakeLists.txt
  )
 +
 +set (FILES_TO_TRANSLATE ${FILES_TO_TRANSLATE} ${openambit_SRCS} ${openambit_MOCS} PARENT_SCOPE)
-Index: openambit/src/openambit/movescount/movescount.cpp
-===================================================================
---- openambit.orig/src/openambit/movescount/movescount.cpp	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/movescount/movescount.cpp	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/movescount/movescount.cpp ../openambit.git/src/openambit/movescount/movescount.cpp
+--- ./src/openambit/movescount/movescount.cpp	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/movescount/movescount.cpp	2015-03-20 20:47:45.932512160 +0100
 @@ -102,9 +102,9 @@
      return retString;
  }
@@ -11620,10 +11546,9 @@ Index: openambit/src/openambit/movescount/movescount.cpp
 +    }
 +}
 +#endif
-Index: openambit/src/openambit/movescount/movescount.h
-===================================================================
---- openambit.orig/src/openambit/movescount/movescount.h	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/movescount/movescount.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/movescount/movescount.h ../openambit.git/src/openambit/movescount/movescount.h
+--- ./src/openambit/movescount/movescount.h	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/movescount/movescount.h	2015-03-20 20:47:45.932512160 +0100
 @@ -31,6 +31,7 @@
  
  #include <libambit.h>
@@ -11661,10 +11586,9 @@ Index: openambit/src/openambit/movescount/movescount.h
  
      QNetworkAccessManager *manager;
      QNetworkReply *firmwareCheckReply;
-Index: openambit/src/openambit/movescount/movescountjson.cpp
-===================================================================
---- openambit.orig/src/openambit/movescount/movescountjson.cpp	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/movescount/movescountjson.cpp	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/movescount/movescountjson.cpp ../openambit.git/src/openambit/movescount/movescountjson.cpp
+--- ./src/openambit/movescount/movescountjson.cpp	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/movescount/movescountjson.cpp	2015-03-20 20:47:45.932512160 +0100
 @@ -34,7 +34,7 @@
  {
  }
@@ -11968,10 +11892,9 @@ Index: openambit/src/openambit/movescount/movescountjson.cpp
 +    }
 +    return dateTime;
 +}
-Index: openambit/src/openambit/movescount/movescountjson.h
-===================================================================
---- openambit.orig/src/openambit/movescount/movescountjson.h	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/movescount/movescountjson.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/movescount/movescountjson.h ../openambit.git/src/openambit/movescount/movescountjson.h
+--- ./src/openambit/movescount/movescountjson.h	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/movescount/movescountjson.h	2015-03-20 20:47:45.932512160 +0100
 @@ -36,7 +36,7 @@
  public:
      explicit MovesCountJSON(QObject *parent = 0);
@@ -11990,10 +11913,9 @@ Index: openambit/src/openambit/movescount/movescountjson.h
  };
  
  #endif // MOVESCOUNTJSON_H
-Index: openambit/src/openambit/movescount/movescountxml.cpp
-===================================================================
---- openambit.orig/src/openambit/movescount/movescountxml.cpp	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/movescount/movescountxml.cpp	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/movescount/movescountxml.cpp ../openambit.git/src/openambit/movescount/movescountxml.cpp
+--- ./src/openambit/movescount/movescountxml.cpp	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/movescount/movescountxml.cpp	2015-03-20 20:47:45.932512160 +0100
 @@ -241,7 +241,7 @@
          xml.writeTextElement("PeakTrainingEffect", QString::number((double)logEntry->logEntry->header.peak_training_effect/10.0, 'g', 16));
      }
@@ -12003,10 +11925,9 @@ Index: openambit/src/openambit/movescount/movescountxml.cpp
      xml.writeStartElement("Temperature");
      xml.writeTextElement("Max", QString::number((double)logEntry->logEntry->header.temperature_max/10.0 + 273.15, 'g', 16));
      xml.writeTextElement("Min", QString::number((double)logEntry->logEntry->header.temperature_min/10.0 + 273.15, 'g', 16));
-Index: openambit/src/openambit/settingsdialog.cpp
-===================================================================
---- openambit.orig/src/openambit/settingsdialog.cpp	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/settingsdialog.cpp	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/settingsdialog.cpp ../openambit.git/src/openambit/settingsdialog.cpp
+--- ./src/openambit/settingsdialog.cpp	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/settingsdialog.cpp	2014-11-05 21:53:14.000000000 +0100
 @@ -69,6 +69,7 @@
  {
      settings.beginGroup("generalSettings");
@@ -12023,10 +11944,9 @@ Index: openambit/src/openambit/settingsdialog.cpp
      settings.endGroup();
  
      settings.beginGroup("syncSettings");
-Index: openambit/src/openambit/settingsdialog.ui
-===================================================================
---- openambit.orig/src/openambit/settingsdialog.ui	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/src/openambit/settingsdialog.ui	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/settingsdialog.ui ../openambit.git/src/openambit/settingsdialog.ui
+--- ./src/openambit/settingsdialog.ui	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/src/openambit/settingsdialog.ui	2015-03-20 20:47:45.932512160 +0100
 @@ -105,6 +105,13 @@
                  </property>
                 </widget>
@@ -12041,10 +11961,9 @@ Index: openambit/src/openambit/settingsdialog.ui
               </layout>
              </widget>
             </item>
-Index: openambit/src/openambit/signalhandler.cpp
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/openambit/signalhandler.cpp	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/signalhandler.cpp ../openambit.git/src/openambit/signalhandler.cpp
+--- ./src/openambit/signalhandler.cpp	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/openambit/signalhandler.cpp	2015-03-20 20:47:45.932512160 +0100
 @@ -0,0 +1,172 @@
 +#include "signalhandler.h"
 +#include "assert.h"
@@ -12218,10 +12137,9 @@ Index: openambit/src/openambit/signalhandler.cpp
 +    POSIX_ntf->setEnabled(true);
 +}
 +#endif //SIGNALHANDLER_POSIX
-Index: openambit/src/openambit/signalhandler.h
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/openambit/signalhandler.h	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/signalhandler.h ../openambit.git/src/openambit/signalhandler.h
+--- ./src/openambit/signalhandler.h	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/openambit/signalhandler.h	2015-03-20 20:47:45.932512160 +0100
 @@ -0,0 +1,63 @@
 +#ifndef SIGNALHANDLER_H
 +#define SIGNALHANDLER_H
@@ -12286,10 +12204,9 @@ Index: openambit/src/openambit/signalhandler.h
 +};
 +
 +#endif // SIGNALHANDLER_H
-Index: openambit/src/openambit/translations/openambit_de.ts
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/openambit/translations/openambit_de.ts	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/translations/openambit_de.ts ../openambit.git/src/openambit/translations/openambit_de.ts
+--- ./src/openambit/translations/openambit_de.ts	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/openambit/translations/openambit_de.ts	2015-03-20 20:47:45.932512160 +0100
 @@ -0,0 +1,328 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!DOCTYPE TS>
@@ -12619,10 +12536,9 @@ Index: openambit/src/openambit/translations/openambit_de.ts
 +    </message>
 +</context>
 +</TS>
-Index: openambit/src/openambit/translations/openambit_fr.ts
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/openambit/translations/openambit_fr.ts	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/translations/openambit_fr.ts ../openambit.git/src/openambit/translations/openambit_fr.ts
+--- ./src/openambit/translations/openambit_fr.ts	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/openambit/translations/openambit_fr.ts	2015-03-20 20:47:45.932512160 +0100
 @@ -0,0 +1,319 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!DOCTYPE TS>
@@ -12943,10 +12859,9 @@ Index: openambit/src/openambit/translations/openambit_fr.ts
 +    </message>
 +</context>
 +</TS>
-Index: openambit/src/openambit/translations/openambit_it.ts
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/openambit/translations/openambit_it.ts	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/translations/openambit_it.ts ../openambit.git/src/openambit/translations/openambit_it.ts
+--- ./src/openambit/translations/openambit_it.ts	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/openambit/translations/openambit_it.ts	2015-03-20 20:47:45.932512160 +0100
 @@ -0,0 +1,328 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!DOCTYPE TS>
@@ -13276,10 +13191,9 @@ Index: openambit/src/openambit/translations/openambit_it.ts
 +    </message>
 +</context>
 +</TS>
-Index: openambit/src/openambit/translations/openambit_pl.ts
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/openambit/translations/openambit_pl.ts	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/translations/openambit_pl.ts ../openambit.git/src/openambit/translations/openambit_pl.ts
+--- ./src/openambit/translations/openambit_pl.ts	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/openambit/translations/openambit_pl.ts	2015-03-20 20:47:45.932512160 +0100
 @@ -0,0 +1,328 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!DOCTYPE TS>
@@ -13609,10 +13523,9 @@ Index: openambit/src/openambit/translations/openambit_pl.ts
 +    </message>
 +</context>
 +</TS>
-Index: openambit/src/openambit/translations/openambit_sv.ts
-===================================================================
---- /dev/null	1970-01-01 00:00:00.000000000 +0000
-+++ openambit/src/openambit/translations/openambit_sv.ts	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./src/openambit/translations/openambit_sv.ts ../openambit.git/src/openambit/translations/openambit_sv.ts
+--- ./src/openambit/translations/openambit_sv.ts	1970-01-01 01:00:00.000000000 +0100
++++ ../openambit.git/src/openambit/translations/openambit_sv.ts	2015-03-20 20:47:45.932512160 +0100
 @@ -0,0 +1,317 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!DOCTYPE TS>
@@ -13931,10 +13844,9 @@ Index: openambit/src/openambit/translations/openambit_sv.ts
 +    </message>
 +</context>
 +</TS>
-Index: openambit/tools/movescountXmlDiff.pl
-===================================================================
---- openambit.orig/tools/movescountXmlDiff.pl	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/tools/movescountXmlDiff.pl	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./tools/movescountXmlDiff.pl ../openambit.git/tools/movescountXmlDiff.pl
+--- ./tools/movescountXmlDiff.pl	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/tools/movescountXmlDiff.pl	2014-11-05 21:53:14.000000000 +0100
 @@ -1,157 +1,140 @@
 -#!/usr/bin/perl
 +#!/usr/bin/perl -w
@@ -14187,10 +14099,9 @@ Index: openambit/tools/movescountXmlDiff.pl
              print $remLine, "\n";
          }
      }
-Index: openambit/wireshark_dissector/ambit-dissector.c
-===================================================================
---- openambit.orig/wireshark_dissector/ambit-dissector.c	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/wireshark_dissector/ambit-dissector.c	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./wireshark_dissector/ambit-dissector.c ../openambit.git/wireshark_dissector/ambit-dissector.c
+--- ./wireshark_dissector/ambit-dissector.c	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/wireshark_dissector/ambit-dissector.c	2014-11-05 21:53:14.000000000 +0100
 @@ -61,6 +61,10 @@
  static gint dissect_ambit_lock_status_reply(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
  static gint dissect_ambit_lock_set(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
@@ -14560,10 +14471,9 @@ Index: openambit/wireshark_dissector/ambit-dissector.c
      };
  
      static gint *ett[] = {
-Index: openambit/wireshark_dissector/cmake/FindWireshark.cmake
-===================================================================
---- openambit.orig/wireshark_dissector/cmake/FindWireshark.cmake	2015-03-20 21:42:14.000000000 +0100
-+++ openambit/wireshark_dissector/cmake/FindWireshark.cmake	2015-05-03 11:09:00.000000000 +0200
+diff -Nur -x debian -x .git -x .gitignore -x .pc ./wireshark_dissector/cmake/FindWireshark.cmake ../openambit.git/wireshark_dissector/cmake/FindWireshark.cmake
+--- ./wireshark_dissector/cmake/FindWireshark.cmake	2015-05-03 11:18:41.000000000 +0200
++++ ../openambit.git/wireshark_dissector/cmake/FindWireshark.cmake	2014-11-05 21:53:14.000000000 +0100
 @@ -16,7 +16,7 @@
  # wireshark does not install its library with pkg-config information,
  # so we need to manually find the libraries and headers
