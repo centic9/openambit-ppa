@@ -1,3 +1,10 @@
+openambit (0.3-1ubuntu0~git20150320~ppa1) trusty; urgency=medium
+
+  * Update to latest version from git
+  * Add ambitconsole example
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 03 May 2015 11:07:53 +0200
+
 openambit (0.3-1ubuntu0~git20150320~ppa2) trusty; urgency=medium
 
   * Adjust location of udev rules

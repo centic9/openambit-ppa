@@ -19,11 +19,15 @@ override_dh_auto_build:
 	mkdir openambit-build
 	cd openambit-build && cmake ../src/openambit -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} $(CFLAGS)" -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} $(CXXFLAGS)"
 	cd openambit-build && $(MAKE) -j$(NUMCPUS)
+	mkdir example-build
+	cd example-build && cmake ../src/example -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} $(CFLAGS)" -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} $(CXXFLAGS)"
+	cd example-build && $(MAKE) -j$(NUMCPUS)
 
 INSTDIR=../debian/tmp/
 override_dh_install:
 	cd libambit-build && $(MAKE) install DESTDIR=$(INSTDIR)
 	cd openambit-build && $(MAKE) install DESTDIR=$(INSTDIR)
+	cd example-build && $(MAKE) install DESTDIR=$(INSTDIR)
 	pwd
 	ls -lR
 	dh_install
