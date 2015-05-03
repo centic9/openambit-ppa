@@ -1,4 +1,4 @@
-openambit (0.3-1ubuntu0~git20150320~ppa1) trusty; urgency=medium
+openambit (0.3-1ubuntu0~git20150503~ppa1) trusty; urgency=medium
 
   * Update to latest version from git
   * Add ambitconsole example
