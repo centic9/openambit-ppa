@@ -1,3 +1,9 @@
+openambit (0.3-1ubuntu0~git20150503~ppa3) trusty; urgency=medium
+
+  * Fix installing docs.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 03 May 2015 22:16:33 +0200
+
 openambit (0.3-1ubuntu0~git20150503~ppa2) trusty; urgency=medium
 
   * Add install-target for ambitconsole example
