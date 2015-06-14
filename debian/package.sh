@@ -16,7 +16,7 @@ git status && \
 echo "Create diff" && \
 diff -Nur -x debian -x .git -x .gitignore -x .pc . ../openambit.git > debian/patches/01_git${DATE}.patch ; \
 echo "Series" && \
-echo 01_git${DATE}.patch > debian/patches/series && \
+echo -e "01_git${DATE}.patch\ninstall_example" > debian/patches/series && \
 \
 \
 echo "All done"
