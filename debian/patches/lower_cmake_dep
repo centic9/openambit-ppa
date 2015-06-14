@@ -1,0 +1,26 @@
+Index: openambit/CMakeLists.txt
+===================================================================
+--- openambit.orig/CMakeLists.txt	2015-06-14 09:55:47.289091944 +0200
++++ openambit/CMakeLists.txt	2015-06-14 09:55:47.285092229 +0200
+@@ -17,7 +17,7 @@
+ #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ 
+-cmake_minimum_required(VERSION 3.0)
++cmake_minimum_required(VERSION 2.8.5)
+ 
+ project(Openambit
+   LANGUAGES NONE)
+Index: openambit/src/movescount/CMakeLists.txt
+===================================================================
+--- openambit.orig/src/movescount/CMakeLists.txt	2015-06-14 09:55:47.217097002 +0200
++++ openambit/src/movescount/CMakeLists.txt	2015-06-14 09:56:29.414255520 +0200
+@@ -17,7 +17,7 @@
+ #  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ 
+-cmake_minimum_required(VERSION 3.0)
++cmake_minimum_required (VERSION 2.8.5)
+ 
+ project(movescount
+   LANGUAGES CXX)

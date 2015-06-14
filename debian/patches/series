@@ -1,2 +1,3 @@
 01_git20150614.patch
 install_example
+lower_cmake_dep
