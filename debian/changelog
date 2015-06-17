@@ -1,3 +1,9 @@
+openambit (0.3-1ubuntu0~git20150614~ppa2) trusty; urgency=medium
+
+  * Add build-dep on wireshark-dev and libglib2.0-dev to also build wireshark-dissector
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 17 Jun 2015 22:10:38 +0200
+
 openambit (0.3-1ubuntu0~git20150614~ppa1) trusty; urgency=medium
 
   * Update to latest version from git
