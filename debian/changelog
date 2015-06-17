@@ -1,3 +1,9 @@
+openambit (0.3-1ubuntu0~git20150614~ppa3) trusty; urgency=medium
+
+  * Disable parallel make as it fails now (github issue #99.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 17 Jun 2015 23:01:47 +0200
+
 openambit (0.3-1ubuntu0~git20150614~ppa2) trusty; urgency=medium
 
   * Add build-dep on wireshark-dev and libglib2.0-dev to also build wireshark-dissector
