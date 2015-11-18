@@ -15,8 +15,7 @@ LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
 override_dh_auto_build:
 	mkdir build
 	cd build && cmake .. -DBUILD_EXTRAS=true -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} $(CFLAGS)" -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} $(CXXFLAGS)"
-	# removed as it caused the build to fail now:  -j$(NUMCPUS)
-	cd build && $(MAKE)
+	cd build && $(MAKE) -j$(NUMCPUS)
 
 INSTDIR=../debian/tmp/
 override_dh_install:

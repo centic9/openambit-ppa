@@ -1,3 +1,12 @@
+openambit (0.3-1ubuntu0~git20151118~ppa1) trusty; urgency=medium
+
+  * Update to latest version from git
+  * Re-enable parallel building as gitbug issue #99 should be
+    fixed now
+  * Re-allow cmake < 3.0 as problems with it were fixed upstream
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 18 Nov 2015 19:46:54 +0100
+
 openambit (0.3-1ubuntu0~git20150614~ppa3) trusty; urgency=medium
 
   * Disable parallel make as it fails now (github issue #99.
