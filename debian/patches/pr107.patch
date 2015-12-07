@@ -1,0 +1,18 @@
+Index: openambit/src/openambit/mainwindow.cpp
+===================================================================
+--- openambit.orig/src/openambit/mainwindow.cpp	2015-12-07 16:29:12.477817298 +0100
++++ openambit/src/openambit/mainwindow.cpp	2015-12-07 16:29:12.473817268 +0100
+@@ -289,10 +289,11 @@
+         }
+ 
+         settings.beginGroup("syncSettings");
+-        if (settings.value("syncAutomatically", false).toBool()) {
++        bool syncAutomatically = settings.value("syncAutomatically", false).toBool();
++        settings.endGroup();
++        if (syncAutomatically) {
+             startSync();
+         }
+-        settings.endGroup();
+     }
+ }
+ 
