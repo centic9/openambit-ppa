@@ -1,3 +1,9 @@
+openambit (0.3-1ubuntu0~git20151R210~ppa1) xenial; urgency=medium
+
+  * Update to commits from 20151210, this replaces patch for pr107.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 07 Aug 2016 10:08:55 +0200
+
 openambit (0.3-1ubuntu0~git20151118~ppa2) trusty; urgency=medium
 
   * Add patch from PR #107 to fix automatic sync with Movescount.

@@ -1,5 +1,5 @@
-# to create diff
-#
+# helper script to create a fresh diff against latest Git in ../openambit.git
+# and create a corresponding patch into debian/patches
 
 DATE=`date +%Y%m%d`
 
@@ -16,7 +16,9 @@ git status && \
 echo "Create diff" && \
 diff -Nur -x debian -x .git -x .gitignore -x .pc . ../openambit.git > debian/patches/01_git${DATE}.patch ; \
 echo "Series" && \
-echo -e "01_git${DATE}.patch\ninstall_example\npr107.patch" > debian/patches/series && \
+echo -e "01_git${DATE}.patch\ninstall_example" > debian/patches/series && \
+\
+git add debian/patches && \
 \
 \
 echo "All done"
