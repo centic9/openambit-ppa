@@ -1,4 +1,4 @@
-openambit (0.3-1ubuntu0~git20151R210~ppa1) xenial; urgency=medium
+openambit (0.3-1ubuntu0~git20151210~ppa1) xenial; urgency=medium
 
   * Update to commits from 20151210, this replaces patch for pr107.
 
