@@ -1,3 +1,9 @@
+openambit (0.3-1ubuntu0~git20170224~ppa1) xenial; urgency=medium
+
+  * Update to commits from 20170224, this includes optional support for Qt5.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Fri, 24 Feb 2017 21:55:52 +0100
+
 openambit (0.3-1ubuntu0~git20151210~ppa1) xenial; urgency=medium
 
   * Update to commits from 20151210, this replaces patch for pr107.
