@@ -1,5 +1,6 @@
 #include "config.h"
 
+#include "stdio.h"
 #include <glib.h>
 #include <epan/conversation.h>
 #include <epan/expert.h>
@@ -61,6 +62,24 @@ static gint dissect_ambit_lock_status_get(tvbuff_t *tvb, packet_info *pinfo, pro
 static gint dissect_ambit_lock_status_reply(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
 static gint dissect_ambit_lock_set(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
 static gint dissect_ambit_lock_set_reply(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
+static gint dissect_ambit_gps_data_peek_get(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
+static gint dissect_ambit_gps_data_peek_reply(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
+static gint dissect_ambit_data_write(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
+static gint dissect_ambit_data_write_reply(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
+static gint dissect_ambit_data_write_content(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length);
+//static uint dissect_ambit_data_write_read_data(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength);
+static uint dissect_ambit_data_get_length_to_read(guint32 *offset, guint32 length, guint16 packageLength);
+static gint dissect_ambit_data_write_sport_modes(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, guint32 address, guint32 length);
+static gint dissect_ambit_data_write_apps(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, guint32 address, guint32 length);
+static uint dissect_ambit_data_write_read_data_0101(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength);
+static uint dissect_ambit_data_write_read_data_0102(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength);
+static uint dissect_ambit_data_write_read_data_0105(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength);
+static uint dissect_ambit_data_write_read_data_0106(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength);
+static uint dissect_ambit_data_write_read_data_0107(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength);
+static uint dissect_ambit_data_write_read_data_0108(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength);
+static uint dissect_ambit_data_write_read_data_0109(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength);
+static uint dissect_ambit_data_write_read_data_010a(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength);
+static uint dissect_ambit_data_write_read_data_010c(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength);
 
 static gint dissect_ambit3_settings_get(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
 static gint dissect_ambit3_settings_reply(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
@@ -151,6 +170,7 @@ static int hf_ambit_log_header_sample_count = -1;
 static int hf_ambit_log_header_energy = -1;
 static int hf_ambit_log_header_cadence_max = -1;
 static int hf_ambit_log_header_cadence_avg = -1;
+static int hf_ambit_log_header_swimming_lengths = -1;
 static int hf_ambit_log_header_speed_max_time = -1;
 static int hf_ambit_log_header_alt_max_time = -1;
 static int hf_ambit_log_header_alt_min_time = -1;
@@ -159,6 +179,7 @@ static int hf_ambit_log_header_hr_min_time = -1;
 static int hf_ambit_log_header_temp_max_time = -1;
 static int hf_ambit_log_header_temp_min_time = -1;
 static int hf_ambit_log_header_cadence_max_time = -1;
+static int hf_ambit_log_header_swimming_pool_length = -1;
 static int hf_ambit_log_header_time_first_fix = -1;
 static int hf_ambit_log_header_battery_start = -1;
 static int hf_ambit_log_header_battery_stop = -1;
@@ -238,7 +259,24 @@ static int hf_ambit_log_altitude_source_type = -1;
 static int hf_ambit_log_altitude_source_altitude_offset = -1;
 static int hf_ambit_log_altitude_source_pressure_offset = -1;
 
+static int hf_ambit_log_cadence_source_type = -1;
+
+static int hf_ambit_log_fwinfo_build_date = -1;
+
+static int hf_ambit_log_swimming_turn_distance = -1;
+static int hf_ambit_log_swimming_turn_lengths = -1;
+static int hf_ambit_log_swimming_turn_lengths_wo_change = -1;
+static int hf_ambit_log_swimming_turn_classification0 = -1;
+static int hf_ambit_log_swimming_turn_classification1 = -1;
+static int hf_ambit_log_swimming_turn_classification2 = -1;
+static int hf_ambit_log_swimming_turn_classification3 = -1;
+static int hf_ambit_log_swimming_turn_prev_style = -1;
+
+static int hf_ambit_log_delayed_store = -1;
+
 static int hf_ambit_log_ibi = -1;
+
+static int hf_ambit_gps_data_head = -1;
 
 static gint ett_ambit = -1;
 static gint ett_ambit_data = -1;
@@ -247,6 +285,38 @@ static gint ett_ambit_log_samples = -1;
 static gint ett_ambit_log_sample = -1;
 static gint ett_ambit3_log_headers = -1;
 static gint ett_ambit3_log_header = -1;
+
+static int hf_ambit_write_data_length = -1;
+static int hf_ambit_write_data_header = -1;
+static int hf_ambit_write_data_activity_id = -1;
+static gint hf_ambit_write_data_interval_repetitions = -1;
+static gint hf_ambit_write_data_show_navigation = -1;
+static gint hf_ambit_write_data_alti_baro_mode = -1;
+static gint hf_ambit_write_data_use_hrbelt_and_pods = -1;
+static gint hf_ambit_write_data_recording_interval = -1;
+static gint hf_ambit_write_data_auto_lap = -1;
+static gint hf_ambit_write_data_auto_pause = -1;
+static gint hf_ambit_write_auto_scroll = -1;
+static gint hf_ambit_write_data_use_interval_timer = -1;
+static gint hf_ambit_write_data_interval_timer_time = -1;
+static gint hf_ambit_write_data_interval_timer_max = -1;
+static gint hf_ambit_write_data_interval_timer_min = -1;
+static gint hf_ambit_write_data_use_hr_limits = -1;
+static gint hf_ambit_write_data_backlight = -1;
+static gint hf_ambit_write_data_display = -1;
+static gint hf_ambit_write_data_display_type = -1;
+static gint hf_ambit_write_quick_navigation  = -1;
+static gint hf_ambit_write_data_gps_interval = -1;
+static gint hf_ambit_log_activity_custom_mode_row = -1;
+static gint hf_ambit_log_activity_custom_mode_display = -1;
+static gint hf_ambit_log_activity_custom_mode_view = -1;
+
+static gint hf_ambit_write_data_apps_nbr_of = -1;
+static gint hf_ambit_write_data_apps_header_len = -1;
+static gint hf_ambit_write_data_apps_end_pos = -1;
+static gint hf_ambit_write_data_app_data = -1;
+static gint hf_ambit_write_data_app_checksum = -1;
+static gint hf_ambit_write_data_app_index = -1;
 
 static ambit_reassembly_entry_t *reassembly_entries = NULL;
 static guint32 reassembly_entries_alloc = 0;
@@ -296,13 +366,99 @@ static const value_string log_samples_time_event_type_vals[] = {
 };
 
 static const value_string log_samples_distance_source_type_vals[] = {
+    { 0x00, "Bikepod" },
+    { 0x01, "Footpod" },
     { 0x02, "GPS" },
     { 0x03, "Wrist" },
+    { 0x04, "Indoorswimming" },
+    { 0x05, "Outdoorswimming" },
     { 0, NULL }
 };
 
 static const value_string log_samples_altitude_source_type_vals[] = {
     { 0x04, "Pressure" },
+    { 0, NULL }
+};
+
+static const value_string log_samples_cadence_source_type_vals[] = {
+    { 0x40, "Wrist" },
+    { 0, NULL }
+};
+
+static const value_string log_samples_swimming_style_vals[] = {
+    { 0x00, "Other" },
+    { 0x01, "Butterfly" },
+    { 0x02, "Backstroke" },
+    { 0x03, "Breaststroke" },
+    { 0x04, "Freestyle" },
+    { 0x05, "Drill" },
+    { 0, NULL }
+};
+
+static const value_string custom_modes_alti_baro_mode_vals[] = {
+    { 0x00, "Alti" },
+    { 0x01, "Baro" },
+    { 0x02, "Automatic" },
+    { 0, NULL }
+};
+
+static const value_string custom_modes_backlight_vals[] = {
+    { 0x00, "Normal" },
+    { 0x01, "Off" },
+    { 0x02, "Night" },
+    { 0x03, "Toggle" },
+    { 0xff, "Default" },
+    { 0, NULL }
+};
+
+static const value_string custom_modes_display_vals[] = {
+    { 0x00, "Light" },
+    { 0x01, "Dark" },
+    { 0xff, "Default" },
+    { 0, NULL }
+};
+
+static const value_string custom_modes_quick_navigation_vals[] = {
+    { 0x00, "Off" },
+    { 0x01, "POI" },
+    { 0x02, "Route" },
+    { 0, NULL }
+};
+
+static const value_string custom_modes_gps_accuracy_vals[] = {
+    { 0x00, "GPS Off" },
+    { 0x01, "GPS Best (16h)" },
+    { 0x05, "GPS Good (24h)" },
+    { 0x3c, "GPS Ok (50h)" },
+    { 0, NULL }
+};
+
+static const value_string custom_modes_interval_timer_unit_vals[] = {
+    { 0x0000, "meter" },
+    { 0x0100, "sec" },
+    { 0, NULL }
+};
+
+static const value_string custom_modes_display_type_val[] = {
+    { 0x0101, "Barograph display" },
+    { 0x0104, "3 rows display" },
+    { 0x0105, "2 rows display" },
+    { 0x0106, "1 row display" },
+    { 0, NULL }
+};
+
+static const value_string custom_modes_header_vals[] = {
+    { 0x0100, "[Custom modes header]" },
+    { 0x0101, "[Custom mode activity header]" },
+    { 0x0102, "[Custom mode activity settings header]" },
+    { 0x0104, "[Unknown header] ????" },
+    { 0x0105, "[Display header]" },
+    { 0x0106, "[Display page header]" },
+    { 0x0107, "[Display ???? header]" },
+    { 0x0108, "[Display row ???? header]" },
+    { 0x0109, "[Row header]" },
+    { 0x010a, "[View header (lower row)]" },
+    { 0x010b, "[Unknown header] ????" },
     { 0, NULL }
 };
 
@@ -329,6 +485,10 @@ static const ambit_protocol_type_t subdissectors[] = {
     { 0x0b0a0a00, "Log header step reply", dissect_ambit_log_header_step_reply },
     { 0x0b0b0500, "Get log header", dissect_ambit_log_header_get },
     { 0x0b0b0a00, "Log header reply", dissect_ambit_log_header_reply },
+    { 0x0b150500, "GPS data peek request", dissect_ambit_gps_data_peek_get },
+    { 0x0b150a00, "GPS data peek reply", dissect_ambit_gps_data_peek_reply },
+    { 0x0b160500, "Data write", dissect_ambit_data_write },
+    { 0x0b160a00, "Data write reply", dissect_ambit_data_write_reply },
     { 0x0b170500, "Get log data", dissect_ambit_log_data_get },
     { 0x0b170a00, "Log data reply", dissect_ambit_log_data_reply },
     { 0x0b190500, "Get lock status", dissect_ambit_lock_status_get },
@@ -363,7 +523,11 @@ static void dissect_ambit_add_unknown(tvbuff_t *tvb, packet_info *pinfo, proto_t
 {
     proto_item *unknown_item = NULL;
     unknown_item = proto_tree_add_item(tree, hf_ambit_unknown, tvb, offset, len, ENC_LITTLE_ENDIAN);
+#if VERSION_MAJOR >= 1 && VERSION_MINOR >= 11
+    /* TODO port to new expert info API */
+#else
     expert_add_info_format(pinfo, unknown_item, PI_UNDECODED, PI_WARN, "Not dissected yet");
+#endif
 }
 
 static gint dissect_ambit_date_write(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
@@ -640,8 +804,10 @@ static gint dissect_ambit_log_header_reply(tvbuff_t *tvb, packet_info *pinfo, pr
         offset += 1;
         proto_tree_add_item(tree, hf_ambit_log_header_cadence_avg, tvb, offset, 1, ENC_LITTLE_ENDIAN);
         offset += 1;
-        dissect_ambit_add_unknown(tvb, pinfo, tree, offset, 4);
-        offset += 4;
+        dissect_ambit_add_unknown(tvb, pinfo, tree, offset, 2);
+        offset += 2;
+        proto_tree_add_item(tree, hf_ambit_log_header_swimming_lengths, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+        offset += 2;
         proto_tree_add_item(tree, hf_ambit_log_header_speed_max_time, tvb, offset, 4, ENC_LITTLE_ENDIAN);
         offset += 4;
         proto_tree_add_item(tree, hf_ambit_log_header_alt_max_time, tvb, offset, 4, ENC_LITTLE_ENDIAN);
@@ -658,7 +824,7 @@ static gint dissect_ambit_log_header_reply(tvbuff_t *tvb, packet_info *pinfo, pr
         offset += 4;
         proto_tree_add_item(tree, hf_ambit_log_header_cadence_max_time, tvb, offset, 4, ENC_LITTLE_ENDIAN);
         offset += 4;
-        dissect_ambit_add_unknown(tvb, pinfo, tree, offset, 4);
+        proto_tree_add_item(tree, hf_ambit_log_header_swimming_pool_length, tvb, offset, 4, ENC_LITTLE_ENDIAN);
         offset += 4;
         proto_tree_add_item(tree, hf_ambit_log_header_time_first_fix, tvb, offset, 2, ENC_LITTLE_ENDIAN);
         offset += 2;
@@ -958,9 +1124,12 @@ static gint dissect_ambit_log_data_content(tvbuff_t *tvb, packet_info *pinfo, pr
     if (offset + 1 >= length) return offset;
     proto_tree_add_item(tree, hf_ambit_log_header_cadence_avg, tvb, offset, 1, ENC_LITTLE_ENDIAN);
     offset += 1;
-    if (offset + 4 >= length) return offset;
-    dissect_ambit_add_unknown(tvb, pinfo, tree, offset, 4);
-    offset += 4;
+    if (offset + 2 >= length) return offset;
+    dissect_ambit_add_unknown(tvb, pinfo, tree, offset, 2);
+    offset += 2;
+    if (offset + 2 >= length) return offset;
+    proto_tree_add_item(tree, hf_ambit_log_header_swimming_lengths, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+    offset += 2;
     if (offset + 4 >= length) return offset;
     proto_tree_add_item(tree, hf_ambit_log_header_speed_max_time, tvb, offset, 4, ENC_LITTLE_ENDIAN);
     offset += 4;
@@ -986,7 +1155,7 @@ static gint dissect_ambit_log_data_content(tvbuff_t *tvb, packet_info *pinfo, pr
     proto_tree_add_item(tree, hf_ambit_log_header_cadence_max_time, tvb, offset, 4, ENC_LITTLE_ENDIAN);
     offset += 4;
     if (offset + 4 >= length) return offset;
-    dissect_ambit_add_unknown(tvb, pinfo, tree, offset, 4);
+    proto_tree_add_item(tree, hf_ambit_log_header_swimming_pool_length, tvb, offset, 4, ENC_LITTLE_ENDIAN);
     offset += 4;
     if (offset + 2 >= length) return offset;
     proto_tree_add_item(tree, hf_ambit_log_header_time_first_fix, tvb, offset, 2, ENC_LITTLE_ENDIAN);
@@ -1448,6 +1617,64 @@ static gint dissect_ambit_log_data_sample(tvbuff_t *tvb, packet_info *pinfo, pro
                 dissect_ambit_add_unknown(tvb, pinfo, sample_tree, offset, sample_len - 9);
             }
             break;
+          case 0x14:
+            sample_ti = proto_tree_add_text(tree, tvb, offset, sample_len + 2, "Sample #%u (Swimming turn)", (*sampleno)++);
+            sample_tree = proto_item_add_subtree(sample_ti, ett_ambit_log_sample);
+            proto_tree_add_item(sample_tree, hf_ambit_log_sample_length, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+            offset += 2;
+            proto_tree_add_item(sample_tree, hf_ambit_log_sample_type, tvb, offset, 1, ENC_LITTLE_ENDIAN);
+            offset += 1;
+            proto_tree_add_item(sample_tree, hf_ambit_log_other_time_offset, tvb, offset, 4, ENC_LITTLE_ENDIAN);
+            offset += 4;
+            proto_tree_add_item(sample_tree, hf_ambit_log_other_type, tvb, offset, 1, ENC_LITTLE_ENDIAN);
+            offset += 1;
+            dissect_ambit_add_unknown(tvb, pinfo, sample_tree, offset, 1);
+            offset += 1;
+            proto_tree_add_item(sample_tree, hf_ambit_log_delayed_store, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+            offset += 2;
+            dissect_ambit_add_unknown(tvb, pinfo, sample_tree, offset, 1);
+            offset += 1;
+            proto_tree_add_item(sample_tree, hf_ambit_log_swimming_turn_distance, tvb, offset, 4, ENC_LITTLE_ENDIAN);
+            offset += 4;
+            proto_tree_add_item(sample_tree, hf_ambit_log_swimming_turn_lengths, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+            offset += 2;
+            dissect_ambit_add_unknown(tvb, pinfo, sample_tree, offset, 4);
+            offset += 4;
+            dissect_ambit_add_unknown(tvb, pinfo, sample_tree, offset, 2);
+            offset += 2;
+            dissect_ambit_add_unknown(tvb, pinfo, sample_tree, offset, 8);
+            offset += 8;
+            proto_tree_add_item(sample_tree, hf_ambit_log_swimming_turn_lengths_wo_change, tvb, offset, 4, ENC_LITTLE_ENDIAN);
+            offset += 4;
+            proto_tree_add_item(sample_tree, hf_ambit_log_swimming_turn_classification0, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+            offset += 2;
+            proto_tree_add_item(sample_tree, hf_ambit_log_swimming_turn_classification1, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+            offset += 2;
+            proto_tree_add_item(sample_tree, hf_ambit_log_swimming_turn_classification2, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+            offset += 2;
+            proto_tree_add_item(sample_tree, hf_ambit_log_swimming_turn_classification3, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+            offset += 2;
+            proto_tree_add_item(sample_tree, hf_ambit_log_swimming_turn_prev_style, tvb, offset, 1, ENC_LITTLE_ENDIAN);
+            offset += 1;
+            dissect_ambit_add_unknown(tvb, pinfo, sample_tree, offset, 1);
+            offset += 1;
+            proto_tree_add_item(sample_tree, hf_ambit_log_swimming_turn_distance, tvb, offset, 4, ENC_LITTLE_ENDIAN);
+            offset += 4;
+            break;
+          case 0x15:
+            sample_ti = proto_tree_add_text(tree, tvb, offset, sample_len + 2, "Sample #%u (Swimming stroke)", (*sampleno)++);
+            sample_tree = proto_item_add_subtree(sample_ti, ett_ambit_log_sample);
+            proto_tree_add_item(sample_tree, hf_ambit_log_sample_length, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+            offset += 2;
+            proto_tree_add_item(sample_tree, hf_ambit_log_sample_type, tvb, offset, 1, ENC_LITTLE_ENDIAN);
+            offset += 1;
+            proto_tree_add_item(sample_tree, hf_ambit_log_other_time_offset, tvb, offset, 4, ENC_LITTLE_ENDIAN);
+            offset += 4;
+            proto_tree_add_item(sample_tree, hf_ambit_log_other_type, tvb, offset, 1, ENC_LITTLE_ENDIAN);
+            offset += 1;
+            proto_tree_add_item(sample_tree, hf_ambit_log_delayed_store, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+            offset += 2;
+            break;
           case 0x18:
             sample_ti = proto_tree_add_text(tree, tvb, offset, sample_len + 2, "Sample #%u (Activity)", (*sampleno)++);
             sample_tree = proto_item_add_subtree(sample_ti, ett_ambit_log_sample);
@@ -1465,6 +1692,23 @@ static gint dissect_ambit_log_data_sample(tvbuff_t *tvb, packet_info *pinfo, pro
             offset += 4;
             if (offset < sample_len - 2) {
                 dissect_ambit_add_unknown(tvb, pinfo, sample_tree, offset, sample_len - 12);
+            }
+            break;
+          case 0x1a:
+            sample_ti = proto_tree_add_text(tree, tvb, offset, sample_len + 2, "Sample #%u (Cadence source)", (*sampleno)++);
+            sample_tree = proto_item_add_subtree(sample_ti, ett_ambit_log_sample);
+            proto_tree_add_item(sample_tree, hf_ambit_log_sample_length, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+            offset += 2;
+            proto_tree_add_item(sample_tree, hf_ambit_log_sample_type, tvb, offset, 1, ENC_LITTLE_ENDIAN);
+            offset += 1;
+            proto_tree_add_item(sample_tree, hf_ambit_log_other_time_offset, tvb, offset, 4, ENC_LITTLE_ENDIAN);
+            offset += 4;
+            proto_tree_add_item(sample_tree, hf_ambit_log_other_type, tvb, offset, 1, ENC_LITTLE_ENDIAN);
+            offset += 1;
+            proto_tree_add_item(sample_tree, hf_ambit_log_cadence_source_type, tvb, offset, 1, ENC_LITTLE_ENDIAN);
+            offset += 1;
+            if (offset < sample_len - 2) {
+                dissect_ambit_add_unknown(tvb, pinfo, sample_tree, offset, sample_len - 7);
             }
             break;
           case 0x1b:
@@ -1488,6 +1732,35 @@ static gint dissect_ambit_log_data_sample(tvbuff_t *tvb, packet_info *pinfo, pro
             }
             if (offset < sample_len - 2) {
                 dissect_ambit_add_unknown(tvb, pinfo, sample_tree, offset, sample_len - 14);
+            }
+            break;
+          case 0x1c:
+            sample_ti = proto_tree_add_text(tree, tvb, offset, sample_len + 2, "Sample #%u (Firmware info)", (*sampleno)++);
+            sample_tree = proto_item_add_subtree(sample_ti, ett_ambit_log_sample);
+            proto_tree_add_item(sample_tree, hf_ambit_log_sample_length, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+            offset += 2;
+            proto_tree_add_item(sample_tree, hf_ambit_log_sample_type, tvb, offset, 1, ENC_LITTLE_ENDIAN);
+            offset += 1;
+            proto_tree_add_item(sample_tree, hf_ambit_log_other_time_offset, tvb, offset, 4, ENC_LITTLE_ENDIAN);
+            offset += 4;
+            proto_tree_add_item(sample_tree, hf_ambit_log_other_type, tvb, offset, 1, ENC_LITTLE_ENDIAN);
+            offset += 1;
+            {
+                guint8 fw1,fw2;
+                guint16 fw3;
+                fw1 = tvb_get_guint8(tvb, offset);
+                fw2 = tvb_get_guint8(tvb, offset+1);
+                fw3 = tvb_get_letohs(tvb, offset+2);
+                proto_tree_add_string_format_value(sample_tree, hf_ambit_fw_version, tvb, offset, 4, "FW version", "%d.%d.%d", fw1, fw2, fw3);
+                offset += 4;
+                guint16 year = tvb_get_letohs(tvb, offset);
+                guint8 month = tvb_get_guint8(tvb, offset + 2);
+                guint8 day = tvb_get_guint8(tvb, offset + 3);
+                guint8 hour = tvb_get_guint8(tvb, offset + 4);
+                guint8 minute = tvb_get_guint8(tvb, offset + 5);
+                guint16 seconds = tvb_get_letohs(tvb, offset + 6);
+                proto_tree_add_string_format_value(sample_tree, hf_ambit_log_fwinfo_build_date, tvb, offset, 8, "Builddate", "%04d-%02d-%02d %02d:%02d:%2.3f", year, month, day, hour, minute, ((float)seconds/1000.0));
+                offset += 8;
             }
             break;
           default:
@@ -1525,6 +1798,507 @@ static gint dissect_ambit_lock_set(tvbuff_t *tvb, packet_info *pinfo, proto_tree
 }
 
 static gint dissect_ambit_lock_set_reply(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
+{
+}
+
+static gint dissect_ambit_gps_data_peek_get(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
+{
+}
+
+static gint dissect_ambit_gps_data_peek_reply(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
+{
+    proto_tree_add_item(tree, hf_ambit_gps_data_head, tvb, 0, 9, ENC_LITTLE_ENDIAN);
+}
+
+static gint dissect_ambit_data_write(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
+{
+    guint32 address = tvb_get_letohl(tvb, 0);
+    guint32 length = tvb_get_letohl(tvb, 4);
+
+    proto_tree_add_item(tree, hf_ambit_log_data_address, tvb, 0, 4, ENC_LITTLE_ENDIAN);
+    proto_tree_add_item(tree, hf_ambit_log_data_length, tvb, 4, 4, ENC_LITTLE_ENDIAN);
+/*
+    if (address >= 0x2000 && address <= 0x3800) { // Custom sport modes address.
+        dissect_ambit_data_write_sport_modes(tvb, pinfo, tree, address, length + 8);
+    }
+    else if (address >= 0x927c0 && address <= 0x9a7c0) {
+        dissect_ambit_data_write_apps(tvb, pinfo, tree, address, length + 8);
+    }
+    else {
+        proto_tree_add_text(tree, tvb, 8, length, "Payload");
+    }
+*/
+    if ((address >= 0x2000 && address <= 0x3800) || (address >= 0x927c0 && address <= 0x9a7c0)) { // Custom sport modes address.
+        int i;
+        for (i=0; i<length+8; i++) {
+            g_printf("%.2x", tvb_get_guint8(tvb,i));
+        }
+        g_printf("\n");
+
+    }
+}
+
+
+static gint dissect_ambit_data_write_sport_modes(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, guint32 address, guint32 length)
+{
+    guint32 offset = 8;
+
+    static guint32 leftToReadArray[6] = {0};
+    int index = (address - 0x2000) / 0x400;
+    uint leftToRead = leftToReadArray[index];
+
+    if (leftToRead)
+    {
+        dissect_ambit_add_unknown(tvb, pinfo, tree, offset, leftToRead);
+        offset += leftToRead;
+    }
+
+
+    if (address == 0x00002000)
+    {
+        proto_tree_add_item(tree, hf_ambit_write_data_header, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+        offset += 2;
+
+        proto_tree_add_item(tree, hf_ambit_write_data_length, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+        offset += 2;
+
+        proto_tree_add_item(tree, hf_ambit_write_data_header, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+        offset += 2;
+
+        proto_tree_add_item(tree, hf_ambit_write_data_length, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+        offset += 2;
+
+        proto_tree_add_item(tree, hf_ambit_write_data_header, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+        offset += 2;
+
+        proto_tree_add_item(tree, hf_ambit_write_data_length, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+        offset += 2;
+
+        dissect_ambit_add_unknown(tvb, pinfo, tree, offset, 2);
+        offset += 2;
+    }
+
+    leftToRead = dissect_ambit_data_write_content(tvb, pinfo, tree, &offset, length);
+    leftToReadArray[index + 1] = leftToRead;
+}
+
+static gint dissect_ambit_data_write_apps(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, guint32 address, guint32 length)
+{
+    static u_int32_t apps_length[10] = {0};
+
+    static guint32 leftToReadArray[6] = {0};
+    static guint32 currentAppIndexArray[6] = {0};
+    int arrayIndex = (address - 0x927c0) / 0x400;
+    uint leftToRead = leftToReadArray[arrayIndex];
+    uint currentAppIndex = currentAppIndexArray[arrayIndex];
+    uint header_len = 0;
+
+    guint32 offset = 8;
+
+    if (address == 0x927c0) {
+        proto_tree_add_item(tree, hf_ambit_write_data_apps_nbr_of, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+        offset += 2;
+
+        dissect_ambit_add_unknown(tvb, pinfo, tree, offset, 1);
+        offset += 1;
+
+        proto_tree_add_item(tree, hf_ambit_write_data_apps_header_len, tvb, offset, 2, ENC_LITTLE_ENDIAN);
+        header_len = tvb_get_letohs(tvb, offset);
+        offset += 2;
+
+        dissect_ambit_add_unknown(tvb, pinfo, tree, offset, 2);
+        offset += 2;
+
+        int i;
+        for (i=0; i*4<header_len-7; i++)
+        {
+            proto_tree_add_item(tree, hf_ambit_write_data_apps_end_pos, tvb, offset, 4, ENC_LITTLE_ENDIAN);
+            apps_length[i] = tvb_get_letohl(tvb, offset) - header_len;
+            offset += 4;
+        }
+    }
+    else {
+        proto_tree_add_item(tree, hf_ambit_write_data_app_data, tvb, offset, leftToRead, ENC_LITTLE_ENDIAN);
+        offset += leftToRead;
+
+        proto_tree_add_item(tree, hf_ambit_write_data_app_checksum, tvb, offset, 1, ENC_LITTLE_ENDIAN);
+        offset += 1;
+        currentAppIndex++;
+    }
+
+    int i = currentAppIndex;
+    while (offset < length) {
+
+        uint read_len = i==0 ? apps_length[i]-1 : apps_length[i]-apps_length[i-1]-1;
+
+        if (read_len > (length-offset) ) {
+            leftToReadArray[arrayIndex+1] = read_len-(length-offset);
+            currentAppIndexArray[arrayIndex+1] = i;
+            read_len = length-offset;
+        }
+
+        proto_tree_add_item(tree, hf_ambit_write_data_app_data, tvb, offset, read_len, ENC_LITTLE_ENDIAN);
+        offset += read_len;
+
+        if (offset < length) {
+            proto_tree_add_item(tree, hf_ambit_write_data_app_checksum, tvb, offset, 1, ENC_LITTLE_ENDIAN);
+            offset += 1;
+
+            if (offset == length) {
+                leftToReadArray[arrayIndex+1] = apps_length[i] - (length-offset);
+                currentAppIndexArray[arrayIndex+1] = i;
+            }
+        }
+
+        i++;
+    }
+}
+
+static gint dissect_ambit_data_write_content(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length)
+{
+    uint leftToRead = 0;
+
+    while (*offset < length)
+    {
+        if (*offset + 2 >= length) return *offset;
+        proto_tree_add_item(tree, hf_ambit_write_data_header, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+//        uint dataHeader = tvb_get_letohs(tvb, *offset);
+        *offset += 2;
+
+        if (*offset + 2 >= length) return *offset;
+        proto_tree_add_item(tree, hf_ambit_write_data_length, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+        uint dataLength = tvb_get_letohs(tvb, *offset);
+        *offset += 2;
+
+        uint startOffset = *offset;
+        dissect_ambit_data_write_read_data_0101(tvb, pinfo, tree, offset, length, dataLength);
+        leftToRead = dataLength - (*offset - startOffset);
+    }
+
+    return leftToRead;
+}
+
+static uint dissect_ambit_data_write_read_data_0101(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength)
+{
+    uint leftToRead = 0;
+    uint startOffset = *offset;
+
+    while (*offset < length && *offset - startOffset < packageLength)
+    {
+        if (*offset + 2 >= length) return *offset;
+        proto_tree_add_item(tree, hf_ambit_write_data_header, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+        guint16 dataHeader = tvb_get_letohs(tvb, *offset);
+        *offset += 2;
+
+        if (*offset + 2 >= length) return *offset;
+        proto_tree_add_item(tree, hf_ambit_write_data_length, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+        guint16 dataLength2 = tvb_get_letohs(tvb, *offset);
+        *offset += 2;
+
+        switch(dataHeader) {
+          case 0x0102:
+            leftToRead = dissect_ambit_data_write_read_data_0102(tvb, pinfo, tree, offset, length, dataLength2);
+            break;
+          case 0x0105:
+            leftToRead = dissect_ambit_data_write_read_data_0105(tvb, pinfo, tree, offset, length, dataLength2);
+            break;
+          case 0x010c:
+            leftToRead = dissect_ambit_data_write_read_data_010c(tvb, pinfo, tree, offset, length, dataLength2);
+            break;
+        }
+    }
+
+    return leftToRead;
+}
+
+static uint dissect_ambit_data_write_read_data_0105(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength)
+{
+    uint leftToRead = 0;
+    uint startOffset = *offset;
+    while (*offset < length && *offset - startOffset < packageLength)
+    {
+
+        if (*offset + 2 > length) return packageLength;
+        proto_tree_add_item(tree, hf_ambit_write_data_header, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+        guint16 dataHeader = tvb_get_letohs(tvb, *offset);
+        *offset += 2;
+
+        if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+        proto_tree_add_item(tree, hf_ambit_write_data_length, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+        guint16 dataLength = tvb_get_letohs(tvb, *offset);
+        *offset += 2;
+
+        switch(dataHeader) {
+          case 0x0106:
+            leftToRead = dissect_ambit_data_write_read_data_0106(tvb, pinfo, tree, offset, length, dataLength);
+            break;
+        }
+    }
+
+    return leftToRead;
+}
+
+static uint dissect_ambit_data_write_read_data_0106(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength)
+{
+    uint leftToRead = 0;
+    uint startOffset = *offset;
+    while (*offset < length && *offset - startOffset < packageLength)
+    {
+
+        if (*offset + 2 > length) return packageLength;
+        proto_tree_add_item(tree, hf_ambit_write_data_header, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+        guint16 dataHeader = tvb_get_letohs(tvb, *offset);
+        *offset += 2;
+
+        if (*offset + 2 > length)
+        {
+            return packageLength - (*offset - startOffset);
+        }
+        proto_tree_add_item(tree, hf_ambit_write_data_length, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+        guint16 dataLength = tvb_get_letohs(tvb, *offset);
+        *offset += 2;
+
+        switch(dataHeader) {
+          case 0x0107:
+            leftToRead = dissect_ambit_data_write_read_data_0107(tvb, pinfo, tree, offset, length, dataLength);
+            break;
+          case 0x0108:
+            leftToRead = dissect_ambit_data_write_read_data_0108(tvb, pinfo, tree, offset, length, dataLength);
+            break;
+        }
+    }
+
+    return leftToRead;
+}
+
+static uint dissect_ambit_data_write_read_data_0107(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength)
+{
+    uint leftToRead = 0;
+    uint startOffset = *offset;
+    while (*offset < length && *offset - startOffset < packageLength)
+    {
+
+        if (*offset + 2 > length) return packageLength;
+        proto_tree_add_item(tree, hf_ambit_write_data_display_type, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+        *offset += 2;
+
+        dissect_ambit_add_unknown(tvb, pinfo, tree, *offset, packageLength - 2);
+        *offset += packageLength - 2;
+    }
+
+    return leftToRead;
+}
+
+static uint dissect_ambit_data_write_read_data_0108(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength)
+{
+    uint leftToRead = 0;
+    uint startOffset = *offset;
+    while (*offset < length && *offset - startOffset < packageLength)
+    {
+
+        if (*offset + 2 > length) return packageLength;
+        proto_tree_add_item(tree, hf_ambit_write_data_header, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+        guint16 dataHeader = tvb_get_letohs(tvb, *offset);
+        *offset += 2;
+
+        if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+        proto_tree_add_item(tree, hf_ambit_write_data_length, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+        guint16 dataLength = tvb_get_letohs(tvb, *offset);
+        *offset += 2;
+
+        switch(dataHeader) {
+          case 0x0109:
+            leftToRead = dissect_ambit_data_write_read_data_0109(tvb, pinfo, tree, offset, length, dataLength);
+            break;
+        case 0x010a:
+          leftToRead = dissect_ambit_data_write_read_data_010a(tvb, pinfo, tree, offset, length, dataLength);
+          break;
+        }
+    }
+
+    return leftToRead;
+}
+
+static uint dissect_ambit_data_write_read_data_0109(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength)
+{
+    uint startOffset = *offset;
+
+    if (*offset + 2 > length) return packageLength;
+    proto_tree_add_item(tree, hf_ambit_log_activity_custom_mode_row, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_log_activity_custom_mode_display, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    return 0;
+}
+
+static uint dissect_ambit_data_write_read_data_010a(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength)
+{
+    if (*offset + 2 > length) return packageLength;
+    proto_tree_add_item(tree, hf_ambit_log_activity_custom_mode_view, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    return 0;
+}
+
+static uint dissect_ambit_data_get_length_to_read(guint32 *offset, guint32 length, guint16 packageLength)
+{
+    if (*offset + packageLength > length)
+    {
+        return (length - *offset);
+    }
+    return packageLength;
+}
+
+static uint dissect_ambit_data_write_read_data_010c(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength)
+{
+    uint startOffset = *offset;
+    while (*offset < length && *offset - startOffset < packageLength)
+    {
+        if (*offset + 2 > length) return packageLength;
+        proto_tree_add_item(tree, hf_ambit_write_data_header, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+        guint16 dataHeader = tvb_get_letohs(tvb, *offset);
+        *offset += 2;
+
+        if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+        proto_tree_add_item(tree, hf_ambit_write_data_length, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+        guint16 dataLength = tvb_get_letohs(tvb, *offset);
+        *offset += 2;
+
+        switch(dataHeader) {
+          case 0x010d:
+            if (*offset + dataLength > length) return packageLength - (*offset - startOffset);
+            proto_tree_add_item(tree, hf_ambit_write_data_app_index, tvb, *offset, dataLength, ENC_LITTLE_ENDIAN);
+            *offset += dataLength;
+            break;
+        }
+    }
+
+    return 0;
+}
+
+static uint dissect_ambit_data_write_read_data_0102(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, /*void *data _U_,*/ guint32 *offset, guint32 length, guint16 packageLength)
+{
+    uint startOffset = *offset;
+
+    if (*offset + 16 > length) return packageLength;
+    proto_tree_add_item(tree, hf_ambit_log_header_activity_name /*hf_ambit_write_data_custom_mode_name*/, tvb, *offset, 16, ENC_LITTLE_ENDIAN);
+    *offset += 16;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_log_activity_custom_mode_id, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_activity_id, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    dissect_ambit_add_unknown(tvb, pinfo, tree, *offset, 2);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_use_hrbelt_and_pods, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_alti_baro_mode, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_gps_interval, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_recording_interval, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_auto_lap, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_log_header_hr_max, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_log_header_hr_min, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_use_hr_limits, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    dissect_ambit_add_unknown(tvb, pinfo, tree, *offset, 2);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_auto_pause, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_auto_scroll, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_use_interval_timer, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_interval_repetitions, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_interval_timer_time, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 6 > length) return packageLength - (*offset - startOffset);
+    dissect_ambit_add_unknown(tvb, pinfo, tree, *offset, 6);
+    *offset += 6;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_interval_timer_max, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    dissect_ambit_add_unknown(tvb, pinfo, tree, *offset, 2);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_interval_timer_time, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 6 > length) return packageLength - (*offset - startOffset);
+    dissect_ambit_add_unknown(tvb, pinfo, tree, *offset, 6);
+    *offset += 6;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_interval_timer_min, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 14 > length) return packageLength - (*offset - startOffset);
+    dissect_ambit_add_unknown(tvb, pinfo, tree, *offset, 14);
+    *offset += 14;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_backlight, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_data_display, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    if (*offset + 2 > length) return packageLength - (*offset - startOffset);
+    proto_tree_add_item(tree, hf_ambit_write_quick_navigation, tvb, *offset, 2, ENC_LITTLE_ENDIAN);
+    *offset += 2;
+
+    return 0;
+}
+
+static gint dissect_ambit_data_write_reply(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_)
 {
 }
 
@@ -2114,6 +2888,8 @@ proto_register_ambit(void)
           { "Cadence max (rpm)", "ambit.log_header.cadence_max", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
         { &hf_ambit_log_header_cadence_avg,
           { "Cadence avg (rpm)", "ambit.log_header.cadence_avg", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_log_header_swimming_lengths,
+          { "Swimming pool lengths", "ambit.log_header.swimming_lengths", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
         { &hf_ambit_log_header_speed_max_time,
           { "Time max speed (ms)", "ambit.log_header.speed_maxtime", FT_UINT32, BASE_DEC, NULL, 0x0,NULL, HFILL } },
         { &hf_ambit_log_header_alt_max_time,
@@ -2130,6 +2906,8 @@ proto_register_ambit(void)
           { "Time min temperature (ms)", "ambit.log_header.temp_mintime", FT_UINT32, BASE_DEC, NULL, 0x0,NULL, HFILL } },
         { &hf_ambit_log_header_cadence_max_time,
           { "Time max cadence (ms)", "ambit.log_header.cadence_maxtime", FT_UINT32, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_log_header_swimming_pool_length,
+          { "Swimming pool length (m)", "ambit.log_header.swimming_pool_length", FT_UINT32, BASE_DEC, NULL, 0x0,NULL, HFILL } },
         { &hf_ambit_log_header_time_first_fix,
           { "Time of first fix", "ambit.log_header.time_first_fix", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
         { &hf_ambit_log_header_battery_start,
@@ -2277,9 +3055,99 @@ proto_register_ambit(void)
           { "Altitude offset", "ambit.log_sample.altitude_source.alt_offset", FT_INT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
         { &hf_ambit_log_altitude_source_pressure_offset,
           { "Pressure", "ambit.log_sample.altitude_source.pres_offset", FT_INT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_log_cadence_source_type,
+          { "Type", "ambit.log_sample.cadence_source.type", FT_UINT8, BASE_HEX, VALS(log_samples_cadence_source_type_vals), 0x0,NULL, HFILL } },
+
+        { &hf_ambit_log_fwinfo_build_date,
+          { "Build date", "ambit.log_sample.fwinfo.builddate", FT_STRING, BASE_NONE, NULL, 0x0,NULL, HFILL } },
+
+        { &hf_ambit_log_swimming_turn_distance,
+          { "Distance (cm)", "ambit.log_sample.swimming_turn.distance", FT_UINT32, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_log_swimming_turn_lengths,
+          { "Total pool lengths", "ambit.log_sample.swimming_turn.lengths", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_log_swimming_turn_lengths_wo_change,
+          { "Total pool lengths w/o style change(!?)", "ambit.log_sample.swimming_turn.lengths_wo_change", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_log_swimming_turn_prev_style,
+          { "Style", "ambit.log_sample.swimming_turn.style", FT_UINT8, BASE_HEX, VALS(log_samples_swimming_style_vals), 0x0,NULL, HFILL } },
+        { &hf_ambit_log_swimming_turn_classification0,
+          { "ClassificationVector[0]", "ambit.log_sample.swimming_turn.classification0", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_log_swimming_turn_classification1,
+          { "ClassificationVector[1]", "ambit.log_sample.swimming_turn.classification1", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_log_swimming_turn_classification2,
+          { "ClassificationVector[2]", "ambit.log_sample.swimming_turn.classification2", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_log_swimming_turn_classification3,
+          { "ClassificationVector[3]", "ambit.log_sample.swimming_turn.classification3", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+
+        { &hf_ambit_log_delayed_store,
+          { "Log write delay (1/10 s)", "ambit.log_sample.delayed_store", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
 
         { &hf_ambit_log_ibi,
           { "IBI entry", "ambit.log_sample.ibi", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+
+        { &hf_ambit_gps_data_head,
+          { "Current GPS position data version", "ambit.gps.data.head", FT_BYTES, BASE_NONE, NULL, 0x0, NULL, HFILL } },
+
+        { &hf_ambit_write_data_length,
+          { "Data Length", "ambit.write_data.custom_modes.length", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_header,
+          { "Data Header", "ambit.write_data.custom_modes.header", FT_UINT16, BASE_HEX, VALS(custom_modes_header_vals), 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_activity_id,
+          { "Activity ID", "ambit.write_data.custom_modes.activity_id", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_interval_repetitions,
+          { "IntervalRepetitions", "ambit.write_data.custom_modes.interval_repetitions", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_show_navigation,
+          { "Show Navigation Selection", "ambit.write_data.custom_modes.show_navigation", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_alti_baro_mode,
+          { "AltiBaroMode", "ambit.write_data.custom_modes.alti_baro_mode", FT_UINT16, BASE_DEC, VALS(custom_modes_alti_baro_mode_vals), 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_backlight,
+          { "Backlight mode", "ambit.write_data.custom_modes.alti_baro_mode", FT_UINT16, BASE_DEC, VALS(custom_modes_backlight_vals), 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_display,
+          { "Display mode", "ambit.write_data.custom_modes.alti_baro_mode", FT_UINT16, BASE_DEC, VALS(custom_modes_display_vals), 0x0,NULL, HFILL } },
+        { &hf_ambit_write_quick_navigation,
+          { "Quick navigation", "ambit.write_data.custom_modes.alti_baro_mode", FT_UINT16, BASE_DEC, VALS(custom_modes_quick_navigation_vals), 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_use_hrbelt_and_pods,
+          { "HR belt and PODs", "ambit.write_data.custom_modes.hrbelt_and_pods", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_use_hr_limits,
+          { "Use HR limits", "ambit.write_data.custom_modes.use_hr_limits", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_recording_interval,
+          { "Recording interval", "ambit.write_data.custom_modes.recording_interval", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_auto_lap,
+          { "Autolap (m)", "ambit.write_data.custom_modes.auto_lap", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_gps_interval,
+          { "GPS interval", "ambit.write_data.custom_modes.gps_interval", FT_UINT16, BASE_DEC, VALS(custom_modes_gps_accuracy_vals), 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_display_type,
+          { "Display type", "ambit.write_data.custom_modes.display_type", FT_UINT16, BASE_HEX, VALS(custom_modes_display_type_val), 0x0,NULL, HFILL } },
+        { &hf_ambit_log_activity_custom_mode_row,
+          { "            Display row", "ambit.write_data.custom_modes.display_row", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_log_activity_custom_mode_display,
+          { "            Display type", "ambit.write_data.custom_modes.display_type", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_log_activity_custom_mode_view,
+          { "            View type (lower row)", "ambit.write_data.custom_modes.view", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_auto_pause,
+          { "Auto pause", "ambit.write_data.custom_modes.auto_pause", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_auto_scroll,
+          { "Auto scroll (sec)", "ambit.write_data.custom_modes.auto_scroll", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_use_interval_timer,
+          { "Use interval timer", "ambit.write_data.custom_modes.interval_timer", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_interval_timer_time,
+          { "Interval timer unit", "ambit.write_data.custom_modes.interval_timer_time", FT_UINT16, BASE_DEC, VALS(custom_modes_interval_timer_unit_vals), 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_interval_timer_max,
+          { "Interval timer max (sec or meters)", "ambit.write_data.custom_modes.interval_timer_max", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_interval_timer_min,
+          { "Interval timer min (sec or meters)", "ambit.write_data.custom_modes.interval_timer_min", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+
+        { &hf_ambit_write_data_apps_nbr_of,
+          { "Number of apps", "ambit.write_data.apps.nbr", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_apps_header_len,
+          { "Apps header length", "ambit.write_data.apps.header_len", FT_UINT16, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_apps_end_pos,
+          { "Pos of app checksum", "ambit.write_data.apps.end_pos", FT_UINT32, BASE_HEX, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_app_data,
+          { "App data", "ambit.write_data.apps.data", FT_STRING, BASE_NONE, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_app_checksum,
+          { "App checksum (xor of app data + app data length)", "ambit.write_data.apps.checksum", FT_UINT8, BASE_DEC, NULL, 0x0,NULL, HFILL } },
+        { &hf_ambit_write_data_app_index,
+          { "App index", "ambit.write_data.apps.index", FT_STRING, BASE_NONE, NULL, 0x0,NULL, HFILL } },
     };
 
     static gint *ett[] = {

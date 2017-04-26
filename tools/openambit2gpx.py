@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-""" concerts the *.log files produced by openambit in ~/.openambit/ to standard gpx format.
+""" converts the *.log files produced by openambit in ~/.openambit/ to standard gpx format.
 usage: ./openambit2gpx.py inputfile outputFile
 """
 
@@ -13,9 +13,17 @@ import sys
 ## getting input parameters ##
 ##############################
 
-fileIn=sys.argv[1]
-fileOut=sys.argv[2]
+if len(sys.argv) == 3:
+    fileIn=sys.argv[1]
+    fileOut=sys.argv[2]
+else:
+    sys.stderr.write("""\
+Convert Openambit *.log files to standard GPX format
+usage: {} inputfile outputfile 
 
+Openambit *.log files can normally be found in ~/.openambit/
+""".format(sys.argv[0]))
+    sys.exit(1)
 
 ###########################################
 ## setting variables up, starting output ##
@@ -36,6 +44,7 @@ timeLast=None
 altitudeLast=None
 hrLast=None
 cadenceLast=None
+powerLast=None
 speedLast=None
 tempLast=None
 airpressureLast=None
@@ -84,7 +93,8 @@ for element in rootIn.iterfind("Log/Samples/Sample"):
 
     altitude=element.findtext("Altitude") if element.findtext("Altitude")!=None else altitudeLast
     hr=element.findtext("HR") if element.findtext("HR")!=None else hrLast
-    cadence=element.findtext("Cadence") if element.findtext("cadence")!=None else cadenceLast
+    cadence=element.findtext("Cadence") if element.findtext("Cadence")!=None else cadenceLast
+    power=element.findtext("BikePower") if element.findtext("BikePower")!=None else powerLast
     speed=element.findtext("Speed") if element.findtext("Speed")!=None else speedLast
     temp=str(float(element.findtext("Temperature"))/10) if element.findtext("Temperature")!=None else tempLast
     airpressure=element.findtext("SeaLevelPressure") if element.findtext("SeaLevelPressure")!=None else airpressureLast
@@ -136,11 +146,12 @@ for element in rootIn.iterfind("Log/Samples/Sample"):
         elif timeLast!=None:
             etree.SubElement(trk,"time").text=timeLast 
 
-        if hr!=None or cadence!=None or speed!=None or temp!=None or airpressure!=None:
+        if hr!=None or cadence!=None or power!=None or speed!=None or temp!=None or airpressure!=None:
             extGpx=etree.SubElement(trk,"extensions")
             if hr!=None: etree.SubElement(extGpx,"gpxdata:hr").text=hr
             if cadence!=None: etree.SubElement(extGpx,"gpxdata:cadence").text=cadence
-            if temp!=None: etree.SubElement(extGpx,"gpxdata:atemp").text=temp
+            if power!=None: etree.SubElement(extGpx,"gpxdata:power").text=power
+            if temp!=None: etree.SubElement(extGpx,"gpxdata:temp").text=temp
             if speed!=None: etree.SubElement(extGpx,"gpxdata:speed").text=speed
             if airpressure!=None: etree.SubElement(extGpx,"gpxdata:SeaLevelPressure").text=airpressure
 
@@ -152,6 +163,7 @@ for element in rootIn.iterfind("Log/Samples/Sample"):
     altitudeLast=altitude
     hrLast=hr
     cadenceLast=cadence
+    powerLast=power
     speedLast=speed
     tempLast=temp
     airpressureLast=airpressure
@@ -162,6 +174,7 @@ for element in rootIn.iterfind("Log/Samples/Sample"):
     altitude=None
     hr=None
     cadence=None
+    power=None
     speed=None
     temp=None
     airpressure=None

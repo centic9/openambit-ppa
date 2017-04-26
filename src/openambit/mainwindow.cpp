@@ -23,8 +23,10 @@
 #include "ui_mainwindow.h"
 
 #include <QCloseEvent>
+#include <QDebug>
 #include <QListWidgetItem>
 #include <QMessageBox>
+#include <QDesktopServices>
 
 #define APPKEY                 "HpF9f1qV5qrDJ1hY1QK1diThyPsX10Mh4JvCw9xVQSglJNLdcwr3540zFyLzIC3e"
 #define MOVESCOUNT_DEFAULT_URL "https://uiservices.movescount.com/"
@@ -91,15 +93,15 @@ MainWindow::MainWindow(QWidget *parent) :
     // Setup device manager
     deviceManager = new DeviceManager();
     deviceManager->moveToThread(&deviceWorkerThread);
-    qRegisterMetaType<ambit_device_info_t>("ambit_device_info_t");
-    connect(deviceManager, SIGNAL(deviceDetected(ambit_device_info_t,bool)), this, SLOT(deviceDetected(ambit_device_info_t,bool)), Qt::QueuedConnection);
+    qRegisterMetaType<DeviceInfo>("DeviceInfo");
+    connect(deviceManager, SIGNAL(deviceDetected(const DeviceInfo&)), this, SLOT(deviceDetected(const DeviceInfo&)), Qt::QueuedConnection);
     connect(deviceManager, SIGNAL(deviceRemoved()), this, SLOT(deviceRemoved()), Qt::QueuedConnection);
     connect(deviceManager, SIGNAL(deviceCharge(quint8)), this, SLOT(deviceCharge(quint8)), Qt::QueuedConnection);
     connect(deviceManager, SIGNAL(syncFinished(bool)), this, SLOT(syncFinished(bool)), Qt::QueuedConnection);
     connect(deviceManager, SIGNAL(syncProgressInform(QString,bool,bool,quint8)), this, SLOT(syncProgressInform(QString,bool,bool,quint8)), Qt::QueuedConnection);
     connect(ui->buttonDeviceReload, SIGNAL(clicked()), deviceManager, SLOT(detect()));
     connect(ui->buttonSyncNow, SIGNAL(clicked()), this, SLOT(syncNowClicked()));
-    connect(this, SIGNAL(syncNow(bool,bool,bool,bool)), deviceManager, SLOT(startSync(bool,bool,bool,bool)));
+    connect(this, SIGNAL(syncNow(bool)), deviceManager, SLOT(startSync(bool)));
     deviceWorkerThread.start();
     deviceManager->start();
     deviceManager->detect();
@@ -171,7 +173,13 @@ void MainWindow::hideEvent(QHideEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    if (!sysTraySupported() || forceClose) {
+    //check if there is a settings for running in background
+    settings.beginGroup("generalSettings");
+    bool RunInBg;
+    RunInBg = settings.value("runningBackground", true).toBool();
+    settings.endGroup();
+
+    if (!sysTraySupported() || forceClose || !RunInBg) {
         trayIcon->setVisible(false);
         event->accept();
     }
@@ -211,6 +219,10 @@ void MainWindow::showSettings()
     connect(settingsDialog, SIGNAL(settingsSaved()), this, SLOT(settingsSaved()));
     settingsDialog->show();
 }
+void MainWindow::showReportBug()
+{
+    QDesktopServices::openUrl(QUrl("https://github.com/openambitproject/openambit/issues"));
+}
 
 void MainWindow::showAbout()
 {
@@ -230,12 +242,19 @@ void MainWindow::syncNowClicked()
     startSync();
 }
 
-void MainWindow::deviceDetected(ambit_device_info_t deviceInfo, bool supported)
+void MainWindow::deviceDetected(const DeviceInfo& deviceInfo)
 {
+    if (0 != deviceInfo.access_status) {
+        ui->labelNotSupported->setText(strerror(deviceInfo.access_status));
+    }
+    else {
+        // FIXME Should be gotten from the UI file, really
+        ui->labelNotSupported->setText(tr("Device not supported yet!"));
+    }
     ui->labelDeviceDetected->setText(deviceInfo.name);
     ui->labelSerial->setText(deviceInfo.serial);
     trayIcon->setIcon(QIcon(":/icon_connected"));
-    if (!supported) {
+    if (0 != deviceInfo.access_status || !deviceInfo.is_supported) {
         ui->labelNotSupportedIcon->setHidden(false);
         ui->labelNotSupported->setHidden(false);
         ui->labelMovescountAuthIcon->setHidden(true);
@@ -264,22 +283,23 @@ void MainWindow::deviceDetected(ambit_device_info_t deviceInfo, bool supported)
 
         movesCountSetup();
         if (movesCount != NULL) {
-            movesCount->setDevice(&deviceInfo);
+            movesCount->setDevice(deviceInfo);
             settings.beginGroup("movescountSettings");
             if (settings.value("checkNewVersions", true).toBool()) {
                 movesCount->checkLatestFirmwareVersion();
             }
-            if (settings.value("movescountEnable", true).toBool()) {
+            if (settings.value("movescountEnable", false).toBool()) {
                 movesCount->getDeviceSettings();
             }
             settings.endGroup();
         }
 
         settings.beginGroup("syncSettings");
-        if (settings.value("syncAutomatically", false).toBool()) {
+        bool syncAutomatically = settings.value("syncAutomatically", false).toBool();
+        settings.endGroup();
+        if (syncAutomatically) {
             startSync();
         }
-        settings.endGroup();
     }
 }
 
@@ -300,12 +320,14 @@ void MainWindow::deviceRemoved(void)
     trayIconSyncAction->setDisabled(true);
     ui->syncProgressBar->setHidden(true);
 
+    trayIcon->toolTip();
     trayIcon->setIcon(QIcon(":/icon_disconnected"));
 }
 
 void MainWindow::deviceCharge(quint8 percent)
 {
     ui->chargeIndicator->setValue(percent);
+    trayIcon->setToolTip(QString(tr("Charging %1%")).arg(percent));
 }
 
 void MainWindow::syncFinished(bool success)
@@ -362,11 +384,12 @@ void MainWindow::syncProgressInform(QString message, bool error, bool newRow, qu
         }
     }
     ui->syncProgressBar->setValue(percentDone);
+    trayIcon->setToolTip(QString(tr("Downloading %1%")).arg(percentDone));
 }
 
 void MainWindow::newerFirmwareExists(QByteArray fw_version)
 {
-    ui->labelNewFirmware->setText(QString(tr("Newer firmware exists (%1.%2.%3)")).arg((int)fw_version[0]).arg((int)fw_version[1]).arg((int)(fw_version[2] | ((int)fw_version[3] << 8))));
+    ui->labelNewFirmware->setText(QString(tr("Newer firmware exists (%1.%2.%3)")).arg((int)fw_version[0]).arg((int)fw_version[1]).arg((int)(fw_version[2])));
     ui->labelNewFirmware->setHidden(false);
     ui->labelNewFirmwareIcon->setHidden(false);
 }
@@ -386,7 +409,7 @@ void MainWindow::logItemSelected(QListWidgetItem *current,QListWidgetItem *previ
     if (current != NULL) {
         logEntry = logStore.read(current->data(Qt::UserRole).toString());
         if (logEntry != NULL) {
-            ui->logDetail->setHtml(logEntry->toHtml());
+            ui->logDetail->showLog(logEntry);
         }
 
         delete logEntry;
@@ -430,8 +453,6 @@ void MainWindow::updateLogList()
 
 void MainWindow::startSync()
 {
-    bool syncTime, syncOrbit, syncMovescount;
-
     ui->checkBoxResyncAll->setEnabled(false);
     ui->buttonSyncNow->setEnabled(false);
     trayIconSyncAction->setEnabled(false);
@@ -444,34 +465,29 @@ void MainWindow::startSync()
     ui->syncProgressBar->setHidden(false);
     ui->syncProgressBar->setValue(0);
 
-    settings.beginGroup("syncSettings");
-    syncTime = settings.value("syncTime", true).toBool();
-    syncOrbit = settings.value("syncOrbit", true).toBool();
-    settings.endGroup();
-    settings.beginGroup("movescountSettings");
-    syncMovescount = settings.value("movescountEnable", true).toBool();
-    settings.endGroup();
-
     trayIcon->setIcon(QIcon(":/icon_syncing"));
     if (isHidden()) {
         trayIcon->showMessage(QCoreApplication::applicationName(), tr("Syncronisation started"));
     }
-
-    emit MainWindow::syncNow(ui->checkBoxResyncAll->isChecked(), syncTime, syncOrbit, syncMovescount);
+    emit MainWindow::syncNow(ui->checkBoxResyncAll->isChecked());
 }
 
 void MainWindow::movesCountSetup()
 {
     bool syncOrbit = false;
+    bool syncSportMode = false;
+    bool syncNavigation = false;
     bool movescountEnable = false;
 
     settings.beginGroup("syncSettings");
-    syncOrbit = settings.value("syncOrbit").toBool();
+    syncOrbit = settings.value("syncOrbit", true).toBool();
+    syncSportMode = settings.value("syncSportMode", false).toBool();
+    syncNavigation = settings.value("syncNavigation", false).toBool();
     settings.endGroup();
 
     settings.beginGroup("movescountSettings");
-    movescountEnable = settings.value("movescountEnable").toBool();
-    if (syncOrbit || movescountEnable) {
+    movescountEnable = settings.value("movescountEnable", false).toBool();
+    if (syncOrbit || syncSportMode || syncNavigation || movescountEnable) {
         if (movesCount == NULL) {
             movesCount = MovesCount::instance();
             movesCount->setAppkey(APPKEY);
@@ -522,16 +538,34 @@ void MainWindow::LogMessageRow::setMessage(QString message)
 void MainWindow::LogMessageRow::setStatus(Status status)
 {
     QIcon icon;
+    QString str_icon = "";
 
     if (status == StatusRunning) {
-        icon = QIcon::fromTheme("task-ongoing");
+        if(QIcon::hasThemeIcon("test-ongoing")) {
+            icon = QIcon::fromTheme("task-ongoing");
+        } else {
+            str_icon = QChar(0x1a,0x23);
+        }
     }
     else if (status == StatusSuccess) {
-        icon = QIcon::fromTheme("task-complete");
+        if(QIcon::hasThemeIcon("task-complete")) {
+            icon = QIcon::fromTheme("task-complete");
+        } else {
+            str_icon = QChar(0x13,0x27);
+        }
     }
     else if (status == StatusFailed) {
-        icon = QIcon::fromTheme("task-reject");
+        if(QIcon::hasThemeIcon("task-reject")) {
+            icon = QIcon::fromTheme("task-reject");
+        } else {
+            str_icon = QChar(0x17,0x27);
+        }
     }
-    iconLabel->setPixmap(icon.pixmap(8,8));
+
+    if(str_icon != "") {
+        iconLabel->setText(str_icon);
+    } else {
+        iconLabel->setPixmap(icon.pixmap(8,8));
+    }
 }
 
