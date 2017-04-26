@@ -30,9 +30,9 @@
 #include <QSocketNotifier>
 
 #include "settings.h"
-#include "logstore.h"
-#include "movescount/movescount.h"
-#include "movescount/movescountxml.h"
+#include <movescount/logstore.h>
+#include <movescount/movescount.h>
+#include <movescount/movescountxml.h>
 #include "udevlistener.h"
 #include <libambit.h>
 
@@ -46,14 +46,14 @@ public:
     ~DeviceManager();
     void start();
 signals:
-    void deviceDetected(ambit_device_info_t deviceInfo, bool supported);
+    void deviceDetected(const DeviceInfo& deviceInfo);
     void deviceRemoved(void);
     void deviceCharge(quint8 percent);
     void syncFinished(bool success);
     void syncProgressInform(QString message, bool error, bool newRow, quint8 percentDone);
 public slots:
     void detect(void);
-    void startSync(bool readAllLogs, bool syncTime, bool syncOrbit, bool syncMovescount);
+    void startSync(bool readAllLogs);
 
 private slots:
     void chargeTimerHit();
@@ -67,8 +67,8 @@ private:
     ambit_object_t *deviceObject;
     UdevListener *udevListener;
 
-    ambit_device_info_t currentDeviceInfo;
-    ambit_personal_settings_t currentPersonalSettings;
+    DeviceInfo currentDeviceInfo;
+    ambit_personal_settings_t *currentPersonalSettings;
 
     int syncParts;
     int currentSyncPart;

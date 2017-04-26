@@ -69,12 +69,15 @@ void SettingsDialog::readSettings()
 {
     settings.beginGroup("generalSettings");
     ui->checkBoxSkipBetaCheck->setChecked(settings.value("skipBetaCheck", false).toBool());
+    ui->checkBoxRunningBackground->setChecked(settings.value("runningBackground", true).toBool());
     settings.endGroup();
 
     settings.beginGroup("syncSettings");
     ui->checkBoxSyncAutomatically->setChecked(settings.value("syncAutomatically", false).toBool());
     ui->checkBoxSyncTime->setChecked(settings.value("syncTime", true).toBool());
     ui->checkBoxSyncOrbit->setChecked(settings.value("syncOrbit", true).toBool());
+    ui->checkBoxSyncSportsMode->setChecked(settings.value("syncSportMode", false).toBool());
+    ui->checkBoxSyncNavigation->setChecked(settings.value("syncNavigation", false).toBool());
     settings.endGroup();
 
     settings.beginGroup("movescountSettings");
@@ -89,12 +92,15 @@ void SettingsDialog::writeSettings()
 {
     settings.beginGroup("generalSettings");
     settings.setValue("skipBetaCheck", ui->checkBoxSkipBetaCheck->isChecked());
+    settings.setValue("runningBackground", ui->checkBoxRunningBackground->isChecked());
     settings.endGroup();
 
     settings.beginGroup("syncSettings");
     settings.setValue("syncAutomatically", ui->checkBoxSyncAutomatically->isChecked());
     settings.setValue("syncTime", ui->checkBoxSyncTime->isChecked());
     settings.setValue("syncOrbit", ui->checkBoxSyncOrbit->isChecked());
+    settings.setValue("syncSportMode", ui->checkBoxSyncSportsMode->isChecked());
+    settings.setValue("syncNavigation", ui->checkBoxSyncNavigation->isChecked());
     settings.endGroup();
 
     settings.beginGroup("movescountSettings");

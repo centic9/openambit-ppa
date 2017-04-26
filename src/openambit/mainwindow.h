@@ -25,7 +25,8 @@
 #include "devicemanager.h"
 #include "settingsdialog.h"
 #include "confirmbetadialog.h"
-#include "movescount/movescount.h"
+#include <movescount/deviceinfo.h>
+#include <movescount/movescount.h>
 #include <QMainWindow>
 #include <QThread>
 #include <QVBoxLayout>
@@ -46,10 +47,11 @@ public:
     ~MainWindow();
 
 signals:
-    void syncNow(bool readAll, bool syncTime, bool syncOrbit, bool syncMovescount);
+    void syncNow(bool readAll);
 
 public slots:
     void singleApplicationMsgRecv(QString msg);
+    void closeRequested();
 
 protected:
     void changeEvent(QEvent *event);
@@ -58,17 +60,17 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    void closeRequested();
     void showHideWindow();
     void trayIconClicked(QSystemTrayIcon::ActivationReason reason);
 
     void showSettings();
+    void showReportBug();
     void showAbout();
     void settingsSaved();
 
     void syncNowClicked();
 
-    void deviceDetected(ambit_device_info_t deviceInfo, bool supported);
+    void deviceDetected(const DeviceInfo& deviceInfo);
     void deviceRemoved();
     void deviceCharge(quint8 percent);
     void syncFinished(bool success);

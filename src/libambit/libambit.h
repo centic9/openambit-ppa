@@ -30,24 +30,73 @@ extern "C" {
 #include <stdbool.h>
 #include <time.h>
 
-#define LIBAMBIT_MODEL_NAME_LENGTH    16
-#define LIBAMBIT_SERIAL_LENGTH        16
-#define LIBAMBIT_PRODUCT_NAME_LENGTH  32
-
 typedef struct ambit_object_s ambit_object_t;
 
 typedef struct ambit_device_info_s {
-    char name[LIBAMBIT_PRODUCT_NAME_LENGTH+1];
-    char model[LIBAMBIT_MODEL_NAME_LENGTH+1];
-    char serial[LIBAMBIT_SERIAL_LENGTH+1];
+    char *name;                                        /* UTF-8 */
+    char *model;                                       /* UTF-8 */
+    char *serial;                                      /* UTF-8 */
     uint8_t fw_version[4];
     uint8_t hw_version[4];
-    bool is_supported;
+
+    const char *path;                   /* file system encoding */
+    uint16_t    vendor_id;
+    uint16_t    product_id;
+    bool        is_supported;
+    int         access_status;
+
+    struct ambit_device_info_s *next;
 } ambit_device_info_t;
 
 typedef struct ambit_device_status_s {
     uint8_t  charge;
 } ambit_device_status_t;
+
+typedef struct ambit_waypoint_s {
+    uint16_t      index;
+    char          name[50];
+    char          route_name[50];
+    uint8_t       ctime_second;
+    uint8_t       ctime_minute;
+    uint8_t       ctime_hour;
+    uint8_t       ctime_day;
+    uint8_t       ctime_month;
+    uint16_t      ctime_year;
+    int32_t       latitude;
+    int32_t       longitude;
+    uint16_t      altitude;
+    uint8_t       type;
+    uint8_t       status;
+} ambit_waypoint_t;
+
+typedef struct ambit_routepoint_s {
+    int32_t      lat;      //devide value by 10000000
+    int32_t      lon;      //devide value by 10000000
+    int32_t      altitude; //meters
+    uint32_t     distance; //relative distance from 0 - 1.000.000
+} ambit_routepoint_t;
+
+typedef struct ambit_route_s {
+    uint32_t      id;
+    char          name[50];
+    uint16_t      waypoint_count;
+    uint16_t      activity_id;
+    uint16_t      altitude_asc; //meters
+    uint16_t      altitude_dec; //meters
+    uint16_t      points_count;
+    uint32_t      distance;
+    int32_t       start_lat;  //devide value by 10000000
+    int32_t       start_lon;  //devide value by 10000000
+    int32_t       end_lat;  //devide value by 10000000
+    int32_t       end_lon;  //devide value by 10000000
+    int32_t       max_lat;  //devide value by 10000000
+    int32_t       min_lat;  //devide value by 10000000
+    int32_t       max_lon;  //devide value by 10000000
+    int32_t       min_lon;  //devide value by 10000000
+    int32_t       mid_lat;  //devide value by 10000000
+    int32_t       mid_lon;  //devide value by 10000000
+    ambit_routepoint_t *points;
+} ambit_route_t;
 
 typedef struct ambit_personal_settings_s {
     uint8_t  sportmode_button_lock;
@@ -94,12 +143,23 @@ typedef struct ambit_personal_settings_s {
     uint8_t  is_male;
     uint8_t  length;
     uint8_t  alti_baro_mode;
+    uint8_t  storm_alarm;
     uint8_t  fused_alti_disabled;
     uint16_t bikepod_calibration;     /* scale 0.0001 */
     uint16_t bikepod_calibration2;    /* scale 0.0001 */
     uint16_t bikepod_calibration3;    /* scale 0.0001 */
     uint16_t footpod_calibration;     /* scale 0.0001 */
     uint8_t  automatic_bikepower_calib;
+    uint8_t  automatic_footpod_calib;
+    uint8_t  training_program;
+    struct {
+        ambit_route_t *data;
+        uint8_t  count;
+    } routes;
+    struct {
+        ambit_waypoint_t *data;
+        uint16_t count;
+    } waypoints;
 } ambit_personal_settings_t;
 
 typedef struct ambit_log_date_time_s {
@@ -124,8 +184,12 @@ typedef enum ambit_log_sample_type_e {
     ambit_log_sample_type_gps_small = 0x0310,
     ambit_log_sample_type_gps_tiny = 0x0311,
     ambit_log_sample_type_time = 0x0312,
+    ambit_log_sample_type_swimming_turn = 0x0314,
+    ambit_log_sample_type_swimming_stroke = 0x0315,
     ambit_log_sample_type_activity = 0x0318,
+    ambit_log_sample_type_cadence_source = 0x031a,
     ambit_log_sample_type_position = 0x031b,
+    ambit_log_sample_type_fwinfo = 0x031c,
     ambit_log_sample_type_unknown = 0xf000
 } ambit_log_sample_type_t;
 
@@ -164,6 +228,43 @@ typedef enum ambit_log_sample_periodic_type_e {
     ambit_log_sample_periodic_type_ruleoutput4 = 0x67,
     ambit_log_sample_periodic_type_ruleoutput5 = 0x68
 } ambit_log_sample_periodic_type_t;
+
+typedef enum movescount_waypoint_type_e {
+    movescount_waypoint_type_building = 0,
+    movescount_waypoint_type_home = 1,
+    movescount_waypoint_type_car = 2,
+    movescount_waypoint_type_parking = 3,
+    movescount_waypoint_type_camp = 4,
+    movescount_waypoint_type_camping = 5,
+    movescount_waypoint_type_food = 6,
+    movescount_waypoint_type_restaurant = 7,
+    movescount_waypoint_type_cafe = 8,
+    movescount_waypoint_type_lodging = 9,
+    movescount_waypoint_type_hostel = 10,
+    movescount_waypoint_type_hotel = 11,
+    movescount_waypoint_type_water = 12,
+    movescount_waypoint_type_river = 13,
+    movescount_waypoint_type_lake = 14,
+    movescount_waypoint_type_coast = 15,
+    movescount_waypoint_type_mouantain = 16,
+    movescount_waypoint_type_hill = 17,
+    movescount_waypoint_type_valley = 18,
+    movescount_waypoint_type_cliff = 19,
+    movescount_waypoint_type_forest = 20,
+    movescount_waypoint_type_crossroad = 21,
+    movescount_waypoint_type_sight = 22,
+    movescount_waypoint_type_beginning = 23,
+    movescount_waypoint_type_end = 24,
+    movescount_waypoint_type_geocache = 25,
+    movescount_waypoint_type_poi = 26,
+    movescount_waypoint_type_road = 27,
+    movescount_waypoint_type_trail = 28,
+    movescount_waypoint_type_rock = 29,
+    movescount_waypoint_type_meadow = 30,
+    movescount_waypoint_type_cave = 31,
+    movescount_waypoint_type_internal_wp_start = 32,
+    movescount_waypoint_type_internal_wp_end = 33
+} movescount_waypoint_type_t;
 
 typedef struct ambit_log_sample_periodic_value_s {
     ambit_log_sample_periodic_type_t type;
@@ -224,7 +325,12 @@ typedef struct ambit_log_sample_s {
             uint16_t ibi[32];
         } ibi;
         uint16_t ttff;
-        uint8_t  distance_source;               /* 2 = GPS, 3 = Wrist */
+        uint8_t  distance_source;               /* 0x00 = Bikepod,
+                                                   0x01 = Footpod,
+                                                   0x02 = GPS,
+                                                   0x03 = Wrist,
+                                                   0x04 = Indoorswimming,
+                                                   0x05 = Outdoorswimming */
         struct {
             uint8_t event_type;                 /* 0x01 = manual lap,
                                                    0x14 = high interval end,
@@ -274,13 +380,30 @@ typedef struct ambit_log_sample_s {
             uint8_t  second;
         } time;
         struct {
+            uint32_t distance;                  /* Total distance, meters scale: 0.01 */
+            uint16_t lengths;                   /* Total pool lengths */
+            uint16_t classification[4];
+            uint8_t  style;                     /* (style of previous length)
+                                                   0x00 = Other,
+                                                   0x01 = Butterfly,
+                                                   0x02 = Backstroke,
+                                                   0x03 = Breaststroke,
+                                                   0x04 = Freestyle,
+                                                   0x05 = Drill */
+        } swimming_turn;
+        struct {
             uint16_t activitytype;
-            uint32_t custommode;
+            uint32_t sportmode;
         } activity;
+        uint8_t cadence_source;                 /* 0x40 = Wrist */
         struct {
             int32_t  latitude;                  /* degree, scale: 0.0000001, -90 <= latitude <= 90 */
             int32_t  longitude;                 /* degree, scale: 0.0000001, -180 <= latitude <= 180 */
         } position;
+        struct {
+            uint8_t version[4];
+            ambit_date_time_t build_date;
+        } fwinfo;
         struct {
             size_t datalen;
             uint8_t *data;
@@ -310,7 +433,7 @@ typedef struct ambit_log_header_s {
     uint32_t heartrate_min_time;    /* ms */
     uint8_t  peak_training_effect;  /* effect scale 0.1 */
     uint8_t  activity_type;
-    char     activity_name[16+1];   /* name of activity in ISO 8859-1 */
+    char    *activity_name;         /* name of activity in UTF-8 */
     int16_t  temperature_max;       /* degree celsius scale 0.1 */
     int16_t  temperature_min;       /* degree celsius scale 0.1 */
     uint32_t temperature_max_time;  /* ms */
@@ -327,9 +450,10 @@ typedef struct ambit_log_header_s {
     uint8_t  unknown2;
     uint8_t  cadence_max;           /* rpm */
     uint8_t  cadence_avg;           /* rpm */
-    uint8_t  unknown3[4];
+    uint8_t  unknown3[2];
+    uint16_t swimming_pool_lengths;
     uint32_t cadence_max_time;      /* ms */
-    uint8_t  unknown4[4];
+    uint32_t swimming_pool_length;  /* m */
     uint8_t  unknown5[4];
     uint8_t  unknown6[24];
 } ambit_log_header_t;
@@ -340,33 +464,146 @@ typedef struct ambit_log_entry_s {
     ambit_log_sample_t *samples;
 } ambit_log_entry_t;
 
-/**
- * Try to detect clock
- * If clock detected, object handle is returned
- * \return object handle if clock found, else NULL
+
+typedef struct ambit_sport_mode_settings_s {
+    char     activity_name[16];
+    uint16_t activity_id;
+    uint16_t sport_mode_id;
+    uint8_t  unknown1[2];
+    uint16_t hrbelt_and_pods;       /* bit pattern representing usage of hr belt or pods */
+    uint16_t alti_baro_mode;
+    uint16_t gps_interval;
+    uint16_t recording_interval;
+    uint16_t autolap;               /* m */
+    uint16_t heartrate_max;         /* bps */
+    uint16_t heartrate_min;         /* bps */
+    uint16_t use_heartrate_limits;
+    uint8_t  unknown2[2];
+    uint16_t auto_pause;
+    uint16_t auto_scroll;           /* s */
+    uint16_t use_interval_timer;
+    uint16_t interval_repetitions;
+    uint16_t interval_timer_max_unit;   /* m or s */
+    uint8_t  unknown3[6];
+    uint16_t interval_timer_max;    /* s or m */ /*Maybe 2 bytes from unknown3 should be included in this field? */
+    uint8_t  unknown4[2];
+    uint16_t interval_timer_min_unit;   /* m or s */
+    uint8_t  unknown5[6];
+    uint16_t interval_timer_min;    /* s or m */ /*Maybe 2 bytes from unknown3 should be included in this field? */
+    uint8_t  unknown6[14];
+    uint16_t backlight_mode;
+    uint16_t display_mode;
+    uint16_t quick_navigation;
+} ambit_sport_mode_settings_t;
+
+typedef struct ambit_sport_mode_display_layout_s {
+    uint16_t header;
+    uint16_t length;
+    uint16_t display_layout;
+    uint8_t unknown[2];
+} ambit_sport_mode_display_layout_t;
+
+typedef struct ambit_sport_mode_row_s {
+    uint16_t header;
+    uint16_t length;
+    uint16_t row_nbr;
+    uint16_t item;
+} ambit_sport_mode_row_t;
+
+typedef struct ambit_sport_mode_view_s {
+    uint16_t header;
+    uint16_t length;
+    uint16_t item;
+} ambit_sport_mode_view_t;
+
+typedef struct ambit_write_header_s {
+    uint16_t header;
+    uint16_t length;
+} ambit_write_header_t;
+
+typedef struct ambit_sport_mode_display_s {
+    uint16_t requiresHRBelt;
+    uint16_t type;
+    uint16_t row1;
+    uint16_t row2;
+    uint16_t row3;
+    uint32_t views_count;
+    uint16_t *view;
+} ambit_sport_mode_display_t;
+
+typedef struct ambit_app_index_s {
+    uint16_t index;
+    uint16_t logging;
+} ambit_apps_list_t;
+
+typedef struct ambit_sport_mode_group_s {
+    uint16_t activity_id;
+    uint16_t sport_mode_group_id;
+    bool is_visible;
+    char activity_name[24];
+    uint32_t sport_mode_index_count;
+    uint16_t *sport_mode_index;
+} ambit_sport_mode_group_t;
+
+typedef struct ambit_sport_mode_s {
+    ambit_sport_mode_settings_t settings;
+    uint32_t displays_count;
+    ambit_sport_mode_display_t *display;
+    uint16_t apps_list_count;
+    ambit_apps_list_t *apps_list;
+} ambit_sport_mode_t;
+
+typedef struct ambit_sport_mode_device_settings_s {
+    uint32_t sport_modes_count;
+    ambit_sport_mode_t *sport_modes;
+    uint32_t sport_mode_groups_count;
+    ambit_sport_mode_group_t *sport_mode_groups;
+    uint32_t app_ids_count;
+    uint32_t app_ids[40];
+} ambit_sport_mode_device_settings_t;
+
+typedef struct ambit_app_rule_s {
+    uint32_t app_rule_data_length;
+    uint32_t app_id;
+    uint8_t *app_rule_data;
+} ambit_app_rule_t;
+
+typedef struct ambit_app_rules_s {
+    uint32_t app_rules_count;
+    ambit_app_rule_t *app_rules;
+} ambit_app_rules_t;
+
+/** \brief Create a list of all known Ambit clocks on the system
+ *
+ *  The list may include clocks that are not supported or cannot be
+ *  accessed.
  */
-ambit_object_t *libambit_detect(void);
+ambit_device_info_t * libambit_enumerate(void);
+
+/** \brief Release resources acquired by libambit_enumerate()
+ */
+void libambit_free_enumeration(ambit_device_info_t *devices);
+
+/** \brief Create an Ambit object for a clock
+ *
+ *  The pointer returned corresponds to a known, accessible and
+ *  supported clock.  In case no such clock is found \c NULL is
+ *  returned.
+ */
+ambit_object_t * libambit_new(const ambit_device_info_t *device);
+
+/** \brief Create an Ambit object from a \a pathname
+ *
+ *  Convenience function for when the path name for a clock is known.
+ *  These path names are platform dependent.
+ */
+ambit_object_t * libambit_new_from_pathname(const char *pathname);
 
 /**
  * Close open Ambit object
  * \param object Object to close
  */
 void libambit_close(ambit_object_t *object);
-
-/**
- * Check if detected device is currently supported
- * \param object Object to check
- * \return true if device supported, else false
- */
-bool libambit_device_supported(ambit_object_t *object);
-
-/**
- * Get device info on connected dev
- * \param object Object to get info from
- * \param status Status object to be filled
- * \return 0 on success, else -1
- */
-int libambit_device_info_get(ambit_object_t *object, ambit_device_info_t *status);
 
 /**
  * Set sync message to device display
@@ -423,6 +660,17 @@ int libambit_gps_orbit_header_read(ambit_object_t *object, uint8_t data[8]);
 int libambit_gps_orbit_write(ambit_object_t *object, uint8_t *data, size_t datalen);
 
 /**
+ * Write Custom mode displays
+ * \param object Object to get settings from
+ * \param ambit_sport_modes settings object to be written
+ * \return 0 on success, else -1
+ */
+int libambit_sport_mode_write(ambit_object_t *object, ambit_sport_mode_device_settings_t *ambit_sport_modes);
+
+
+int libambit_app_data_write(ambit_object_t *object, ambit_sport_mode_device_settings_t *ambit_sport_modes, ambit_app_rules_t* ambit_apps);
+
+/**
  * Callback function for checking if a specific log entry should be read out or
  * skipped during log readouts
  * \param object Object reference
@@ -459,12 +707,139 @@ typedef void (*ambit_log_progress_cb)(void *userref, uint16_t log_count, uint16_
  * libambit_log_entry_free()
  */
 int libambit_log_read(ambit_object_t *object, ambit_log_skip_cb skip_cb, ambit_log_push_cb push_cb, ambit_log_progress_cb progress_cb, void *userref);
-
 /**
  * Free log entry allocated by libambit_log_read
  * \param log_entry Log entry to free
  */
 void libambit_log_entry_free(ambit_log_entry_t *log_entry);
+/**
+ * Init ambit_route_t struct
+ */
+ambit_route_t* libambit_route_alloc(uint16_t route_count);
+/**
+ * Free struct allocated by libambit_route_alloc
+ * \param personal_settings Struct to free
+ */
+void libambit_route_free(ambit_route_t *routes, uint16_t route_count);
+/**
+ * Append to a ambit_personal_settings_t.waypoints
+ */
+void libambit_waypoint_append(ambit_personal_settings_t *ps, ambit_waypoint_t *waypoints, uint8_t num_to_append);
+/**
+ * Init personal_settings struct
+ */
+ambit_personal_settings_t* libambit_personal_settings_alloc();
+/**
+ * Free struct allocated by libambit_personal_settings_alloc
+ * \param personal_settings Struct to free
+ */
+void libambit_personal_settings_free(ambit_personal_settings_t *personal_settings);
+
+/**
+ * Read Waypoint entries
+ */
+int libambit_navigation_read(ambit_object_t *object, ambit_personal_settings_t *personal_settings);
+
+/**
+ * Write Waypoint entries
+ */
+int libambit_navigation_write(ambit_object_t *object, ambit_personal_settings_t *personal_settings);
+
+/**
+ * Allocates memmory for device settings structure and
+ * initiate pointer in the structure to NULL and sport_modes_count and sport_mode_groups_count to 0.
+ * \note Caller is responsible of freeing the struct with libambit_sport_mode_device_settings_free()
+ * \return pointer to allocated data struct.
+ */
+ambit_sport_mode_device_settings_t *libambit_malloc_sport_mode_device_settings(void);
+
+/**
+ * Allocates memmory for a number of custom mode structures and
+ * initiate display pointer in the structures to NULL and displays_count to 0.
+ * \param count number of custom modes that will be allocated.
+ * \param ambit_settings structure where these custom modes belongs to.
+ * The ambit_settings will be updated to point at the allocated data and the custom modes count will be set to count.
+ * \return true if allocation was succesfull.
+ */
+bool libambit_malloc_sport_modes(uint16_t count, ambit_sport_mode_device_settings_t *ambit_settings);
+
+/**
+ * Allocates memmory for a number of custom mode group structures and
+ * initiate structure pointers to NULL and index_count to 0.
+ * \param count number of custom mode groups that will be allocated.
+ * \param ambit_settings structure where these custom mode groups belongs to.
+ * The ambit_settings will be updated to point at the allocated data and the custom mode groups count will be set to count.
+ * \return true if allocation was succesfull.
+ */
+bool libambit_malloc_sport_mode_groups(uint16_t count, ambit_sport_mode_device_settings_t *ambit_settings);
+
+/**
+ * Allocates memmory for a number of display structures and
+ * initiate structure pointers to NULL and view_count to 0.
+ * \param count number of displays that will be allocated.
+ * \param ambit_sport_mode structure where these displays belongs to.
+ * The ambit_sport_mode will be updated to point at the allocated data and the display count will be set to count.
+ * \return true if allocation was succesfull.
+ */
+bool libambit_malloc_sport_mode_displays(uint16_t count, ambit_sport_mode_t *ambit_sport_mode);
+
+/**
+ * Allocates memmory for a number of views.
+ * \param count number of views that will be allocated.
+ * \param ambit_displays structure where these views belongs to.
+ * The ambit_displays will be updated to point at the allocated data and the views count will be set to count.
+ * \return true if allocation was succesfull.
+ */
+bool libambit_malloc_sport_mode_view(uint16_t count, ambit_sport_mode_display_t *ambit_displays);
+
+/**
+ * Allocates memmory for a number of app ids.
+ * \param count number of app_ids (uint32_t) that will be allocated.
+ * \param ambit_sport_mode structure where these app_ids belongs to.
+ * The ambit_sport_mode will be updated to point at the allocated data and the app_ids_count will be set to count.
+ * \return true if allocation was succesfull.
+ */
+bool libambit_malloc_sport_mode_app_ids(uint16_t count, ambit_sport_mode_t *ambit_sport_mode);
+
+/**
+ * Allocates memmory for a number of custom mode index.
+ * \param count number of custom mode index that will be allocated.
+ * \param ambit_sport_mode_group structure where these custom mode index belongs to.
+ * The ambit_sport_mode_group will be updated to point at the allocated data and the custom mode index count will be set to count.
+ * \return true if allocation was succesfull.
+ */
+bool libambit_malloc_sport_mode_index(uint16_t count, ambit_sport_mode_group_t *ambit_sport_mode_group);
+
+/**
+ * Free device setting and under laying data structures,
+ * allocated by ambit_maloc_*
+ * \param settings Device settings to free
+ */
+void libambit_sport_mode_device_settings_free(ambit_sport_mode_device_settings_t *settings);
+
+/**
+ * Free structures for app rules and under laying data,
+ * allocated by liblibambit_malloc_app_rules and libambit_malloc_app_rule
+ * \param app_rules structure to be freed
+ */
+void libambit_app_rules_free(ambit_app_rules_t *app_rules);
+
+/**
+ * Allocates memmory for ambit_app_rules_t structure and
+ * initiate pointer in the structure to NULL and app_rules_count to 0.
+ * \note Caller is responsible of freeing the struct with libambit_app_rules_free()
+ * \return pointer to allocated data struct.
+ */
+ambit_app_rules_t *liblibambit_malloc_app_rules(void);
+
+/**
+ * Allocates memmory for a number of app rules.
+ * \param count number of app rules that will be allocated.
+ * \param ambit_app_rules structure from where the app rules will be referenced from.
+ * The app_rule pointer in ambit_app_rules will be updated to point to the allocated data and the app_rules_count will be set to count.
+ * \return true if allocation was succesfull.
+ */
+bool libambit_malloc_app_rule(uint16_t count, ambit_app_rules_t *ambit_app_rules);
 
 #ifdef __cplusplus /* If this is a C++ compiler, end C linkage */
 }
