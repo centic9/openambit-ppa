@@ -14,7 +14,7 @@ LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
 
 override_dh_auto_build:
 	mkdir build
-	cd build && cmake .. -DBUILD_EXTRAS=true -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} $(CFLAGS)" -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} $(CXXFLAGS)"
+	cd build && cmake .. -DUSE_QT5=1 -DBUILD_EXTRAS=true -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} $(CFLAGS)" -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} $(CXXFLAGS)"
 	cd build && $(MAKE) -j$(NUMCPUS)
 
 INSTDIR=../debian/tmp/
