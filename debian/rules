@@ -12,6 +12,9 @@ LDFLAGS:=$(shell dpkg-buildflags --get LDFLAGS)
 %:
 	dh $@ 
 
+override_dh_auto_configure:
+	dh_auto_configure -- -DUSE_QT5=1 -DBUILD_EXTRAS=true -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} $(CFLAGS)" -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} $(CXXFLAGS)"
+
 override_dh_auto_build:
 	mkdir build
 	cd build && cmake .. -DUSE_QT5=1 -DBUILD_EXTRAS=true -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_C_FLAGS="${CMAKE_C_FLAGS} $(CFLAGS)" -DCMAKE_CXX_FLAGS="${CMAKE_CXX_FLAGS} $(CXXFLAGS)"
