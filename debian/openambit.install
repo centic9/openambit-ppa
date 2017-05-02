@@ -1,4 +1,4 @@
-lib/udev/rules.d/99-suunto-ambit.rules
+#lib/udev/rules.d/99-suunto-ambit.rules
 usr/bin/openambit
 usr/share/applications/openambit.desktop
 usr/share/icons/
