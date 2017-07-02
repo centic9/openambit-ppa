@@ -1,3 +1,9 @@
+openambit (0.4-0ubuntu0~git20170702~ppa1) xenial; urgency=medium
+
+  * Rebase to the latest changes from github.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 02 Jul 2017 10:34:21 +0200
+
 openambit (0.4-0ubuntu0~git20170426~ppa3) xenial; urgency=medium
 
   * Try to fix configure-step for QT5.

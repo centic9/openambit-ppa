@@ -20,6 +20,7 @@ echo -e "01_git${DATE}.patch\ninstall_example" > debian/patches/series && \
 \
 git add debian/patches && \
 \
+git status && \
 \
 echo "All done"
 
