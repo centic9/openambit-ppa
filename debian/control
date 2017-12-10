@@ -3,7 +3,7 @@ Section: utils
 Priority: optional
 Maintainer: Debian running development group <pkg-running-devel@lists.alioth.debian.org>
 Uploaders: Christian Perrier <bubulle@debian.org>
-Build-Depends: debhelper (>= 9~), cmake, libusb-1.0-0-dev, libudev-dev, libqjson-dev, libqt4-dev, zlib1g-dev
+Build-Depends: debhelper (>= 9~), cmake (>= 2.8.5), libusb-1.0-0-dev, libudev-dev, qtbase5-dev, qttools5-dev-tools, zlib1g-dev, libpcap-dev, libglib2.0-dev, wireshark-dev
 Standards-Version: 3.9.5
 Homepage: http://openambit.org/
 Vcs-Git: git://git.debian.org/pkg-running/openambit.git
