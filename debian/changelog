@@ -1,3 +1,9 @@
+openambit (0.4-1ubuntu0~git20170702~ppa2) xenial; urgency=medium
+
+  * Remove libqjson-dev which is not used any more, Closes #875327, #875321 
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 10 Dec 2017 10:13:39 +0100
+
 openambit (0.4-1ubuntu0~git20170702~ppa1) xenial; urgency=medium
 
   * Rebase onto 0.4-1 from Debian, remaining changes
