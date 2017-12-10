@@ -27,3 +27,6 @@ moc_*.cpp
 /src/openambit/*.qrc.depends
 /wireshark_dissector/ambit.so
 /wireshark_dissector/plugin.c
+
+# Debian patch-dir
+.pc

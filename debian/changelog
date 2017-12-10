@@ -6,11 +6,149 @@ openambit (0.4-1) experimental; urgency=low
 
  -- Christian Perrier <bubulle@debian.org>  Tue, 02 May 2017 19:10:30 +0200
 
+openambit (0.4-0ubuntu0~git20170702~ppa1) xenial; urgency=medium
+
+  * Rebase to the latest changes from github.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 02 Jul 2017 10:34:21 +0200
+
+openambit (0.4-0ubuntu0~git20170426~ppa3) xenial; urgency=medium
+
+  * Try to fix configure-step for QT5.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 30 Apr 2017 08:26:33 +0200
+
+openambit (0.4-0ubuntu0~git20170426~ppa2) xenial; urgency=medium
+
+  * Switch to building using QT5
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Thu, 27 Apr 2017 22:37:46 +0200
+
+openambit (0.4-0ubuntu0~git20170426~ppa1) xenial; urgency=medium
+
+  * Update to latest upstream version 0.4
+    #62 - Add user options for "running program in background" functionality
+    #63 - Added internationalization (de, fr, it, ja, nb, nl, pl, sv)
+    #125 Added support for syncing navigations items (waypoints and routes) with movescount
+    #130 Added support for syncing sport modes with movescount
+    Added support for pool swimming sample uploads to movescount
+    Added support for Qt5
+    Split movescount support to separate library
+  * Apply more changes from latest Git
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 26 Apr 2017 20:48:36 +0200
+
+openambit (0.3-1ubuntu0~git20170224~ppa1) xenial; urgency=medium
+
+  * Update to commits from 20170224, this includes optional support for Qt5.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Fri, 24 Feb 2017 21:55:52 +0100
+
+openambit (0.3-1ubuntu0~git20151210~ppa1) xenial; urgency=medium
+
+  * Update to commits from 20151210, this replaces patch for pr107.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 07 Aug 2016 10:08:55 +0200
+
+openambit (0.3-1ubuntu0~git20151118~ppa2) trusty; urgency=medium
+
+  * Add patch from PR #107 to fix automatic sync with Movescount.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Mon, 07 Dec 2015 16:29:27 +0100
+
+openambit (0.3-1ubuntu0~git20151118~ppa1) trusty; urgency=medium
+
+  * Update to latest version from git
+  * Re-enable parallel building as gitbug issue #99 should be
+    fixed now
+  * Re-allow cmake < 3.0 as problems with it were fixed upstream
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 18 Nov 2015 19:46:54 +0100
+
+openambit (0.3-1ubuntu0~git20150614~ppa3) trusty; urgency=medium
+
+  * Disable parallel make as it fails now (github issue #99.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 17 Jun 2015 23:01:47 +0200
+
+openambit (0.3-1ubuntu0~git20150614~ppa2) trusty; urgency=medium
+
+  * Add build-dep on wireshark-dev and libglib2.0-dev to also build wireshark-dissector
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 17 Jun 2015 22:10:38 +0200
+
+openambit (0.3-1ubuntu0~git20150614~ppa1) trusty; urgency=medium
+
+  * Update to latest version from git
+  * Use top-level CMakeLists.txt for building
+  * Keep cmake dependency at 2.8.5 for now to not
+    require cmake not available in trusty yet
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 14 Jun 2015 09:28:41 +0200
+
+openambit (0.3-1ubuntu0~git20150503~ppa3) trusty; urgency=medium
+
+  * Fix installing docs.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 03 May 2015 22:16:33 +0200
+
+openambit (0.3-1ubuntu0~git20150503~ppa2) trusty; urgency=medium
+
+  * Add install-target for ambitconsole example
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 03 May 2015 21:29:04 +0200
+
+openambit (0.3-1ubuntu0~git20150503~ppa1) trusty; urgency=medium
+
+  * Update to latest version from git
+  * Add ambitconsole example
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 03 May 2015 11:07:53 +0200
+
+openambit (0.3-1ubuntu0~git20150320~ppa2) trusty; urgency=medium
+
+  * Adjust location of udev rules
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Fri, 20 Mar 2015 21:34:41 +0100
+
+openambit (0.3-1ubuntu0~git20150320~ppa1) trusty; urgency=medium
+
+  * Update to latest version from git
+  * Update version to higher version than available in Vivid.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Fri, 20 Mar 2015 20:48:56 +0100
+
 openambit (0.3-1) unstable; urgency=low
 
   * New upstream release
 
  -- Christian Perrier <bubulle@debian.org>  Tue, 16 Sep 2014 22:27:30 +0200
+
+openambit (0.3-0ubuntu20141223~ppa2) trusty; urgency=medium
+
+  * Adjust new standard-conforming location of udev-rules.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Tue, 23 Dec 2014 23:25:09 +0100
+
+openambit (0.3-0ubuntu20141223~ppa1) trusty; urgency=medium
+
+  * Update to latest Git
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Tue, 23 Dec 2014 23:15:19 +0100
+
+openambit (0.3-0ubuntu20141105~ppa1) trusty; urgency=medium
+
+  * Update to latest Git
+  * Add dependency on libpcap-dev as libopenambit now can make 
+    use of it (not sure if it will be actually used, though...)
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 05 Nov 2014 22:05:12 +0100
+
+openambit (0.3-0ubuntu0~ppa1) trusty; urgency=medium
+
+  * Update to new upstream release.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Wed, 17 Sep 2014 21:37:29 +0200
 
 openambit (0.2+20140602-1) unstable; urgency=low
 
