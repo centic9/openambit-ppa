@@ -14,7 +14,7 @@ cd ../openambit && \
 echo "Status" && \
 git status && \
 echo "Create diff" && \
-diff -Nur -x debian -x .git -x .gitignore -x .pc . ../openambit.git > debian/patches/01_git${DATE}.patch ; \
+diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml . ../openambit.git > debian/patches/01_git${DATE}.patch ; \
 echo "Series" && \
 echo -e "01_git${DATE}.patch\ninstall_example" > debian/patches/series && \
 \
