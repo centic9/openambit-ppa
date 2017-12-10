@@ -1,3 +1,13 @@
+openambit (0.4-1ubuntu0~git20170702~ppa1) xenial; urgency=medium
+
+  * Rebase onto 0.4-1 from Debian, remaining changes
+    * Correctly build for QT5
+    * Add dependencies on wireshark and libpcap and enable building extras
+    * install ambitconsole as well
+    * Build from the CMakeLists.txt in the root dir
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 10 Dec 2017 10:08:51 +0100
+
 openambit (0.4-1) experimental; urgency=low
 
   * New upstream release
