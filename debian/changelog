@@ -1,3 +1,10 @@
+openambit (0.4-1ubuntu0~git20171210~ppa2) xenial; urgency=medium
+
+  * Add some more changes committed on 2017-12-10
+  * Exclude local kdevelop-project from patch
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 10 Dec 2017 22:44:37 +0100
+
 openambit (0.4-1ubuntu0~git20171210~ppa1) xenial; urgency=medium
 
   * Include latest changes from git.
