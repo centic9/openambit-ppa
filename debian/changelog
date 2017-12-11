@@ -1,4 +1,4 @@
-openambit (0.4-2) unstable; urgency=medium
+openambit (0.4-1.1) unstable; urgency=medium
 
   * Correctly build for QT5, Closes #875068
   * Remove libqjson-dev which is not used any more, Closes #875327, #875321 
