@@ -1,0 +1,19 @@
+Index: openambit/src/example/CMakeLists.txt
+===================================================================
+--- openambit.orig/src/example/CMakeLists.txt	2015-05-03 22:06:46.254071868 +0200
++++ openambit/src/example/CMakeLists.txt	2015-05-03 22:12:03.655376299 +0200
+@@ -8,6 +8,8 @@
+ 
+ find_package(libambit REQUIRED)
+ 
++include(GNUInstallDirs)
++
+ include_directories(
+   ${LIBAMBIT_INCLUDE_DIR}
+ )
+@@ -23,3 +25,5 @@
+ target_link_libraries(
+   ambitconsole ${LIBAMBIT_LIBS}
+ )
++
++install ( TARGETS ambitconsole DESTINATION ${CMAKE_INSTALL_BINDIR} )

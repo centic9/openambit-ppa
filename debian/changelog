@@ -1,3 +1,9 @@
+openambit (0.4-1.2) unstable; urgency=medium
+
+  * Fix building/installing ambitconsole
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Mon, 11 Dec 2017 20:23:24 +0100
+
 openambit (0.4-1.1) unstable; urgency=medium
 
   * Correctly build for QT5, Closes #875068
