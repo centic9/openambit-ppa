@@ -1,3 +1,9 @@
+openambit (0.4-1ubuntu0~git20181118~ppa1) bionic; urgency=medium
+
+  * Include latest changes from git.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sun, 18 Nov 2018 20:39:48 +0100
+
 openambit (0.4-1ubuntu0~git20171210~ppa2) xenial; urgency=medium
 
   * Add some more changes committed on 2017-12-10
