@@ -1,6 +1,7 @@
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./CMakeLists.txt ../openambit.git/CMakeLists.txt
---- ./CMakeLists.txt	2017-04-27 22:38:21.000000000 +0200
-+++ ../openambit.git/CMakeLists.txt	2018-11-18 09:07:58.692687030 +0100
+Index: openambit/CMakeLists.txt
+===================================================================
+--- openambit.orig/CMakeLists.txt	2018-11-18 20:42:39.754015522 +0100
++++ openambit/CMakeLists.txt	2018-11-18 20:42:39.738015256 +0100
 @@ -22,7 +22,6 @@
  project(Openambit
    LANGUAGES NONE)
@@ -9,9 +10,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
  option(BUILD_EXTRAS "Build examples and wireshark dissector" OFF)
  
  add_subdirectory(src/libambit)
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./Dockerfile ../openambit.git/Dockerfile
---- ./Dockerfile	2017-04-26 20:42:26.169749292 +0200
-+++ ../openambit.git/Dockerfile	2018-11-18 09:07:58.732687432 +0100
+Index: openambit/Dockerfile
+===================================================================
+--- openambit.orig/Dockerfile	2018-11-18 20:42:39.754015522 +0100
++++ openambit/Dockerfile	2018-11-18 20:42:39.738015256 +0100
 @@ -79,8 +79,8 @@
  RUN  apt-get update \
       && apt-get install ${APT_OPTS} \
@@ -23,159 +25,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
               zlib1g-dev
  
  # wireshark dissector build dependencies
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./openambit_0.4-1.2_amd64-20171211-2200.build ../openambit.git/openambit_0.4-1.2_amd64-20171211-2200.build
---- ./openambit_0.4-1.2_amd64-20171211-2200.build	2017-12-11 22:00:23.696174985 +0100
-+++ ../openambit.git/openambit_0.4-1.2_amd64-20171211-2200.build	1970-01-01 01:00:00.000000000 +0100
-@@ -1,71 +0,0 @@
--sbuild (Debian sbuild) 0.67.0 (26 Dec 2015) on dstathink.dstadler.org
--
--+==============================================================================+
--| openambit 0.4-1.2 (amd64)                                  11 Dez 2017 22:00 |
--+==============================================================================+
--
--Package: openambit
--Version: 0.4-1.2
--Source Version: 0.4-1.2
--Distribution: unstable
--Machine Architecture: amd64
--Host Architecture: amd64
--Build Architecture: amd64
--
--I: NOTICE: Log filtering will replace 'build/openambit-94xeYA/openambit-0.4' with '<<PKGBUILDDIR>>'
--I: NOTICE: Log filtering will replace 'build/openambit-94xeYA' with '<<BUILDDIR>>'
--I: NOTICE: Log filtering will replace 'var/lib/schroot/mount/unstable-amd64-sbuild-1a546074-ba4e-43ab-ae2d-a9f832d8e1e2' with '<<CHROOT>>'
--
--+------------------------------------------------------------------------------+
--| Update chroot                                                                |
--+------------------------------------------------------------------------------+
--
--Hit:1 http://cdn-fastly.deb.debian.org/debian unstable InRelease
--Reading package lists...
--Reading package lists...
--Building dependency tree...
--Calculating upgrade...
--0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
--
--+------------------------------------------------------------------------------+
--| Fetch source files                                                           |
--+------------------------------------------------------------------------------+
--
--
--Check APT
-----------
--
--Checking available source versions...
--Can't find source for openambit_0.4-1.2
--(only different version(s) openambit 0.3-1 found)
--
--+------------------------------------------------------------------------------+
--| Cleanup                                                                      |
--+------------------------------------------------------------------------------+
--
--Purging /<<BUILDDIR>>
--Not cleaning session: cloned chroot in use
--E: Failed to fetch source files
--
--+------------------------------------------------------------------------------+
--| Summary                                                                      |
--+------------------------------------------------------------------------------+
--
--Build Architecture: amd64
--Build-Space: 0
--Build-Time: 0
--Distribution: unstable
--Fail-Stage: fetch-src
--Host Architecture: amd64
--Install-Time: 0
--Job: openambit_0.4-1.2
--Machine Architecture: amd64
--Package: openambit
--Package-Time: 0
--Source-Version: 0.4-1.2
--Space: 0
--Status: failed
--Version: 0.4-1.2
----------------------------------------------------------------------------------
--Finished at 20171211-2200
--Build needed 00:00:00, 0k disc space
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./openambit_0.4-1.2_amd64.build ../openambit.git/openambit_0.4-1.2_amd64.build
---- ./openambit_0.4-1.2_amd64.build	2017-12-11 22:00:23.696174985 +0100
-+++ ../openambit.git/openambit_0.4-1.2_amd64.build	1970-01-01 01:00:00.000000000 +0100
-@@ -1,71 +0,0 @@
--sbuild (Debian sbuild) 0.67.0 (26 Dec 2015) on dstathink.dstadler.org
--
--+==============================================================================+
--| openambit 0.4-1.2 (amd64)                                  11 Dez 2017 22:00 |
--+==============================================================================+
--
--Package: openambit
--Version: 0.4-1.2
--Source Version: 0.4-1.2
--Distribution: unstable
--Machine Architecture: amd64
--Host Architecture: amd64
--Build Architecture: amd64
--
--I: NOTICE: Log filtering will replace 'build/openambit-94xeYA/openambit-0.4' with '<<PKGBUILDDIR>>'
--I: NOTICE: Log filtering will replace 'build/openambit-94xeYA' with '<<BUILDDIR>>'
--I: NOTICE: Log filtering will replace 'var/lib/schroot/mount/unstable-amd64-sbuild-1a546074-ba4e-43ab-ae2d-a9f832d8e1e2' with '<<CHROOT>>'
--
--+------------------------------------------------------------------------------+
--| Update chroot                                                                |
--+------------------------------------------------------------------------------+
--
--Hit:1 http://cdn-fastly.deb.debian.org/debian unstable InRelease
--Reading package lists...
--Reading package lists...
--Building dependency tree...
--Calculating upgrade...
--0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
--
--+------------------------------------------------------------------------------+
--| Fetch source files                                                           |
--+------------------------------------------------------------------------------+
--
--
--Check APT
-----------
--
--Checking available source versions...
--Can't find source for openambit_0.4-1.2
--(only different version(s) openambit 0.3-1 found)
--
--+------------------------------------------------------------------------------+
--| Cleanup                                                                      |
--+------------------------------------------------------------------------------+
--
--Purging /<<BUILDDIR>>
--Not cleaning session: cloned chroot in use
--E: Failed to fetch source files
--
--+------------------------------------------------------------------------------+
--| Summary                                                                      |
--+------------------------------------------------------------------------------+
--
--Build Architecture: amd64
--Build-Space: 0
--Build-Time: 0
--Distribution: unstable
--Fail-Stage: fetch-src
--Host Architecture: amd64
--Install-Time: 0
--Job: openambit_0.4-1.2
--Machine Architecture: amd64
--Package: openambit
--Package-Time: 0
--Source-Version: 0.4-1.2
--Space: 0
--Status: failed
--Version: 0.4-1.2
----------------------------------------------------------------------------------
--Finished at 20171211-2200
--Build needed 00:00:00, 0k disc space
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./README.rst ../openambit.git/README.rst
---- ./README.rst	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/README.rst	2018-11-18 09:07:58.736687472 +0100
+Index: openambit/README.rst
+===================================================================
+--- openambit.orig/README.rst	2018-11-18 20:42:39.754015522 +0100
++++ openambit/README.rst	2018-11-18 20:42:39.742015322 +0100
 @@ -70,10 +70,10 @@
  
  In order to build Openambit from source you need a couple of tools and
@@ -207,9 +60,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
  
  Install Procedure
  -----------------
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/debug.h ../openambit.git/src/libambit/debug.h
---- ./src/libambit/debug.h	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/debug.h	2017-07-02 10:32:42.786320355 +0200
+Index: openambit/src/libambit/debug.h
+===================================================================
+--- openambit.orig/src/libambit/debug.h	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/debug.h	2018-11-18 20:42:39.742015322 +0100
 @@ -48,5 +48,6 @@
  #else
  #define LOG_INFO(fmt, ...)
@@ -217,9 +71,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
 +#define ONLYDEBUGVAR(x) (void)(x)
  
  #endif /* __DEBUG_H__ */
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/device_driver_ambit3.c ../openambit.git/src/libambit/device_driver_ambit3.c
---- ./src/libambit/device_driver_ambit3.c	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/device_driver_ambit3.c	2018-11-18 09:07:58.736687472 +0100
+Index: openambit/src/libambit/device_driver_ambit3.c
+===================================================================
+--- openambit.orig/src/libambit/device_driver_ambit3.c	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/device_driver_ambit3.c	2018-11-18 20:42:39.742015322 +0100
 @@ -21,6 +21,7 @@
   */
  #include "device_driver.h"
@@ -1004,9 +859,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
              else {
                  LOG_WARNING("Unknown memory map type \"%s\"", (char*)ptr);
              }
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/device_driver_ambit.c ../openambit.git/src/libambit/device_driver_ambit.c
---- ./src/libambit/device_driver_ambit.c	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/device_driver_ambit.c	2017-07-02 10:32:42.790320396 +0200
+Index: openambit/src/libambit/device_driver_ambit.c
+===================================================================
+--- openambit.orig/src/libambit/device_driver_ambit.c	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/device_driver_ambit.c	2018-11-18 20:42:39.742015322 +0100
 @@ -188,7 +188,7 @@
              libambit_protocol_free(reply_data);
  
@@ -1035,9 +891,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
                  if (log_entry != NULL) {
                      if (push_cb != NULL) {
                          push_cb(userref, log_entry);
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/device_support.c ../openambit.git/src/libambit/device_support.c
---- ./src/libambit/device_support.c	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/device_support.c	2018-11-18 09:07:58.736687472 +0100
+Index: openambit/src/libambit/device_support.c
+===================================================================
+--- openambit.orig/src/libambit/device_support.c	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/device_support.c	2018-11-18 20:42:39.742015322 +0100
 @@ -23,6 +23,7 @@
  #include "device_driver.h"
  
@@ -1129,9 +986,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
  {
      return (  (version[0] << 24)
              | (version[1] << 16)
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/device_support.h ../openambit.git/src/libambit/device_support.h
---- ./src/libambit/device_support.h	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/device_support.h	2017-07-02 10:32:42.790320396 +0200
+Index: openambit/src/libambit/device_support.h
+===================================================================
+--- openambit.orig/src/libambit/device_support.h	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/device_support.h	2018-11-18 20:42:39.742015322 +0100
 @@ -31,9 +31,12 @@
      bool supported;
      struct ambit_device_driver_s *driver;
@@ -1145,9 +1003,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
 +uint32_t libambit_fw_version_number(const uint8_t version[4]);
  
  #endif /* __DEVICE_SUPPORT_H__ */
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/libambit.c ../openambit.git/src/libambit/libambit.c
---- ./src/libambit/libambit.c	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/libambit.c	2017-07-02 10:32:42.790320396 +0200
+Index: openambit/src/libambit/libambit.c
+===================================================================
+--- openambit.orig/src/libambit/libambit.c	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/libambit.c	2018-11-18 20:42:39.742015322 +0100
 @@ -50,11 +50,6 @@
  static ambit_device_info_t * ambit_device_info_new(const struct hid_device_info *dev);
  
@@ -1237,9 +1096,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
                           device->vendor_id, device->product_id,
                           device->model, fw_version, hw_version,
                           (device->is_supported ? "YES" : "NO"));
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/libambit.h ../openambit.git/src/libambit/libambit.h
---- ./src/libambit/libambit.h	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/libambit.h	2017-07-02 10:32:42.790320396 +0200
+Index: openambit/src/libambit/libambit.h
+===================================================================
+--- openambit.orig/src/libambit/libambit.h	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/libambit.h	2018-11-18 20:42:39.742015322 +0100
 @@ -22,14 +22,14 @@
  #ifndef __LIBAMBIT_H__
  #define __LIBAMBIT_H__
@@ -1312,9 +1172,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
          struct {
              int32_t  latitude;                  /* degree, scale: 0.0000001, -90 <= latitude <= 90 */
              int32_t  longitude;                 /* degree, scale: 0.0000001, -180 <= latitude <= 180 */
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/libambit.rules ../openambit.git/src/libambit/libambit.rules
---- ./src/libambit/libambit.rules	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/libambit.rules	2018-11-18 09:07:58.788687996 +0100
+Index: openambit/src/libambit/libambit.rules
+===================================================================
+--- openambit.orig/src/libambit/libambit.rules	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/libambit.rules	2018-11-18 20:42:39.742015322 +0100
 @@ -25,6 +25,18 @@
  # Greentit (a.k.a Suunto Ambit2 R)
  SUBSYSTEMS=="usb", ATTRS{idProduct}=="001d", ENV{openambit}="yes"
@@ -1334,9 +1195,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
  ENV{openambit}=="yes", MODE="0666", OWNER="root", GROUP="root"
  
  LABEL="openambit_rules_end"
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/pmem20.c ../openambit.git/src/libambit/pmem20.c
---- ./src/libambit/pmem20.c	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/pmem20.c	2017-07-02 10:32:42.790320396 +0200
+Index: openambit/src/libambit/pmem20.c
+===================================================================
+--- openambit.orig/src/libambit/pmem20.c	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/pmem20.c	2018-11-18 20:42:39.742015322 +0100
 @@ -93,7 +93,7 @@
  
      // Set memory structure
@@ -1544,9 +1406,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
      uint32_t altisource_index = 0;
      uint32_t last_base_lat = 0, last_base_long = 0;
      uint32_t last_small_lat = 0, last_small_long = 0;
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/pmem20.h ../openambit.git/src/libambit/pmem20.h
---- ./src/libambit/pmem20.h	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/pmem20.h	2017-07-02 10:32:42.790320396 +0200
+Index: openambit/src/libambit/pmem20.h
+===================================================================
+--- openambit.orig/src/libambit/pmem20.h	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/pmem20.h	2018-11-18 20:42:39.742015322 +0100
 @@ -26,6 +26,11 @@
  #include <stdint.h>
  #include "libambit.h"
@@ -1577,9 +1440,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
  int libambit_pmem20_gps_orbit_write(libambit_pmem20_t *object, const uint8_t *data, size_t datalen, bool include_sha256_hash);
  int libambit_pmem20_sport_mode_write(libambit_pmem20_t *object, const uint8_t *data, size_t datalen, bool include_sha256_hash);
  int libambit_pmem20_app_data_write(libambit_pmem20_t *object, const uint8_t *data, size_t datalen, bool include_sha256_hash);
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/protocol.c ../openambit.git/src/libambit/protocol.c
---- ./src/libambit/protocol.c	2017-04-27 22:38:21.000000000 +0200
-+++ ../openambit.git/src/libambit/protocol.c	2018-11-18 09:07:58.788687996 +0100
+Index: openambit/src/libambit/protocol.c
+===================================================================
+--- openambit.orig/src/libambit/protocol.c	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/protocol.c	2018-11-18 20:42:39.742015322 +0100
 @@ -106,7 +106,7 @@
      msg->MP = 0x5d;
      msg->parts_seq = htole16(packet_count);
@@ -1589,9 +1453,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
      msg->format = htole16(legacy_format == 1 ? 0 : 9);
      msg->sequence = htole16(object->sequence_no);
      msg->payload_len = htole32(datalen);
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/protocol.h ../openambit.git/src/libambit/protocol.h
---- ./src/libambit/protocol.h	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/protocol.h	2017-07-02 10:32:42.790320396 +0200
+Index: openambit/src/libambit/protocol.h
+===================================================================
+--- openambit.orig/src/libambit/protocol.h	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/protocol.h	2018-11-18 20:42:39.742015322 +0100
 @@ -49,11 +49,17 @@
      ambit_command_lock_check            = 0x0b19,
      ambit_command_lock_set              = 0x0b1a,
@@ -1611,9 +1476,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
  };
  
  /**
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/sbem0102.c ../openambit.git/src/libambit/sbem0102.c
---- ./src/libambit/sbem0102.c	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/sbem0102.c	2017-07-02 10:32:42.802320519 +0200
+Index: openambit/src/libambit/sbem0102.c
+===================================================================
+--- openambit.orig/src/libambit/sbem0102.c	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/sbem0102.c	2018-11-18 20:42:39.742015322 +0100
 @@ -153,9 +153,8 @@
                  // Check if this reply was just a part (5th byte is the current
                  // guess on how to determine)
@@ -1626,9 +1492,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
                      memcpy(send_data, reply, 4);
  
                      // Free old reply before calling again
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/sbem0102.h ../openambit.git/src/libambit/sbem0102.h
---- ./src/libambit/sbem0102.h	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/sbem0102.h	2018-11-18 09:07:58.788687996 +0100
+Index: openambit/src/libambit/sbem0102.h
+===================================================================
+--- openambit.orig/src/libambit/sbem0102.h	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/sbem0102.h	2018-11-18 20:42:39.742015322 +0100
 @@ -25,6 +25,9 @@
  #include <stddef.h>
  #include <stdint.h>
@@ -1676,9 +1543,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
          return 0;
      }
      // Exit state
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/libambit/utils.h ../openambit.git/src/libambit/utils.h
---- ./src/libambit/utils.h	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/libambit/utils.h	2017-07-02 10:32:42.802320519 +0200
+Index: openambit/src/libambit/utils.h
+===================================================================
+--- openambit.orig/src/libambit/utils.h	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/libambit/utils.h	2018-11-18 20:42:39.742015322 +0100
 @@ -24,6 +24,7 @@
  
  #include <stddef.h>
@@ -1713,9 +1581,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
 +    for (size_t _i = 0; _i < ARRAY_LENGTH(_arr) && (_elem = &_arr[_i]); _i++)
 +
  #endif /* __UTILS_H__ */
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/movescount/CMakeLists.txt ../openambit.git/src/movescount/CMakeLists.txt
---- ./src/movescount/CMakeLists.txt	2017-04-27 22:38:21.000000000 +0200
-+++ ../openambit.git/src/movescount/CMakeLists.txt	2018-11-18 09:07:58.792688036 +0100
+Index: openambit/src/movescount/CMakeLists.txt
+===================================================================
+--- openambit.orig/src/movescount/CMakeLists.txt	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/movescount/CMakeLists.txt	2018-11-18 20:42:39.742015322 +0100
 @@ -24,14 +24,8 @@
  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
  set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../openambit/cmake")
@@ -1760,9 +1629,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
  )
  
  set_target_properties(movescount
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/movescount/logstore.cpp ../openambit.git/src/movescount/logstore.cpp
---- ./src/movescount/logstore.cpp	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/movescount/logstore.cpp	2017-07-02 10:32:42.810320601 +0200
+Index: openambit/src/movescount/logstore.cpp
+===================================================================
+--- openambit.orig/src/movescount/logstore.cpp	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/movescount/logstore.cpp	2018-11-18 20:42:39.746015389 +0100
 @@ -847,12 +847,12 @@
                          }
                          break;
@@ -1817,9 +1687,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
                  xml.writeCharacters(QString(cadence_source_name->XMLName));
                  break;
              }
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/movescount/movescount.cpp ../openambit.git/src/movescount/movescount.cpp
---- ./src/movescount/movescount.cpp	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/movescount/movescount.cpp	2018-11-18 09:07:58.804688157 +0100
+Index: openambit/src/movescount/movescount.cpp
+===================================================================
+--- openambit.orig/src/movescount/movescount.cpp	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/movescount/movescount.cpp	2018-11-18 20:42:39.746015389 +0100
 @@ -574,7 +574,7 @@
  
      reply = syncPOST("/moves/", "", output, true);
@@ -1829,9 +1700,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
          QByteArray data = reply->readAll();
          if (jsonParser.parseLogReply(data, moveId) == 0) {
              emit logMoveID(logEntry->device, logEntry->time, moveId);
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/movescount/movescountjson.cpp ../openambit.git/src/movescount/movescountjson.cpp
---- ./src/movescount/movescountjson.cpp	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/movescount/movescountjson.cpp	2018-11-18 09:07:58.804688157 +0100
+Index: openambit/src/movescount/movescountjson.cpp
+===================================================================
+--- openambit.orig/src/movescount/movescountjson.cpp	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/movescount/movescountjson.cpp	2018-11-18 20:42:39.746015389 +0100
 @@ -27,14 +27,9 @@
  #include <QVariantList>
  #include <QStringList>
@@ -2020,9 +1892,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
 -#endif
  }
  
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/movescount/movescountjson.h ../openambit.git/src/movescount/movescountjson.h
---- ./src/movescount/movescountjson.h	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/movescount/movescountjson.h	2017-07-02 10:32:42.810320601 +0200
+Index: openambit/src/movescount/movescountjson.h
+===================================================================
+--- openambit.orig/src/movescount/movescountjson.h	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/movescount/movescountjson.h	2018-11-18 20:42:39.746015389 +0100
 @@ -46,7 +46,7 @@
      int parsePersonalSettings(QByteArray &input, ambit_personal_settings_t *ps, MovesCount *movescount);
      int parseRoute(QByteArray &input, ambit_route_t *routes, ambit_personal_settings_t *ps, MovesCount *movescount);
@@ -2032,9 +1905,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
      int parseDeviceSettingsReply(QByteArray &input, MovescountSettings &movescountSettings);
      int parseAppRulesReply(QByteArray &input, ambit_app_rules_t* ambitApps); // QList<uint> &appRulesId, QList<QByteArray> &appRulesData);
  
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/movescount/movescountxml.cpp ../openambit.git/src/movescount/movescountxml.cpp
---- ./src/movescount/movescountxml.cpp	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/movescount/movescountxml.cpp	2017-12-10 18:45:27.724773014 +0100
+Index: openambit/src/movescount/movescountxml.cpp
+===================================================================
+--- openambit.orig/src/movescount/movescountxml.cpp	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/movescount/movescountxml.cpp	2018-11-18 20:42:39.746015389 +0100
 @@ -20,6 +20,7 @@
   *
   */
@@ -2069,9 +1943,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
              // Only include UTC time for GPS source
              xml.writeTextElement("UTC", dateTimeString(dateTime));
          }
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/movescount/sportmode.cpp ../openambit.git/src/movescount/sportmode.cpp
---- ./src/movescount/sportmode.cpp	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/movescount/sportmode.cpp	2017-07-02 10:32:42.810320601 +0200
+Index: openambit/src/movescount/sportmode.cpp
+===================================================================
+--- openambit.orig/src/movescount/sportmode.cpp	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/movescount/sportmode.cpp	2018-11-18 20:42:39.746015389 +0100
 @@ -233,7 +233,7 @@
  
  void CustomMode::toAmbitName(char ambitName[NAME_SIZE])
@@ -2081,9 +1956,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
      int strLen = activityName.length() < NAME_SIZE ? activityName.length() : NAME_SIZE;
      memset(ambitName, 0x00, NAME_SIZE);
      memcpy(ambitName, source, strLen);
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/movescount/sportmodegroup.cpp ../openambit.git/src/movescount/sportmodegroup.cpp
---- ./src/movescount/sportmodegroup.cpp	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/movescount/sportmodegroup.cpp	2017-07-02 10:32:42.810320601 +0200
+Index: openambit/src/movescount/sportmodegroup.cpp
+===================================================================
+--- openambit.orig/src/movescount/sportmodegroup.cpp	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/movescount/sportmodegroup.cpp	2018-11-18 20:42:39.746015389 +0100
 @@ -70,7 +70,7 @@
  
  void CustomModeGroup::toAmbitName(char ambitName[GROUP_NAME_SIZE])
@@ -2093,9 +1969,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
      int strLen = activityName.length() < GROUP_NAME_SIZE ? activityName.length() : GROUP_NAME_SIZE;
      memset(ambitName, 0x00, GROUP_NAME_SIZE);
      memcpy(ambitName, source, strLen);
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/CMakeLists.txt ../openambit.git/src/openambit/CMakeLists.txt
---- ./src/openambit/CMakeLists.txt	2017-04-27 22:38:21.000000000 +0200
-+++ ../openambit.git/src/openambit/CMakeLists.txt	2018-11-18 09:07:58.804688157 +0100
+Index: openambit/src/openambit/CMakeLists.txt
+===================================================================
+--- openambit.orig/src/openambit/CMakeLists.txt	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/CMakeLists.txt	2018-11-18 20:42:39.746015389 +0100
 @@ -8,15 +8,12 @@
  
  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
@@ -2171,9 +2048,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
  
  install(TARGETS openambit DESTINATION ${CMAKE_INSTALL_BINDIR})
  install(FILES ${OPENAMBIT_SOURCE_DIR}/deployment/openambit.desktop
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/confirmbetadialog.ui ../openambit.git/src/openambit/confirmbetadialog.ui
---- ./src/openambit/confirmbetadialog.ui	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/confirmbetadialog.ui	2017-07-02 10:32:42.822320723 +0200
+Index: openambit/src/openambit/confirmbetadialog.ui
+===================================================================
+--- openambit.orig/src/openambit/confirmbetadialog.ui	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/confirmbetadialog.ui	2018-11-18 20:42:39.746015389 +0100
 @@ -38,25 +38,26 @@
     <item row="0" column="0">
      <widget class="QTextBrowser" name="textBrowser">
@@ -2219,9 +2097,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
       </property>
       <property name="openExternalLinks">
        <bool>true</bool>
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/devicemanager.cpp ../openambit.git/src/openambit/devicemanager.cpp
---- ./src/openambit/devicemanager.cpp	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/devicemanager.cpp	2017-07-02 10:32:42.822320723 +0200
+Index: openambit/src/openambit/devicemanager.cpp
+===================================================================
+--- openambit.orig/src/openambit/devicemanager.cpp	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/devicemanager.cpp	2018-11-18 20:42:39.746015389 +0100
 @@ -131,12 +131,15 @@
          }
  
@@ -2273,9 +2152,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
              currentSyncPart++;
          }
  
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/devicemanager.h ../openambit.git/src/openambit/devicemanager.h
---- ./src/openambit/devicemanager.h	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/devicemanager.h	2017-07-02 10:32:42.822320723 +0200
+Index: openambit/src/openambit/devicemanager.h
+===================================================================
+--- openambit.orig/src/openambit/devicemanager.h	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/devicemanager.h	2018-11-18 20:42:39.746015389 +0100
 @@ -35,7 +35,6 @@
  #include <movescount/movescountxml.h>
  #include "udevlistener.h"
@@ -2284,9 +2164,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
  #include <libudev.h>
  
  class DeviceManager : public QObject
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/mainwindow.cpp ../openambit.git/src/openambit/mainwindow.cpp
---- ./src/openambit/mainwindow.cpp	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/mainwindow.cpp	2018-11-18 20:35:51.756124045 +0100
+Index: openambit/src/openambit/mainwindow.cpp
+===================================================================
+--- openambit.orig/src/openambit/mainwindow.cpp	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/mainwindow.cpp	2018-11-18 20:42:39.746015389 +0100
 @@ -337,20 +337,20 @@
      }
      if (success) {
@@ -2352,9 +2233,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
      }
      emit MainWindow::syncNow(ui->checkBoxResyncAll->isChecked());
  }
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/mainwindow.ui ../openambit.git/src/openambit/mainwindow.ui
---- ./src/openambit/mainwindow.ui	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/mainwindow.ui	2017-09-24 10:47:09.435094955 +0200
+Index: openambit/src/openambit/mainwindow.ui
+===================================================================
+--- openambit.orig/src/openambit/mainwindow.ui	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/mainwindow.ui	2018-11-18 20:42:39.746015389 +0100
 @@ -20,307 +20,310 @@
    <widget class="QWidget" name="centralWidget">
     <layout class="QHBoxLayout" name="horizontalLayout">
@@ -3027,9 +2909,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
   </resources>
   <connections>
    <connection>
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/settingsdialog.ui ../openambit.git/src/openambit/settingsdialog.ui
---- ./src/openambit/settingsdialog.ui	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/settingsdialog.ui	2017-07-02 10:32:42.822320723 +0200
+Index: openambit/src/openambit/settingsdialog.ui
+===================================================================
+--- openambit.orig/src/openambit/settingsdialog.ui	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/settingsdialog.ui	2018-11-18 20:42:39.746015389 +0100
 @@ -134,7 +134,7 @@
                </sizepolicy>
               </property>
@@ -3039,9 +2922,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
               </property>
               <layout class="QFormLayout" name="formLayout">
                <item row="1" column="0">
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/translations/openambit_de.ts ../openambit.git/src/openambit/translations/openambit_de.ts
---- ./src/openambit/translations/openambit_de.ts	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/translations/openambit_de.ts	2017-07-02 10:32:42.822320723 +0200
+Index: openambit/src/openambit/translations/openambit_de.ts
+===================================================================
+--- openambit.orig/src/openambit/translations/openambit_de.ts	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/translations/openambit_de.ts	2018-11-18 20:42:39.750015456 +0100
 @@ -12,25 +12,26 @@
          <translation>Nicht nochmal fragen, ich möchte Openambit wirklich benutzen</translation>
      </message>
@@ -3137,9 +3021,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
          <translation>Einstellungen für die Gerätesynchronisierung</translation>
      </message>
      <message>
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/translations/openambit_fr.ts ../openambit.git/src/openambit/translations/openambit_fr.ts
---- ./src/openambit/translations/openambit_fr.ts	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/translations/openambit_fr.ts	2017-07-02 10:32:42.822320723 +0200
+Index: openambit/src/openambit/translations/openambit_fr.ts
+===================================================================
+--- openambit.orig/src/openambit/translations/openambit_fr.ts	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/translations/openambit_fr.ts	2018-11-18 20:42:39.750015456 +0100
 @@ -12,25 +12,26 @@
          <translation>Ne plus me poser cette question.</translation>
      </message>
@@ -3354,9 +3239,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
 +    </message>
  </context>
  </TS>
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/translations/openambit_it.ts ../openambit.git/src/openambit/translations/openambit_it.ts
---- ./src/openambit/translations/openambit_it.ts	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/translations/openambit_it.ts	2018-11-18 09:07:58.804688157 +0100
+Index: openambit/src/openambit/translations/openambit_it.ts
+===================================================================
+--- openambit.orig/src/openambit/translations/openambit_it.ts	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/translations/openambit_it.ts	2018-11-18 20:42:39.750015456 +0100
 @@ -12,25 +12,26 @@
          <translation>Non mi chiedere piu, voglio veramente uasre Openambit</translation>
      </message>
@@ -3531,9 +3417,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
      </message>
      <message>
          <source>Email (Movescount account)</source>
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/translations/openambit_ja.ts ../openambit.git/src/openambit/translations/openambit_ja.ts
---- ./src/openambit/translations/openambit_ja.ts	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/translations/openambit_ja.ts	2017-07-02 10:32:42.822320723 +0200
+Index: openambit/src/openambit/translations/openambit_ja.ts
+===================================================================
+--- openambit.orig/src/openambit/translations/openambit_ja.ts	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/translations/openambit_ja.ts	2018-11-18 20:42:39.750015456 +0100
 @@ -12,26 +12,27 @@
          <translation>再び聞かないで、Openambitをマジで使いたい！</translation>
      </message>
@@ -3622,9 +3509,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
          <translation>デバイス同期設定</translation>
      </message>
      <message>
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/translations/openambit_nb_NO.ts ../openambit.git/src/openambit/translations/openambit_nb_NO.ts
---- ./src/openambit/translations/openambit_nb_NO.ts	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/translations/openambit_nb_NO.ts	2017-07-02 10:32:42.822320723 +0200
+Index: openambit/src/openambit/translations/openambit_nb_NO.ts
+===================================================================
+--- openambit.orig/src/openambit/translations/openambit_nb_NO.ts	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/translations/openambit_nb_NO.ts	2018-11-18 20:42:39.750015456 +0100
 @@ -12,25 +12,26 @@
          <translation>Ikke spør meg igjen. Jeg vil bruke Openambit.</translation>
      </message>
@@ -3728,9 +3616,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
          <translation>Synkroniseringsinnstillinger</translation>
      </message>
      <message>
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/translations/openambit_nl.ts ../openambit.git/src/openambit/translations/openambit_nl.ts
---- ./src/openambit/translations/openambit_nl.ts	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/translations/openambit_nl.ts	2017-07-02 10:32:42.822320723 +0200
+Index: openambit/src/openambit/translations/openambit_nl.ts
+===================================================================
+--- openambit.orig/src/openambit/translations/openambit_nl.ts	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/translations/openambit_nl.ts	2018-11-18 20:42:39.750015456 +0100
 @@ -12,25 +12,26 @@
          <translation>Niet nogmaals vragen, ik wil Openambit echt gebruiken</translation>
      </message>
@@ -3817,9 +3706,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
          <translation>Installingen voor de apparaatsynchronisatie</translation>
      </message>
      <message>
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/translations/openambit_pl.ts ../openambit.git/src/openambit/translations/openambit_pl.ts
---- ./src/openambit/translations/openambit_pl.ts	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/translations/openambit_pl.ts	2017-07-02 10:32:42.822320723 +0200
+Index: openambit/src/openambit/translations/openambit_pl.ts
+===================================================================
+--- openambit.orig/src/openambit/translations/openambit_pl.ts	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/translations/openambit_pl.ts	2018-11-18 20:42:39.750015456 +0100
 @@ -12,25 +12,26 @@
          <translation>Nie pytaj ponownie, na prawdę chcę użyć Openambit</translation>
      </message>
@@ -3938,9 +3828,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
          <translation>Synchronizacja ustawień urządzenia</translation>
      </message>
      <message>
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/translations/openambit_ru.ts ../openambit.git/src/openambit/translations/openambit_ru.ts
---- ./src/openambit/translations/openambit_ru.ts	1970-01-01 01:00:00.000000000 +0100
-+++ ../openambit.git/src/openambit/translations/openambit_ru.ts	2017-07-02 10:32:42.822320723 +0200
+Index: openambit/src/openambit/translations/openambit_ru.ts
+===================================================================
+--- /dev/null	1970-01-01 00:00:00.000000000 +0000
++++ openambit/src/openambit/translations/openambit_ru.ts	2018-11-18 20:42:39.750015456 +0100
 @@ -0,0 +1,333 @@
 +<?xml version="1.0" encoding="utf-8"?>
 +<!DOCTYPE TS>
@@ -4275,9 +4166,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
 +    </message>
 +</context>
 +</TS>
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./src/openambit/translations/openambit_sv.ts ../openambit.git/src/openambit/translations/openambit_sv.ts
---- ./src/openambit/translations/openambit_sv.ts	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/src/openambit/translations/openambit_sv.ts	2017-07-02 10:32:42.822320723 +0200
+Index: openambit/src/openambit/translations/openambit_sv.ts
+===================================================================
+--- openambit.orig/src/openambit/translations/openambit_sv.ts	2018-11-18 20:42:39.754015522 +0100
++++ openambit/src/openambit/translations/openambit_sv.ts	2018-11-18 20:42:39.750015456 +0100
 @@ -12,25 +12,26 @@
          <translation>Fråga mig inte igen</translation>
      </message>
@@ -4373,9 +4265,10 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
          <translation>Synkroniseringsinställningar</translation>
      </message>
      <message>
-diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 ./wireshark_dissector/ambit-dissector.c ../openambit.git/wireshark_dissector/ambit-dissector.c
---- ./wireshark_dissector/ambit-dissector.c	2017-12-10 10:28:27.000000000 +0100
-+++ ../openambit.git/wireshark_dissector/ambit-dissector.c	2017-07-02 10:32:42.834320846 +0200
+Index: openambit/wireshark_dissector/ambit-dissector.c
+===================================================================
+--- openambit.orig/wireshark_dissector/ambit-dissector.c	2018-11-18 20:42:39.754015522 +0100
++++ openambit/wireshark_dissector/ambit-dissector.c	2018-11-18 20:42:39.754015522 +0100
 @@ -86,6 +86,8 @@
  static gint dissect_ambit3_log_headers_get(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
  static gint dissect_ambit3_log_headers_reply(tvbuff_t *tvb, packet_info *pinfo, proto_tree *tree, void *data _U_);
