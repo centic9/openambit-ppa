@@ -1,3 +1,11 @@
+openambit (0.4-1ubuntu0~git20191028~ppa1) bionic; urgency=medium
+
+  * Update to latest master which received lots of changes
+  * Add message box if settings file can not be written
+  * Keep PR204 and PR210 as well
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Mon, 28 Oct 2019 07:24:41 +0100
+
 openambit (0.4-1ubuntu0~git20181118~ppa2) bionic; urgency=medium
 
   * Add PR204 - Add support for registering device
