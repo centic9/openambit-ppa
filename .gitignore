@@ -33,3 +33,6 @@ moc_*.cpp
 *.iml
 
 /core
+
+# Debian patch-dir
+.pc

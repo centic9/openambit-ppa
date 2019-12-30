@@ -1,0 +1,174 @@
+From 0ed61404f1602b023dd79d6cf9a046e963658548 Mon Sep 17 00:00:00 2001
+From: Nicolas Cornu <nicolac76@yahoo.fr>
+Date: Wed, 7 Nov 2018 21:17:04 +0100
+Subject: [PATCH] Add support for registering new device to movescount.com
+
+---
+ src/movescount/movescount.cpp     | 14 ++++++++++++++
+ src/movescount/movescount.h       |  1 +
+ src/movescount/movescountjson.cpp | 13 +++++++++++++
+ src/movescount/movescountjson.h   |  1 +
+ src/openambit/mainwindow.cpp      | 10 ++++++++++
+ src/openambit/mainwindow.h        |  1 +
+ src/openambit/mainwindow.ui       |  7 +++++++
+ 7 files changed, 47 insertions(+)
+
+diff --git a/src/movescount/movescount.cpp b/src/movescount/movescount.cpp
+index b205d82..4d6ce95 100644
+--- a/src/movescount/movescount.cpp
++++ b/src/movescount/movescount.cpp
+@@ -587,6 +587,20 @@ void MovesCount::writeLogInThread(LogEntry *logEntry)
+     }
+ }
+ 
++void MovesCount::createUserDevice()
++{
++    QByteArray output;
++    QNetworkReply *reply;
++
++    jsonParser.generateUserdevice(device_info, output);
++
++    reply = syncPOST("/userdevices/", "", output, true);
++
++    if (reply->error() != QNetworkReply::NoError) {
++        qDebug() << "Failed to create device, movescount.com replied with \"" << reply->readAll() << "\"";
++    }
++}
++
+ MovesCount::MovesCount() :
+     exiting(false), authorized(false), firmwareCheckReply(NULL), authCheckReply(NULL)
+ {
+diff --git a/src/movescount/movescount.h b/src/movescount/movescount.h
+index 09b6383..ef31bf4 100644
+--- a/src/movescount/movescount.h
++++ b/src/movescount/movescount.h
+@@ -67,6 +67,7 @@ class MovesCount : public QObject
+     void checkLatestFirmwareVersion();
+     void writePersonalSettings(ambit_personal_settings_t *settings);
+     void writeLog(LogEntry *logEntry);
++    void createUserDevice();
+ 
+ signals:
+     void newerFirmwareExists(QByteArray fw_version);
+diff --git a/src/movescount/movescountjson.cpp b/src/movescount/movescountjson.cpp
+index ebcfff0..2241a3d 100644
+--- a/src/movescount/movescountjson.cpp
++++ b/src/movescount/movescountjson.cpp
+@@ -1141,6 +1141,19 @@ QDateTime MovesCountJSON::dateTimeCompensate(QDateTime dateTime, QDateTime prevD
+     return dateTime;
+ }
+ 
++int MovesCountJSON::generateUserdevice(const DeviceInfo& device, QByteArray& output)
++{
++    QVariantMap content;
++
++    content.insert("DeviceName", device.model);
++    content.insert("SerialNumber", device.serial);
++    QString firmwareVersion = QString("%1.%2.%3").arg(device.fw_version[0]).arg(device.fw_version[1]).arg(device.fw_version[2]);
++    content.insert("FirmwareVersion", firmwareVersion);
++
++    output = QJsonDocument(QJsonObject::fromVariantMap(content)).toJson(QJsonDocument::Compact);
++    return !output.isEmpty() ? 0 : -1;
++}
++
+ QVariantMap MovesCountJSON::parseJsonMap(const QByteArray& input, bool& ok) const
+ {
+     if (input.length() <= 0) {
+diff --git a/src/movescount/movescountjson.h b/src/movescount/movescountjson.h
+index 43a1b98..e32e3a6 100644
+--- a/src/movescount/movescountjson.h
++++ b/src/movescount/movescountjson.h
+@@ -52,6 +52,7 @@ class MovesCountJSON : public QObject
+ 
+     int generateNewPersonalSettings(ambit_personal_settings_t *settings, DeviceInfo &device_info, QByteArray &output);
+     int generateLogData(LogEntry *logEntry, QByteArray &output);
++    int generateUserdevice(const DeviceInfo& device, QByteArray& output);
+ 
+ signals:
+ 
+diff --git a/src/openambit/mainwindow.cpp b/src/openambit/mainwindow.cpp
+index 8b47e20..1ebda0b 100644
+--- a/src/openambit/mainwindow.cpp
++++ b/src/openambit/mainwindow.cpp
+@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) :
+     ui->chargeIndicator->setHidden(true);
+     ui->checkBoxResyncAll->setHidden(true);
+     ui->buttonSyncNow->setHidden(true);
++    ui->createUserDevice->setHidden(true);
+     ui->syncProgressBar->setHidden(true);
+ 
+ 
+@@ -101,6 +102,7 @@ MainWindow::MainWindow(QWidget *parent) :
+     connect(deviceManager, SIGNAL(syncProgressInform(QString,bool,bool,quint8)), this, SLOT(syncProgressInform(QString,bool,bool,quint8)), Qt::QueuedConnection);
+     connect(ui->buttonDeviceReload, SIGNAL(clicked()), deviceManager, SLOT(detect()));
+     connect(ui->buttonSyncNow, SIGNAL(clicked()), this, SLOT(syncNowClicked()));
++    connect(ui->createUserDevice, SIGNAL(clicked()), this, SLOT(createUserDevice()));
+     connect(this, SIGNAL(syncNow(bool)), deviceManager, SLOT(startSync(bool)));
+     deviceWorkerThread.start();
+     deviceManager->start();
+@@ -242,6 +244,11 @@ void MainWindow::syncNowClicked()
+     startSync();
+ }
+ 
++void MainWindow::createUserDevice()
++{
++    movesCount->createUserDevice();
++}
++
+ void MainWindow::deviceDetected(const DeviceInfo& deviceInfo)
+ {
+     if (0 != deviceInfo.access_status) {
+@@ -265,6 +272,7 @@ void MainWindow::deviceDetected(const DeviceInfo& deviceInfo)
+         ui->chargeIndicator->setHidden(true);
+         ui->checkBoxResyncAll->setHidden(true);
+         ui->buttonSyncNow->setHidden(true);
++        ui->createUserDevice->setHidden(true);
+         trayIconSyncAction->setDisabled(true);
+         ui->syncProgressBar->setHidden(true);
+     }
+@@ -279,6 +287,7 @@ void MainWindow::deviceDetected(const DeviceInfo& deviceInfo)
+         ui->chargeIndicator->setHidden(false);
+         ui->checkBoxResyncAll->setHidden(false);
+         ui->buttonSyncNow->setHidden(false);
++        ui->createUserDevice->setHidden(false);
+         trayIconSyncAction->setDisabled(false);
+ 
+         movesCountSetup();
+@@ -317,6 +326,7 @@ void MainWindow::deviceRemoved(void)
+     ui->chargeIndicator->setHidden(true);
+     ui->checkBoxResyncAll->setHidden(true);
+     ui->buttonSyncNow->setHidden(true);
++    ui->createUserDevice->setHidden(true);
+     trayIconSyncAction->setDisabled(true);
+     ui->syncProgressBar->setHidden(true);
+ 
+diff --git a/src/openambit/mainwindow.h b/src/openambit/mainwindow.h
+index 0ac9aa4..9859792 100644
+--- a/src/openambit/mainwindow.h
++++ b/src/openambit/mainwindow.h
+@@ -69,6 +69,7 @@ private slots:
+     void settingsSaved();
+ 
+     void syncNowClicked();
++    void createUserDevice();
+ 
+     void deviceDetected(const DeviceInfo& deviceInfo);
+     void deviceRemoved();
+diff --git a/src/openambit/mainwindow.ui b/src/openambit/mainwindow.ui
+index 5498aeb..531adc5 100644
+--- a/src/openambit/mainwindow.ui
++++ b/src/openambit/mainwindow.ui
+@@ -319,6 +319,13 @@
+              </property>
+             </widget>
+            </item>
++           <item>
++            <widget class="QPushButton" name="createUserDevice">
++             <property name="text">
++              <string>Add device to Movescount</string>
++             </property>
++            </widget>
++           </item>
+           </layout>
+          </widget>
+         </item>
