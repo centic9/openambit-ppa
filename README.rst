@@ -70,11 +70,19 @@ Requirements
 
 In order to build Openambit from source you need a couple of tools and
 libraries.  To begin with, you will need ``cmake``, ``make`` and C and
-C++ compilers.  You will need C and C++ libraries, Qt4, ``libqjson``
-and ``zlib`` as well as one of ``libudev`` and ``libusb-1.0``.  For
-all these libraries you will also need their header files (typically
-provided in ``*-dev`` or ``*-devel`` packages).
+C++ compilers.  You will need C and C++ libraries, Qt5 and ``zlib`` as
+well as one of ``libudev`` and ``libusb-1.0``.
+For all these libraries you will also need their header files
+(typically provided in ``*-dev`` or ``*-devel`` packages).
 
+On Debian/Ubuntu based distributions the following should install the
+necessary packages:
+
+``sudo apt-get install debhelper gcc g++ make cmake libusb-1.0-0-dev libudev-dev qtbase5-dev qttools5-dev-tools zlib1g-dev libpcap-dev libglib2.0-dev wireshark-dev qttools5-dev``
+
+Openambit also makes use of the hidapi library from https://github.com/libusb/hidapi
+The source is currently included, so no dependency needs to be installed
+for it.
 
 Build Procedure
 ---------------
@@ -127,6 +135,16 @@ following ought to work:
    cd _build
    cmake ..
    make
+   
+Build options
+
+.. code-block:: sh
+
+   BUILD_EXTRAS = 0 | 1 (Default 0)
+   CMAKE_BUILD_TYPE = Debug | Release
+   DEBUG_PRINT_INFO = 0 | 1 (Default 0)
+   HIDAPI_DRIVER = libudev | libusb | pcapsimulate | mac | windows (Default <empty> => libudev)
+
 
 Install Procedure
 -----------------
@@ -164,3 +182,9 @@ will use the latest and greatest(?) version.
 .. _Ubuntu: http://packages.ubuntu.com/search?keywords=openambit
 .. _OSWatershed.org: http://oswatershed.org/pkg/openambit
 .. _release: https://github.com/openambitproject/openambit/releases
+
+More information
+----------------
+
+Look at the wiki at https://github.com/openambitproject/openambit/wiki for
+more information.

@@ -24,21 +24,13 @@
 
 #include <QRegExp>
 #include <QVariantMap>
-#include <QVariantList>
 #include <QStringList>
-#include <QDebug>
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-# include <qjson/parser.h>
-# include <qjson/serializer.h>
-#else
-# include <QJsonArray>
-# include <QJsonDocument>
-# include <QJsonObject>
-#endif
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 #include <zlib.h>
-#include <math.h>
-#include <stdio.h>
-#include <algorithm>
+#include <cmath>
+#include <cstdio>
 
 MovesCountJSON::MovesCountJSON(QObject *parent) :
     QObject(parent)
@@ -153,7 +145,7 @@ int MovesCountJSON::parsePersonalSettings(QByteArray &input, ambit_personal_sett
             waypoints_to_append[x].type = (uint8_t)(jsonWp["Type"].toInt());
             this->copyDataString(jsonWp["Name"],waypoints_to_append[x].name, 49);
             strncpy(waypoints_to_append[x].route_name, "", 49);
-            dt = dt.fromString(jsonWp["CreationLocalTime"].toString(), Qt::ISODate);
+            dt = QDateTime::fromString(jsonWp["CreationLocalTime"].toString(), Qt::ISODate);
             waypoints_to_append[x].ctime_second = (uint8_t)dt.toString("s").toInt();
             waypoints_to_append[x].ctime_minute = (uint8_t)dt.toString("m").toInt();
             waypoints_to_append[x].ctime_hour = (uint8_t)dt.toString("h").toInt();
@@ -195,7 +187,7 @@ int MovesCountJSON::parsePersonalSettings(QByteArray &input, ambit_personal_sett
     return 0;
 }
 
-bool MovesCountJSON::copyDataString(QVariant entry, char *data, size_t maxlength)
+bool MovesCountJSON::copyDataString(const QVariant& entry, char *data, size_t maxlength)
 {
     QByteArray ba=entry.toString().toLatin1();
     strncpy(data, ba.data(), maxlength);
@@ -292,7 +284,8 @@ int MovesCountJSON::parseRoutePoints(QByteArray &input, ambit_route_t *route, am
             appendRoutePoint(route, x, clat, clon, jCurrent["Altitude"].toInt(), (uint32_t)(jCurrent["RelativeDistance"].toDouble()*100000));
 
             if(jCurrent["Name"].toString() != "") {
-                appendWaypoint(cur_waypoint_count, ps, QString(route->name), jCurrent["Name"].toString(), clat, clon, jCurrent["Altitude"].toInt(), jCurrent["Type"].toInt());
+                QByteArray ba1 = jCurrent["Name"].toString().toLatin1();
+                appendWaypoint(cur_waypoint_count, ps, route->name, ba1.data(), clat, clon, jCurrent["Altitude"].toInt(), jCurrent["Type"].toInt());
                 ++cur_waypoint_count;
             }
         }
@@ -321,8 +314,8 @@ int MovesCountJSON::parseRoutePoints(QByteArray &input, ambit_route_t *route, am
     route->mid_lon = route->max_lon - (route->max_lon - route->min_lon)/2;
 
     if(cur_waypoint_count == 0) {
-        appendWaypoint(cur_waypoint_count++, ps, QString(route->name), "A", route->start_lat, route->start_lon, route->points[0].altitude, movescount_waypoint_type_internal_wp_start);
-        appendWaypoint(cur_waypoint_count, ps, QString(route->name), "B", route->end_lat, route->end_lon, route->points[(ret-1)].altitude, movescount_waypoint_type_internal_wp_end);
+        appendWaypoint(cur_waypoint_count++, ps, route->name, (char*)"A", route->start_lat, route->start_lon, route->points[0].altitude, movescount_waypoint_type_internal_wp_start);
+        appendWaypoint(cur_waypoint_count, ps, route->name, (char*)"B", route->end_lat, route->end_lon, route->points[(ret-1)].altitude, movescount_waypoint_type_internal_wp_end);
     }
 
     return ret;
@@ -353,12 +346,12 @@ bool MovesCountJSON::appendRoutePoint(ambit_route_t *route, int point_number, in
     return true;
 }
 
-bool MovesCountJSON::appendWaypoint(uint16_t count, ambit_personal_settings_t *ps, QString route_name, QString waypoint_name, int32_t lat, int32_t lon, uint16_t altitude, uint8_t type) {
+bool MovesCountJSON::appendWaypoint(uint16_t count, ambit_personal_settings_t *ps, char *route_name, char *waypoint_name, int32_t lat, int32_t lon, uint16_t altitude, uint8_t type) {
 
     ambit_waypoint_t wp;
     wp.index = 0;
-    strncpy(wp.name, waypoint_name.toLatin1().data(), 49);
-    strncpy(wp.route_name, route_name.toLatin1().data(), 49);
+    strncpy(wp.name, waypoint_name, 49);
+    strncpy(wp.route_name, route_name, 49);
     wp.ctime_second = count;
     wp.ctime_minute = wp.ctime_hour = 0;
     wp.ctime_day = wp.ctime_month = 1;
@@ -369,7 +362,6 @@ bool MovesCountJSON::appendWaypoint(uint16_t count, ambit_personal_settings_t *p
     wp.type = type;
     wp.status = 0;
     libambit_waypoint_append(ps, &wp, 1);
-
     return true;
 }
 
@@ -396,11 +388,6 @@ int MovesCountJSON::parseLogDirReply(QByteArray &input, QList<MovesCountLogDirEn
 
 int MovesCountJSON::generateNewPersonalSettings(ambit_personal_settings_t *settings, DeviceInfo &device_info, QByteArray &output)
 {
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    QJson::Serializer serializer;
-    serializer.setDoublePrecision(16);
-    serializer.setIndentMode(QJson::IndentCompact);
-#endif
     bool ok;
     QVariantMap content;
 
@@ -433,7 +420,7 @@ int MovesCountJSON::generateNewPersonalSettings(ambit_personal_settings_t *setti
                         );
                 c_waypoint.insert("Latitude",  (double)settings->waypoints.data[x].latitude/10000000);
                 c_waypoint.insert("Longitude",  (double)settings->waypoints.data[x].longitude/10000000);
-                c_waypoint.insert("Name", QString(settings->waypoints.data[x].name));
+                c_waypoint.insert("Name", QString::fromLatin1(settings->waypoints.data[x].name));
                 c_waypoint.insert("Type", settings->waypoints.data[x].type);
                 waypoints.append(c_waypoint);
 
@@ -443,12 +430,8 @@ int MovesCountJSON::generateNewPersonalSettings(ambit_personal_settings_t *setti
 
     content.insert("Waypoints", waypoints);
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    output = serializer.serialize(content, &ok);
-#else
     output = QJsonDocument(QJsonObject::fromVariantMap(content)).toJson(QJsonDocument::Compact);
     ok = !output.isEmpty();
-#endif
 
     return (ok ? 0 : -1);
 }
@@ -482,7 +465,10 @@ int MovesCountJSON::parseAppRulesReply(QByteArray &input, ambit_app_rules_t* amb
             appRulesId.append(entry["RuleID"].toUInt());
             QByteArray binary;
             foreach (QVariant binaryVar, entry["Binary"].toList()) {
-                binary.append(binaryVar.toChar());
+                binary.append(binaryVar.toInt(&ok));
+                if(!ok) {
+                    return -1;
+                }
             }
             appRulesData.append(binary);
         }
@@ -521,11 +507,6 @@ int MovesCountJSON::parseAppRulesReply(QByteArray &input, ambit_app_rules_t* amb
  */
 int MovesCountJSON::generateLogData(LogEntry *logEntry, QByteArray &output)
 {
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    QJson::Serializer serializer;
-    serializer.setDoublePrecision(16);
-    serializer.setIndentMode(QJson::IndentCompact);
-#endif
     bool ok, inPause = false;
     QVariantMap content;
     QVariantList IBIContent;
@@ -679,7 +660,7 @@ int MovesCountJSON::generateLogData(LogEntry *logEntry, QByteArray &output)
                 marksContent.append(tmpMap);
                 break;
             }
-            };
+            }
             break;
         case ambit_log_sample_type_swimming_turn:
         {
@@ -802,11 +783,7 @@ int MovesCountJSON::generateLogData(LogEntry *logEntry, QByteArray &output)
         content.insert("HighAltitude", QVariant::Invalid);
     }
     if (IBIContent.count() > 0) {
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-        uncompressedData = serializer.serialize(IBIContent);
-#else
         uncompressedData = QJsonDocument(QJsonArray::fromVariantList(IBIContent)).toJson(QJsonDocument::Compact);
-#endif
         compressData(uncompressedData, compressedData);
         QVariantMap IBIDataMap;
         IBIDataMap.insert("CompressedValues", compressedData.toBase64());
@@ -829,11 +806,7 @@ int MovesCountJSON::generateLogData(LogEntry *logEntry, QByteArray &output)
     content.insert("PeakTrainingEffect", (double)logEntry->logEntry->header.peak_training_effect/10.0);
     content.insert("RecoveryTime", (double)logEntry->logEntry->header.recovery_time/1000.0);
     if (periodicSamplesContent.count() > 0) {
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-        uncompressedData = serializer.serialize(periodicSamplesContent);
-#else
         uncompressedData = QJsonDocument(QJsonArray::fromVariantList(periodicSamplesContent)).toJson(QJsonDocument::Compact);
-#endif
         compressData(uncompressedData, compressedData);
         QVariantMap periodicSamplesDataMap;
         periodicSamplesDataMap.insert("CompressedSampleSets", compressedData.toBase64());
@@ -843,23 +816,15 @@ int MovesCountJSON::generateLogData(LogEntry *logEntry, QByteArray &output)
     content.insert("StartLatitude", QVariant::Invalid);
     content.insert("StartLongitude", QVariant::Invalid);
     if (GPSSamplesContent.count() > 0) {
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-        uncompressedData = serializer.serialize(GPSSamplesContent);
-#else
         uncompressedData = QJsonDocument(QJsonArray::fromVariantList(GPSSamplesContent)).toJson(QJsonDocument::Compact);
-#endif
         compressData(uncompressedData, compressedData);
         QVariantMap GPSSamplesDataMap;
         GPSSamplesDataMap.insert("CompressedTrackPoints", compressedData.toBase64());
         content.insert("Track", GPSSamplesDataMap);                   /* compressed */
     }
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    output = serializer.serialize(content, &ok);
-#else
     output = QJsonDocument(QJsonObject::fromVariantMap(content)).toJson(QJsonDocument::Compact);
     ok = !output.isEmpty();
-#endif
 
     return (ok ? 0 : -1);
 }
@@ -874,18 +839,22 @@ bool MovesCountJSON::writePeriodicSample(ambit_log_sample_t *sample, QVariantMap
 
         switch(value->type) {
         case ambit_log_sample_periodic_type_latitude:
-            output.insert("Latitude", (double)value->u.latitude/10000000);
+            if (value->u.latitude <= 90 && value->u.latitude >= -90){
+                output.insert("Latitude", (double)value->u.latitude/10000000);
+            }
             break;
         case ambit_log_sample_periodic_type_longitude:
-            output.insert("Longitude", (double)value->u.longitude/10000000);
+            if (value->u.longitude <= 180 && value->u.longitude >= -180){
+                output.insert("Longitude", (double)value->u.longitude/10000000);
+            }
             break;
         case ambit_log_sample_periodic_type_distance:
-            if (value->u.distance != 0xffffffff) {
+            if (value->u.distance != 0xffffffff && value->u.distance != 0xb400000) {
                 output.insert("Distance", value->u.distance);
             }
             break;
         case ambit_log_sample_periodic_type_speed:
-            if (value->u.speed != 0xffff) {
+            if (value->u.speed != 0xffff && (value->u.speed/100) <= 556) {
                 output.insert("Speed", (double)value->u.speed/100.0);
             }
             break;
@@ -919,7 +888,7 @@ bool MovesCountJSON::writePeriodicSample(ambit_log_sample_t *sample, QVariantMap
             output.insert("EVPE", value->u.evpe);
             break;
         case ambit_log_sample_periodic_type_altitude:
-            if (value->u.altitude >= -1000 && value->u.altitude <= 10000) {
+            if (value->u.altitude >= -1000 && value->u.altitude <= 15000) {
                 output.insert("Altitude", (double)value->u.altitude);
             }
             break;
@@ -927,7 +896,7 @@ bool MovesCountJSON::writePeriodicSample(ambit_log_sample_t *sample, QVariantMap
             output.insert("AbsPressure", (int)round((double)value->u.abspressure/10.0));
             break;
         case ambit_log_sample_periodic_type_energy:
-            if (value->u.energy) {
+            if (value->u.energy && value->u.energy <= 1000) {
                 output.insert("EnergyConsumption", (double)value->u.energy/10.0);
             }
             break;
@@ -942,12 +911,12 @@ bool MovesCountJSON::writePeriodicSample(ambit_log_sample_t *sample, QVariantMap
             }
             break;
         case ambit_log_sample_periodic_type_gpsaltitude:
-            if (value->u.gpsaltitude >= -1000 && value->u.gpsaltitude <= 10000) {
+            if (value->u.gpsaltitude >= -1000 && value->u.gpsaltitude <= 15000) {
                 output.insert("GPSAltitude", value->u.gpsaltitude);
             }
             break;
         case ambit_log_sample_periodic_type_gpsheading:
-            if (value->u.gpsheading != 0xffff) {
+            if (value->u.gpsheading != 0xffff && value->u.gpsheading >= 0 && value->u.gpsheading <= 360) {
                 output.insert("GPSHeading", (double)value->u.gpsheading/10000000);
             }
             break;
@@ -999,7 +968,9 @@ bool MovesCountJSON::writePeriodicSample(ambit_log_sample_t *sample, QVariantMap
             }
             break;
         case ambit_log_sample_periodic_type_verticalspeed:
-            output.insert("VerticalSpeed", (double)value->u.verticalspeed/100.0);
+            if ((value->u.verticalspeed/100.0) >= -59 && (value->u.verticalspeed/100.0) <= 59){
+                output.insert("VerticalSpeed", (double)value->u.verticalspeed/100.0);
+            }
             break;
         case ambit_log_sample_periodic_type_cadence:
             if (value->u.cadence != 0xff) {
@@ -1007,7 +978,7 @@ bool MovesCountJSON::writePeriodicSample(ambit_log_sample_t *sample, QVariantMap
             }
             break;
         case ambit_log_sample_periodic_type_bikepower:
-            if (value->u.bikepower != 0xffff) {
+            if (value->u.bikepower <= 2000) {
                 output.insert("BikePower", value->u.bikepower);
             }
             break;
@@ -1048,15 +1019,16 @@ bool MovesCountJSON::writePeriodicSample(ambit_log_sample_t *sample, QVariantMap
 int MovesCountJSON::compressData(QByteArray &content, QByteArray &output)
 {
     int ret = -1, res, deflate_res;
-    z_stream strm;
-    gz_header header;
     size_t destLen = compressBound(content.length());
-
-    memset(&strm, 0, sizeof(z_stream));
-    memset(&header, 0, sizeof(gz_header));
 
     if (destLen > 0) {
         u_int8_t *buf = (u_int8_t*)malloc(destLen);
+
+        z_stream strm;
+        gz_header header;
+        memset(&strm, 0, sizeof(z_stream));
+        memset(&header, 0, sizeof(gz_header));
+
         strm.zalloc = Z_NULL;
         strm.zfree = Z_NULL;
         strm.opaque = Z_NULL;
@@ -1079,11 +1051,14 @@ int MovesCountJSON::compressData(QByteArray &content, QByteArray &output)
             }
 
             if (deflate_res == Z_STREAM_END) {
-                output.setRawData((char*)buf, destLen - strm.avail_out);
+                // make sure to copy the data and free buf to not cause a memory leak
+                output.clear();
+                output.append((char*)buf, destLen - strm.avail_out);
                 ret = 0;
             }
         }
 
+        free(buf);
         deflateEnd(&strm);
     }
 
@@ -1148,7 +1123,7 @@ QList<int> MovesCountJSON::rearrangeSamples(LogEntry *logEntry)
     return sampleList;
 }
 
-QString MovesCountJSON::dateTimeString(QDateTime dateTime)
+QString MovesCountJSON::dateTimeString(const QDateTime& dateTime)
 {
     if (dateTime.time().msec() != 0) {
         return dateTime.toString("yyyy-MM-ddThh:mm:ss.zzz");
@@ -1168,7 +1143,7 @@ QDateTime MovesCountJSON::dateTimeRound(QDateTime dateTime, int msecRoundFactor)
     }
 }
 
-QDateTime MovesCountJSON::dateTimeCompensate(QDateTime dateTime, QDateTime prevDateTime, int minOffset)
+QDateTime MovesCountJSON::dateTimeCompensate(QDateTime dateTime, const QDateTime& prevDateTime, int minOffset)
 {
     if (dateTime <= prevDateTime) {
         return prevDateTime.addMSecs(minOffset);
@@ -1183,15 +1158,10 @@ QVariantMap MovesCountJSON::parseJsonMap(const QByteArray& input, bool& ok) cons
       return QVariantMap();
     }
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    QJson::Parser parser;
-    return parser.parse(input, &ok).toMap();
-#else
     QJsonParseError err;
     QJsonDocument json = QJsonDocument::fromJson(input, &err);
     ok = !json.isNull();
     return json.object().toVariantMap();
-#endif
 }
 
 QVariantList MovesCountJSON::parseJsonList(const QByteArray& input, bool& ok) const
@@ -1201,14 +1171,9 @@ QVariantList MovesCountJSON::parseJsonList(const QByteArray& input, bool& ok) co
       return QVariantList();
     }
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 0, 0)
-    QJson::Parser parser;
-    return parser.parse(input, &ok).toList();
-#else
     QJsonParseError err;
     QJsonDocument json = QJsonDocument::fromJson(input, &err);
     ok = !json.isNull();
     return json.array().toVariantList();
-#endif
 }
 

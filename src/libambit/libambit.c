@@ -50,11 +50,6 @@ static int device_info_get(ambit_object_t *object, ambit_device_info_t *info);
 static ambit_device_info_t * ambit_device_info_new(const struct hid_device_info *dev);
 
 /*
- * Static variables
- */
-static uint8_t komposti_version[] = { 0x02, 0x00, 0x2d, 0x00 };
-
-/*
  * Public functions
  */
 ambit_device_info_t * libambit_enumerate(void)
@@ -181,6 +176,9 @@ void libambit_close(ambit_object_t *object)
         }
         if (object->handle != NULL) {
             hid_close(object->handle);
+        }
+        if(object->driver_data != NULL) {
+            free(object->driver_data);
         }
 
         free((char *) object->device_info.path);
@@ -353,8 +351,11 @@ void libambit_sport_mode_device_settings_free(ambit_sport_mode_device_settings_t
     if (settings->sport_modes != NULL) {
         for (i=0; i<settings->sport_modes_count; i++) {
             if (settings->sport_modes[i].display != NULL) {
-                if (settings->sport_modes[i].display->view != NULL) {
-                    free(settings->sport_modes[i].display->view);
+                int j;
+                for(j = 0;j < settings->sport_modes[i].displays_count;j++) {
+                    if (settings->sport_modes[i].display[j].view != NULL) {
+                        free(settings->sport_modes[i].display[j].view);
+                    }
                 }
                 free(settings->sport_modes[i].display);
             }
@@ -373,6 +374,8 @@ void libambit_sport_mode_device_settings_free(ambit_sport_mode_device_settings_t
         }
         free(settings->sport_mode_groups);
     }
+
+    free(settings);
 }
 
 ambit_sport_mode_device_settings_t *libambit_malloc_sport_mode_device_settings(void)
@@ -383,6 +386,7 @@ ambit_sport_mode_device_settings_t *libambit_malloc_sport_mode_device_settings(v
     ambit_device_settings->sport_mode_groups = NULL;
     ambit_device_settings->sport_mode_groups_count = 0;
     ambit_device_settings->app_ids_count = 0;
+    memset(ambit_device_settings->app_ids, 0, sizeof(ambit_device_settings->app_ids));
 
     return ambit_device_settings;
 }
@@ -433,6 +437,12 @@ bool libambit_malloc_sport_mode_groups(uint16_t count, ambit_sport_mode_device_s
 
 bool libambit_malloc_sport_mode_app_ids(uint16_t count, ambit_sport_mode_t *ambit_sport_mode)
 {
+    if(count == 0) {
+        ambit_sport_mode->apps_list = NULL;
+        ambit_sport_mode->apps_list_count = 0;
+        return false;
+    }
+
     ambit_apps_list_t *ambit_app_ids = (ambit_apps_list_t *)malloc(sizeof(ambit_apps_list_t) * count);
     if (ambit_app_ids != NULL) {
         ambit_sport_mode->apps_list = ambit_app_ids;
@@ -447,6 +457,12 @@ bool libambit_malloc_sport_mode_app_ids(uint16_t count, ambit_sport_mode_t *ambi
 
 bool libambit_malloc_sport_mode_displays(uint16_t count, ambit_sport_mode_t *ambit_sport_mode)
 {
+    if(count == 0) {
+        ambit_sport_mode->display = NULL;
+        ambit_sport_mode->displays_count = 0;
+        return false;
+    }
+
     ambit_sport_mode_display_t *ambit_displays = (ambit_sport_mode_display_t *)malloc(sizeof(ambit_sport_mode_display_t) * count);
     if (ambit_displays != NULL) {
         ambit_sport_mode->display = ambit_displays;
@@ -467,6 +483,12 @@ bool libambit_malloc_sport_mode_displays(uint16_t count, ambit_sport_mode_t *amb
 
 bool libambit_malloc_sport_mode_view(uint16_t count, ambit_sport_mode_display_t *ambit_displays)
 {
+    if(count == 0) {
+        ambit_displays->view = NULL;
+        ambit_displays->views_count = 0;
+        return false;
+    }
+
     uint16_t *ambit_views = (uint16_t *)malloc(sizeof(uint16_t) * count);
     if (ambit_views != NULL) {
         ambit_displays->view = ambit_views;
@@ -542,13 +564,22 @@ bool libambit_malloc_app_rule(uint16_t count, ambit_app_rules_t *ambit_app_rules
 
 static int device_info_get(ambit_object_t *object, ambit_device_info_t *info)
 {
+    uint8_t *komposti_version = NULL;
     uint8_t *reply_data = NULL;
     size_t replylen;
     int ret = -1;
 
+    printf("Vendor: %x, Product: %x\n", info->vendor_id, info->product_id);
+    komposti_version = (uint8_t*)libambit_device_komposti(info->vendor_id, info->product_id, 0);
+    printf("Komposit version: %x %x %x %x\n", komposti_version[0], komposti_version[1], komposti_version[2], komposti_version[3]);
+
+    if(komposti_version == NULL) {
+        LOG_WARNING("Failed to get komposti version");
+    }
+    
     LOG_INFO("Reading device info");
 
-    if (libambit_protocol_command(object, ambit_command_device_info, komposti_version, sizeof(komposti_version), &reply_data, &replylen, 1) == 0) {
+    if (libambit_protocol_command(object, ambit_command_device_info, komposti_version, sizeof(uint8_t)*4, &reply_data, &replylen, 1) == 0) {
         if (info != NULL) {
             const char *p = (char *)reply_data;
 
@@ -566,6 +597,31 @@ static int device_info_get(ambit_object_t *object, ambit_device_info_t *info)
     }
 
     libambit_protocol_free(reply_data);
+
+    memset(info->compact_serial, 0, sizeof(info->compact_serial));
+
+    if (info->fw_version[0] == 2 && info->fw_version[1] >= 4)
+    {
+        LOG_INFO("Ambit3 get compact serial");
+
+        uint8_t data[17];
+        data[8] = 1;
+
+        if (libambit_protocol_command(object, ambit_command_ambit3_get_compact_serial, data, sizeof(data), &reply_data, &replylen, 0) == 0) {
+            ret = 0;
+            if (replylen >= sizeof(info->compact_serial))
+            {
+                LOG_INFO("Ambit3 device serial %s\n", &reply_data[9]);
+                strcpy((char*)info->compact_serial, (char*)&reply_data[9]);
+            }
+        }
+        else {
+            LOG_WARNING("Ambit3 get serial failed");
+            ret = -1;
+        }
+
+        libambit_protocol_free(reply_data);
+    }
 
     return ret;
 }
@@ -677,6 +733,7 @@ static ambit_device_info_t * ambit_device_info_new(const struct hid_device_info 
             known_device = libambit_device_support_find(device->vendor_id, device->product_id, device->model, device->fw_version);
             if (known_device != NULL) {
                 device->is_supported = known_device->supported;
+                memcpy(&device->komposti_version, &known_device->komposti_version, sizeof(uint8_t)*4);
                 if (device->name && known_device->name
                     && 0 != strcmp(device->name, known_device->name)) {
                     char *name = strdup(known_device->name);
@@ -696,9 +753,11 @@ static ambit_device_info_t * ambit_device_info_new(const struct hid_device_info 
                 version_string(fw_version, device->fw_version);
                 version_string(hw_version, device->hw_version);
 
-                LOG_INFO("Ambit: %s: '%s' (serial: %s, VID/PID: %04x/%04x, "
+                LOG_INFO("Ambit: %s: '%s' (serial: %s, compact serial %s, "
+                         "VID/PID: %04x/%04x, "
                          "nick: %s, F/W: %s, H/W: %s, supported: %s)",
                          device->path, device->name, device->serial,
+                         device->compact_serial,
                          device->vendor_id, device->product_id,
                          device->model, fw_version, hw_version,
                          (device->is_supported ? "YES" : "NO"));
