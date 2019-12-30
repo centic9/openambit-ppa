@@ -1,7 +1,7 @@
 Index: openambit/src/example/CMakeLists.txt
 ===================================================================
---- openambit.orig/src/example/CMakeLists.txt	2015-05-03 22:06:46.254071868 +0200
-+++ openambit/src/example/CMakeLists.txt	2015-05-03 22:12:03.655376299 +0200
+--- openambit.orig/src/example/CMakeLists.txt	2019-12-30 11:59:42.550684703 +0100
++++ openambit/src/example/CMakeLists.txt	2019-12-30 11:59:42.542684702 +0100
 @@ -8,6 +8,8 @@
  
  find_package(libambit REQUIRED)
