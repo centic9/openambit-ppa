@@ -1,3 +1,9 @@
+openambit (0.4-1ubuntu0~git20191230~ppa1) bionic; urgency=medium
+
+  * Add dependency on python-minimal for wireshark build.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Mon, 30 Dec 2019 11:57:18 +0100
+
 openambit (0.4-1ubuntu0~git20191028~ppa1) bionic; urgency=medium
 
   * Update to latest master which received lots of changes
