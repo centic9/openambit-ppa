@@ -1,3 +1,9 @@
+openambit (0.5-0ubuntu0~git20191230~ppa3) bionic; urgency=medium
+
+  * Try to use PINFO_FD_VISITED to support newer versions of wireshark.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Mon, 30 Dec 2019 12:50:28 +0100
+
 openambit (0.5-0ubuntu0~git20191230~ppa2) bionic; urgency=medium
 
   * Install openambit-cli as well

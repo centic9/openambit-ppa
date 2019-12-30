@@ -1,5 +1,5 @@
 diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 -x .idea -x cmake-build-debug -x _build -x '*.iml' -x '*-build' ./build.sh ../openambit.git/build.sh
---- ./build.sh	2019-12-30 12:24:38.652751199 +0100
+--- ./build.sh	2019-12-30 12:49:04.945660542 +0100
 +++ ../openambit.git/build.sh	2019-11-12 22:31:19.822251420 +0100
 @@ -10,7 +10,7 @@
     CORES=$(cat /proc/cpuinfo | grep processor | wc -l)
@@ -11,7 +11,7 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
      cd ${SOURCE_LOCATION}
      echo "------building $target------"
 diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 -x .idea -x cmake-build-debug -x _build -x '*.iml' -x '*-build' ./CMakeLists.txt ../openambit.git/CMakeLists.txt
---- ./CMakeLists.txt	2019-12-30 12:24:38.652751199 +0100
+--- ./CMakeLists.txt	2019-12-30 12:49:24.873666418 +0100
 +++ ../openambit.git/CMakeLists.txt	2019-11-12 22:31:19.822251420 +0100
 @@ -27,13 +27,19 @@
  add_subdirectory(src/libambit)
@@ -34,7 +34,7 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
  
  if (BUILD_EXTRAS)
 diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 -x .idea -x cmake-build-debug -x _build -x '*.iml' -x '*-build' ./run.sh ../openambit.git/run.sh
---- ./run.sh	2019-12-30 12:24:38.652751199 +0100
+--- ./run.sh	2019-12-30 12:49:04.945660542 +0100
 +++ ../openambit.git/run.sh	2019-12-15 09:39:29.769448634 +0100
 @@ -14,6 +14,8 @@
  fi
@@ -52,7 +52,7 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
 -LD_LIBRARY_PATH=./libambit-build ./${builddir}/${application}
 +LD_LIBRARY_PATH=./libambit-build ./${builddir}/${application} "$@"
 diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 -x .idea -x cmake-build-debug -x _build -x '*.iml' -x '*-build' ./src/libambit/device_support.c ../openambit.git/src/libambit/device_support.c
---- ./src/libambit/device_support.c	2019-12-30 12:24:38.652751199 +0100
+--- ./src/libambit/device_support.c	2019-12-30 12:49:24.873666418 +0100
 +++ ../openambit.git/src/libambit/device_support.c	2019-11-12 22:31:19.822251420 +0100
 @@ -90,7 +90,7 @@
          if (vendor_id == known_devices[i].vid &&
@@ -64,7 +64,7 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
              device = &known_devices[i].public_info;
              break;
 diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 -x .idea -x cmake-build-debug -x _build -x '*.iml' -x '*-build' ./src/libambit/utils.h ../openambit.git/src/libambit/utils.h
---- ./src/libambit/utils.h	2019-12-30 12:24:38.656751190 +0100
+--- ./src/libambit/utils.h	2019-12-30 12:49:24.873666418 +0100
 +++ ../openambit.git/src/libambit/utils.h	2019-11-12 22:31:19.826251421 +0100
 @@ -92,25 +92,4 @@
      return (buf[(*offset)-4] | (buf[(*offset)-3] << 8) | (buf[(*offset)-2] << 16) | (buf[(*offset)-1] << 24));
@@ -93,7 +93,7 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
 -
  #endif /* __UTILS_H__ */
 diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 -x .idea -x cmake-build-debug -x _build -x '*.iml' -x '*-build' ./src/movescount/logentry.cpp ../openambit.git/src/movescount/logentry.cpp
---- ./src/movescount/logentry.cpp	2019-12-30 12:24:38.656751190 +0100
+--- ./src/movescount/logentry.cpp	2019-12-30 12:49:24.873666418 +0100
 +++ ../openambit.git/src/movescount/logentry.cpp	2019-11-12 22:31:19.830251421 +0100
 @@ -19,6 +19,7 @@
   * Contributors:
@@ -12461,7 +12461,7 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
 +    ]
 +}
 diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 -x .idea -x cmake-build-debug -x _build -x '*.iml' -x '*-build' ./test.sh ../openambit.git/test.sh
---- ./test.sh	2019-12-30 12:24:38.672751153 +0100
+--- ./test.sh	2019-12-30 12:49:04.945660542 +0100
 +++ ../openambit.git/test.sh	2019-11-12 22:38:09.894206919 +0100
 @@ -12,13 +12,21 @@
  for b in Debug Release;do
@@ -12485,3 +12485,15 @@ diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kde
  python2.7 tools/openambit2gpx.py test-data/testlog.log "${TMP:-/tmp}"/testlog.gpx
  
  diff --ignore-all-space test-data/testlog.gpx "${TMP:-/tmp}"/testlog.gpx
+diff -Nur -x debian -x .git -x .gitignore -x .pc -x build -x .travis.yml -x .kdev4 -x .idea -x cmake-build-debug -x _build -x '*.iml' -x '*-build' ./wireshark_dissector/ambit-dissector.c ../openambit.git/wireshark_dissector/ambit-dissector.c
+--- ./wireshark_dissector/ambit-dissector.c	2019-12-30 12:29:35.508075862 +0100
++++ ../openambit.git/wireshark_dissector/ambit-dissector.c	2019-12-30 12:45:42.737914364 +0100
+@@ -2494,7 +2494,7 @@
+             memset(reassembly_entries+reassembly_entries_alloc, 0, sizeof(ambit_reassembly_entry_t)*10000);
+             reassembly_entries_alloc += 10000;
+         }
+-        if (!pinfo->fd->flags.visited) {
++        if (!PINFO_FD_VISITED(pinfo)) {
+             if (msg_part == 0x5d && msg_count > 1) {
+                 reassembly_entries[pinfo->fd->num].valid = 2;
+                 reassembly_entries[pinfo->fd->num].command = command;
