@@ -1,5 +1,6 @@
 #lib/udev/rules.d/99-suunto-ambit.rules
 usr/bin/openambit
+usr/bin/openambit-cli
 usr/bin/ambitconsole
 usr/share/applications/openambit.desktop
 usr/share/icons/
