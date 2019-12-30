@@ -46,7 +46,7 @@ public:
     int parsePersonalSettings(QByteArray &input, ambit_personal_settings_t *ps, MovesCount *movescount);
     int parseRoute(QByteArray &input, ambit_route_t *routes, ambit_personal_settings_t *ps, MovesCount *movescount);
     int parseRoutePoints(QByteArray &input, ambit_route_t *routes, ambit_personal_settings_t *ps);
-    bool appendWaypoint(uint16_t count, ambit_personal_settings_t *ps, QString route_name, QString waypoint_name, int32_t lat, int32_t lon, uint16_t altitude, uint8_t type);
+    bool appendWaypoint(uint16_t count, ambit_personal_settings_t *ps, char *route_name, char *waypoint_name, int32_t lat, int32_t lon, uint16_t altitude, uint8_t type);
     int parseDeviceSettingsReply(QByteArray &input, MovescountSettings &movescountSettings);
     int parseAppRulesReply(QByteArray &input, ambit_app_rules_t* ambitApps); // QList<uint> &appRulesId, QList<QByteArray> &appRulesData);
 
@@ -59,14 +59,14 @@ public slots:
 
 private:
     bool writePeriodicSample(ambit_log_sample_t *sample, QVariantMap &output);
-    bool copyDataString(QVariant entry, char *data, size_t maxlength);
+    bool copyDataString(const QVariant& entry, char *data, size_t maxlength);
     bool appendRoutePoint(ambit_route_t *route, int point_number, int32_t lat, int32_t lon, int32_t altitude, uint32_t distance);
 
     int compressData(QByteArray &content, QByteArray &output);
     QList<int> rearrangeSamples(LogEntry *logEntry);
-    QString dateTimeString(QDateTime dateTime);
+    QString dateTimeString(const QDateTime& dateTime);
     QDateTime dateTimeRound(QDateTime dateTime, int msecRoundFactor);
-    QDateTime dateTimeCompensate(QDateTime dateTime, QDateTime prevDateTime, int minOffset);
+    QDateTime dateTimeCompensate(QDateTime dateTime, const QDateTime& prevDateTime, int minOffset);
 
     QVariantMap parseJsonMap(const QByteArray& input, bool& ok) const;
     QVariantList parseJsonList(const QByteArray& input, bool& ok) const;

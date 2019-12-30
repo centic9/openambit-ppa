@@ -12,25 +12,26 @@
         <translation>Ne plus me poser cette question.</translation>
     </message>
     <message>
-        <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+      <source><![CDATA[<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+<html><head><meta name="qrichtext" content="1" /><style type="text/css">
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;EARLY BETA SOFTWARE: &lt;a href=&quot;http://en.wikipedia.org/wiki/Here_be_dragons&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;here be dragons&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;This software is in early beta stage, it might upload invalid logs to movescount that cannot be overwritten, and do other bizarre things.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#008000;&quot;&gt;Openambit&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; color:#008000;&quot;&gt;is&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; color:#008000;&quot;&gt;free&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; color:#008000;&quot;&gt;software:&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; color:#008000;&quot;&gt;you&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; color:#008000;&quot;&gt;can&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; color:#008000;&quot;&gt;redistribute&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; color:#008000;&quot;&gt;it&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; color:#008000;&quot;&gt;and/or&lt;/span&gt;&lt;span style=&quot; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; color:#008000;&quot;&gt;modify &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;it&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;under&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;the&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;terms&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;of&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;the&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;GNU&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;General&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;Public&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;License&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;as&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;published&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;by the&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;Free&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;Software&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;Foundation,&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;either&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;version&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;3&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;of&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;the&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;License,&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;or&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;(at&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;your&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;option)&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;any&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;later&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;version.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Courier New,courier&apos;;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;This&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;program&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;is&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;distributed&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;in&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;the&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;hope&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;that&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;it&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;will&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;be&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;useful, but&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;WITHOUT&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;ANY&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;WARRANTY;&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;without&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;even&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;the&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;implied&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;warranty&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;of&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;MERCHANTABILITY&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;or&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;FITNESS&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;FOR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;PARTICULAR&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;PURPOSE.&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;See&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;the GNU&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;General&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;Public&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;License&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;for&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;more&lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#c0c0c0;&quot;&gt; &lt;/span&gt;&lt;span style=&quot; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;details.&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Please use this software at &lt;span style=&quot; text-decoration: underline;&quot;&gt;your own&lt;/span&gt; risk and only if you understand the risks involved.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;If you decide to use Openambit please consider &lt;a href=&quot;https://github.com/openambitproject/openambit/issues/new&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;reporting bugs&lt;/span&gt;&lt;/a&gt; so we can make it better.&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Thanks &lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:&apos;Courier New,courier&apos;; color:#008000;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+</style></head><body style=" font-family:'Ubuntu'; font-size:11pt; font-weight:400; font-style:normal;">
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">EARLY BETA SOFTWARE: <a href="http://en.wikipedia.org/wiki/Here_be_dragons"><span style=" text-decoration: underline; color:#0000ff;">here be dragons</span></a></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">This software is in early beta stage, it might upload invalid logs to movescount that cannot be overwritten, and do other bizarre things.</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" color:#008000;">Openambit</span><span style=" color:#c0c0c0;"> </span><span style=" color:#008000;">is</span><span style=" color:#c0c0c0;"> </span><span style=" color:#008000;">free</span><span style=" color:#c0c0c0;"> </span><span style=" color:#008000;">software:</span><span style=" color:#c0c0c0;"> </span><span style=" color:#008000;">you</span><span style=" color:#c0c0c0;"> </span><span style=" color:#008000;">can</span><span style=" color:#c0c0c0;"> </span><span style=" color:#008000;">redistribute</span><span style=" color:#c0c0c0;"> </span><span style=" color:#008000;">it</span><span style=" color:#c0c0c0;"> </span><span style=" color:#008000;">and/or</span><span style=" color:#c0c0c0;"> </span><span style=" color:#008000;">modify </span><span style=" font-family:'Courier New,courier'; color:#008000;">it</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">under</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">the</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">terms</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">of</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">the</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">GNU</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">General</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">Public</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">License</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">as</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">published</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">by the</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">Free</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">Software</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">Foundation,</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">either</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">version</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">3</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">of</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">the</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">License,</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">or</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">(at</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">your</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">option)</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">any</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">later</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">version.</span></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Courier New,courier';"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-family:'Courier New,courier'; color:#008000;">This</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">program</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">is</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">distributed</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">in</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">the</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">hope</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">that</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">it</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">will</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">be</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">useful, but</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">WITHOUT</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">ANY</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">WARRANTY;</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">without</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">even</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">the</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">implied</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">warranty</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">of</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">MERCHANTABILITY</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">or</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">FITNESS</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">FOR</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">A</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">PARTICULAR</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">PURPOSE.</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">See</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">the GNU</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">General</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">Public</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">License</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">for</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">more</span><span style=" font-family:'Courier New,courier'; color:#c0c0c0;"> </span><span style=" font-family:'Courier New,courier'; color:#008000;">details.</span></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Please use this software at <span style=" text-decoration: underline;">your own</span> risk and only if you understand the risks involved.</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">If you decide to use Openambit please consider <a href="https://github.com/openambitproject/openambit/issues"><span style=" text-decoration: underline; color:#0000ff;">reporting bugs</span></a> so we can make it better.</p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>
+<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Thanks </p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Courier New,courier'; color:#008000;"><br /></p>
+<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Courier New,courier'; color:#008000;"><br /></p></body></html> 
+      ]]></source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -38,38 +39,62 @@ p, li { white-space: pre-wrap; }
     <name>DeviceManager</name>
     <message>
         <source>Reading personal settings</source>
-        <translation>Läser personliga inställningar</translation>
+        <translation>Lecture paramètres personnels</translation>
     </message>
     <message>
         <source>Setting date/time</source>
-        <translation>Skriver datum &amp; tid</translation>
+        <translation>Configuration date &amp; heure</translation>
     </message>
     <message>
         <source>Reading log files</source>
-        <translation>Läser logg-filer</translation>
+        <translation>Lecture des fichiers de log</translation>
     </message>
     <message>
         <source>Fetching orbital data</source>
-        <translation>Hämtar GPS-data</translation>
+        <translation>Récupération des données orbitales</translation>
     </message>
     <message>
         <source>Writing orbital data</source>
-        <translation>Skriver GPS-data</translation>
+        <translation>Écriture des données orbitales</translation>
     </message>
     <message>
         <source>Failed to get orbital data</source>
-        <translation>GPS-data gick ej att hämta</translation>
+        <translation>Erreur lors de la récupération des données orbitales</translation>
     </message>
     <message>
         <source>Downloading log %1 of %2</source>
-        <translation>Läser logg %1 av %2</translation>
+        <translation>Téléchargement des logs %1 sur %2</translation>
+    </message>
+    <message>
+        <source>Synchronizing navigation</source>
+        <translation>Synchronization des données de navigation</translation>
+    </message>
+    <message>
+        <source>Write navigation</source>
+        <translation>Écriture des données de navigation</translation>
+    </message>
+    <message>
+        <source>Synchronized navigation</source>
+        <translation>Données de navigation synchronisées</translation>
+    </message>
+    <message>
+        <source>Fetching sport modes</source>
+        <translation>Récupération des modes de sport</translation>
+    </message>
+    <message>
+        <source>Write sport modes</source>
+        <translation>Écriture des modes de sport</translation>
+    </message>
+    <message>
+        <source>Write apps</source>
+        <translation>Écriture des applications</translation>
     </message>
 </context>
 <context>
     <name>LogEntry</name>
     <message>
         <source>Device</source>
-        <translation type="obsolete">Périphérique</translation>
+        <translation>Périphérique</translation>
     </message>
 </context>
 <context>
@@ -88,7 +113,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Duration: %1</source>
-        <translation>Durée : %1</translation>
+        <translation>Durée : %1</translation>
     </message>
     <message>
         <source>Distance: %1 m</source>
@@ -122,15 +147,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Name: %1</source>
-        <translation>Nom : %1</translation>
+        <translation>Nom : %1</translation>
     </message>
     <message>
         <source>Variant: %1</source>
-        <translation>Variante : %1</translation>
+        <translation>Variante : %1</translation>
     </message>
     <message>
         <source>Serial: %1</source>
-        <translation>N/S : %1</translation>
+        <translation>N/S : %1</translation>
     </message>
 </context>
 <context>
@@ -160,19 +185,15 @@ p, li { white-space: pre-wrap; }
         <translation>Pas de périphérique détecté</translation>
     </message>
     <message>
-        <source>Syncronization complete</source>
+        <source>Synchronization complete</source>
         <translation>Synchronisation complète</translation>
     </message>
     <message>
-        <source>Syncronisation finished</source>
+        <source>Synchronization finished</source>
         <translation>Synchronisation terminée</translation>
     </message>
     <message>
-        <source>Syncronization failed</source>
-        <translation>Échec de synchronisation</translation>
-    </message>
-    <message>
-        <source>Syncronisation failed</source>
+        <source>Synchronization failed</source>
         <translation>Échec de synchronisation</translation>
     </message>
     <message>
@@ -185,10 +206,10 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Write Movescount file</source>
-        <translation>Écrire le fichier Movescount</translation>
+        <translation>Envoyer le fichier sur Movescount</translation>
     </message>
     <message>
-        <source>Syncronisation started</source>
+        <source>Synchronization started</source>
         <translation>Début de synchronisation</translation>
     </message>
     <message>
@@ -243,6 +264,10 @@ p, li { white-space: pre-wrap; }
         <source>Downloading %1%</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Report bug...</source>
+        <translation>Signaler un bug...</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -288,7 +313,7 @@ Ligne %2, colonne %3</translation>
         <translation>Poursuivre le fonctionnement en tâche de fond lorsque la fenêtre principale d&apos;Openambit est fermée</translation>
     </message>
     <message>
-        <source>Device syncronisation settings</source>
+        <source>Device synchronization settings</source>
         <translation>Réglages de synchronisation du périphérique</translation>
     </message>
     <message>
@@ -322,6 +347,14 @@ Ligne %2, colonne %3</translation>
     <message>
         <source>Email (Movescount account)</source>
         <translation>Adresse électronique (du compte Movescount)</translation>
+    </message>
+    <message>
+        <source>Sync sport modes (from Movescount)</source>
+        <translation>Synchroniser les modes de sport (du compte Movescount)</translation>
+    </message>
+    <message>
+        <source>Sync navigation (from Movescount)</source>
+        <translation>Synchroniser les données de navigation (du compte Movescount)</translation>
     </message>
 </context>
 </TS>

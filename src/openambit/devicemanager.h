@@ -36,8 +36,6 @@
 #include "udevlistener.h"
 #include <libambit.h>
 
-#include <libudev.h>
-
 class DeviceManager : public QObject
 {
     Q_OBJECT

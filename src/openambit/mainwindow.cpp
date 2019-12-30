@@ -337,20 +337,20 @@ void MainWindow::syncFinished(bool success)
     }
     if (success) {
         currentLogMessageRow = new LogMessageRow(0);
-        currentLogMessageRow->setMessage(tr("Syncronization complete"));
+        currentLogMessageRow->setMessage(tr("Synchronization complete"));
         currentLogMessageRow->setStatus(LogMessageRow::StatusSuccess);
         ui->verticalLayoutLogMessages->addLayout(currentLogMessageRow);
         if (isHidden()) {
-            trayIcon->showMessage(QCoreApplication::applicationName(), tr("Syncronisation finished"));
+            trayIcon->showMessage(QCoreApplication::applicationName(), tr("Synchronization finished"));
         }
     }
     else {
         currentLogMessageRow = new LogMessageRow(0);
-        currentLogMessageRow->setMessage(tr("Syncronization failed"));
+        currentLogMessageRow->setMessage(tr("Synchronization failed"));
         currentLogMessageRow->setStatus(LogMessageRow::StatusFailed);
         ui->verticalLayoutLogMessages->addLayout(currentLogMessageRow);
         if (isHidden()) {
-            trayIcon->showMessage(QCoreApplication::applicationName(), tr("Syncronisation failed"), QSystemTrayIcon::Critical);
+            trayIcon->showMessage(QCoreApplication::applicationName(), tr("Synchronization failed"), QSystemTrayIcon::Critical);
         }
     }
     ui->checkBoxResyncAll->setChecked(false);
@@ -400,6 +400,11 @@ void MainWindow::movesCountAuth(bool authorized)
     ui->labelMovescountAuthIcon->setHidden(authorized);
 }
 
+void MainWindow::showUploadError(QByteArray data)
+{
+    QMessageBox::warning(nullptr, QObject::tr("Upload error"), data, QMessageBox::Ok);
+}
+
 void MainWindow::logItemSelected(QListWidgetItem *current,QListWidgetItem *previous)
 {
     LogEntry *logEntry = NULL;
@@ -427,11 +432,29 @@ void MainWindow::showContextMenuForLogItem(const QPoint &pos)
 
 void MainWindow::logItemWriteMovescount()
 {
+    bool movescountEnable = settings.value("movescountSettings/movescountEnable", false).toBool();
+    bool movescountInfoEnable = settings.value("generalSettings/movescountInfoEnable", true).toBool();
     LogEntry *logEntry = NULL;
 
     logEntry = logStore.read(ui->logsList->selectedItems().at(0)->data(Qt::UserRole).toString());
     if (logEntry != NULL) {
-        if (movesCount != NULL) {
+        if(!movescountEnable && movescountInfoEnable) {
+            QMessageBox msgBox(QMessageBox::Information,
+                               QCoreApplication::applicationName(),
+                               tr("You must enable synchronization with Movescount in \
+                                   \"File -> Settings\" to upload logs."),
+                               QMessageBox::NoButton, 
+                               this);
+            QAbstractButton* pButtonApply = msgBox.addButton(tr("Don't show this message again"),
+                                                             QMessageBox::ApplyRole);
+            msgBox.addButton(QMessageBox::Ok);
+            msgBox.exec();
+
+            if(msgBox.clickedButton() == pButtonApply) {
+                settings.setValue("generalSettings/movescountInfoEnable", false);
+            }
+        }
+        else if (movescountEnable && movesCount != NULL) {
             movesCount->writeLog(logEntry);
         }
         movesCountXML.writeLog(logEntry);
@@ -467,7 +490,7 @@ void MainWindow::startSync()
 
     trayIcon->setIcon(QIcon(":/icon_syncing"));
     if (isHidden()) {
-        trayIcon->showMessage(QCoreApplication::applicationName(), tr("Syncronisation started"));
+        trayIcon->showMessage(QCoreApplication::applicationName(), tr("Synchronization started"));
     }
     emit MainWindow::syncNow(ui->checkBoxResyncAll->isChecked());
 }
@@ -499,6 +522,7 @@ void MainWindow::movesCountSetup()
 
             connect(movesCount, SIGNAL(newerFirmwareExists(QByteArray)), this, SLOT(newerFirmwareExists(QByteArray)), Qt::QueuedConnection);
             connect(movesCount, SIGNAL(movesCountAuth(bool)), this, SLOT(movesCountAuth(bool)), Qt::QueuedConnection);
+            connect(movesCount, SIGNAL(uploadError(QByteArray)), this, SLOT(showUploadError(QByteArray)));
         }
         if (movescountEnable) {
             movesCount->setUsername(settings.value("email").toString());

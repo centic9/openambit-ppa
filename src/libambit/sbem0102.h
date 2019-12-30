@@ -25,6 +25,9 @@
 #include <stddef.h>
 #include <stdint.h>
 #include "libambit.h"
+#include "debug.h"
+#include "utils.h"
+
 
 typedef struct libambit_sbem0102_s {
     uint16_t chunk_size;
@@ -133,9 +136,12 @@ static inline uint8_t libambit_sbem0102_data_id(libambit_sbem0102_data_t *object
  * \param object Object to iterate over
  * \return Current elements data length
  */
-static inline uint8_t libambit_sbem0102_data_len(libambit_sbem0102_data_t *object)
+static inline uint32_t libambit_sbem0102_data_len(libambit_sbem0102_data_t *object)
 {
-    return object->read_ptr[1];
+    if(object->read_ptr[1] == 0xff) {
+       return object->read_ptr[2] | (object->read_ptr[3] << 8) | (object->read_ptr[4] << 16) | (object->read_ptr[5] << 24);
+    }
+    return (uint8_t)object->read_ptr[1];
 }
 
 /**
@@ -145,6 +151,10 @@ static inline uint8_t libambit_sbem0102_data_len(libambit_sbem0102_data_t *objec
  */
 static inline const uint8_t *libambit_sbem0102_data_ptr(libambit_sbem0102_data_t *object)
 {
+    if(libambit_sbem0102_data_len(object)>254) {
+        return &object->read_ptr[6];
+    }
+
     return &object->read_ptr[2];
 }
 
@@ -162,8 +172,8 @@ static inline int libambit_sbem0102_data_next(libambit_sbem0102_data_t *object)
         return 0;
     }
     // Loop state
-    if (object->data + object->size > object->read_ptr + 2 + libambit_sbem0102_data_len(object)) {
-        object->read_ptr += 2 + libambit_sbem0102_data_len(object);
+    if (object->data + object->size > (uint8_t*)libambit_sbem0102_data_ptr(object) + libambit_sbem0102_data_len(object)) {
+        object->read_ptr = (uint8_t*)libambit_sbem0102_data_ptr(object) + libambit_sbem0102_data_len(object);
         return 0;
     }
     // Exit state
