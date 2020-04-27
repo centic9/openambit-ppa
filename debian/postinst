@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+#
+# leftover from early version of openambit
+#
+if [ -e /lib/udev/rules.d/60-openambit.rules ]; then
+    echo "Removing outdated file /lib/udev/rules.d/60-openambit.rules..."
+    rm -rf /lib/udev/rules.d/60-openambit.rules
+fi
+
+##DEBHELPER##
+
+exit 0

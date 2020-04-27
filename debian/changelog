@@ -1,3 +1,9 @@
+openambit (0.5-0ubuntu0~git20200404~ppa2) bionic; urgency=medium
+
+  * Try to remove outdated udev-rules that are still present.
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Mon, 27 Apr 2020 09:56:26 +0200
+
 openambit (0.5-0ubuntu0~git20200404~ppa1) bionic; urgency=medium
 
   * Update to current local git-version.
