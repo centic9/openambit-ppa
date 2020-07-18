@@ -1,3 +1,9 @@
+openambit (0.5-0ubuntu0~git20200718~ppa2) bionic; urgency=medium
+
+  * Update to latest Git to try to enable support for Python 3
+
+ -- Dominik Stadler (Ubuntu key) <dominik.stadler@gmx.at>  Sat, 18 Jul 2020 10:07:52 +0200
+
 openambit (0.5-0ubuntu0~git20200717~ppa1) bionic; urgency=medium
 
   * Update to latest version from Git
